@@ -1,0 +1,27 @@
+# aliases
+alias swapcaps="setxkbmap -option caps:swapescape"
+alias copy="xclip -selection c"
+alias del='trash-put'
+alias untar='tar -zxvf '
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
+alias whatcanopen='mimeopen -a'
+alias newsession='setsid'
+alias r='ranger'
+
+# shortcut to configs
+alias i3conf='nvim ~/.config/i3/config'
+alias zshconf='nvim ~/.zshrc'
+alias polyconf='nvim ~/.config/polybar/config'
+alias nvimconf='nvim ~/.vimrc'
+alias bspconf='nvim ~/.config/bspwm/bspwmrc'
+alias sxhconf='nvim ~/.config/sxhkd/sxhkdrc'
+
+# shortcuts to applications
+alias wifi='nmtui'
+
+# shortcuts to folders
+alias schooldir='cd ~/Documents/School'
+alias bspdir='cd ~/.config/bspwm'
+alias zshdir='cd ~/.config/zsh'

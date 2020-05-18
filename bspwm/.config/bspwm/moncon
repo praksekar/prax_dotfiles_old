@@ -1,0 +1,16 @@
+#!/bin/bash
+
+case "$1" in
+    laptop-only)
+        xrandr --output HDMI-1 --off
+    ;;
+    monitor-connected)
+        xrandr --output HDMI-1 --auto
+        xrandr --output HDMI-1 --right-of eDP-1
+        launch_polybar > /dev/null 2>&1
+        setxkbmap -option "caps:swapescape"
+    ;;
+    *) 
+        echo "Error: first arg must be laptop-only/monitor-connected"
+    ;;
+esac

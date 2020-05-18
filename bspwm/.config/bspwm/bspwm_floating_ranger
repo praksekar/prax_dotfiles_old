@@ -1,0 +1,28 @@
+#!/bin/bash
+
+ranger_node="$(cat ~/.config/bspwm/ranger_node.txt)"
+
+# if ranger node is not on current wm, then create it.
+if [ -z "$(bspc query --nodes | grep $ranger_node)" ]
+then 
+    bspc desktop ranger --remove
+    bspc monitor HDMI-1 --add-desktops ranger
+    bspc desktop --focus ranger 
+    setsid launch_ranger &
+    while [ -z "$(bspc query --nodes -d ranger)" ]; do sleep 0.1; done; #wait until ranger has started up before saving the node ID.
+    bspc desktop last -f
+    bspc query --nodes --desktop ranger > ~/.config/bspwm/ranger_node.txt
+    ranger_node="$(cat ~/.config/bspwm/ranger_node.txt)"
+    bspc node "$ranger_node" --state floating
+    bspc node "$ranger_node" --flag locked
+fi
+
+# if ranger node is on focused node, move ranger to ranger desktop. Otherwise, bring ranger into focus on the focused desktop.
+if [ ! -z "$(bspc query --nodes --desktop | grep $ranger_node)"  ] 
+then
+    bspc node "$ranger_node" --to-desktop ranger
+else
+    bspc node "$ranger_node" --to-desktop focused
+    bspc node "$ranger_node" -f 
+fi
+

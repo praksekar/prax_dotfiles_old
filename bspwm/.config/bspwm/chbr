@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+
+case "$1" in
+    
+    keyboard)
+        case "$2" in
+            off) brightness=0 ;;
+            on) brightness=127 ;;
+            max) brightness=255 ;;
+            *) echo "invalid argument"; exit 1 ;;
+        esac
+
+        echo "$brightness" | sudo tee /sys/class/leds/kbd_backlight/brightness
+        notify-send "Keyboard Brightness = $brightness"
+    ;;
+
+    laptop)
+        brightness=$(cat /sys/class/backlight/intel_backlight/brightness)
+        max_brightness=$(cat /sys/class/backlight/intel_backlight/max_brightness)
+        increment=1000
+
+        case "$2" in
+            inc) brightness=$(($brightness+$increment)) ;;
+            dec) brightness=$(($brightness-$increment)) ;;
+            *) brightness=$2
+        esac
+
+        if (($brightness > $max_brightness)); then brightness=$max_brightness; fi
+        if (($brightness < 1000)); then brightness=1000; fi
+
+        echo "$brightness" | tee /sys/class/backlight/intel_backlight/brightness 
+        notify-send "Laptop Brightness = $brightness"
+    ;;
+    
+    monitor)
+        brightness=$(cat ~/.config/bspwm/monitorBrightnessLevel.txt)
+        increment=1
+
+        case "$2" in 
+            inc) brightness=$(($brightness+$increment));;
+            dec) brightness=$(($brightness-$increment));;
+            *) echo "invalid argument"; exit 1;;
+        esac
+
+        if (($brightness > 10)); then brightness=10; fi
+        if (($brightness < 1)); then brightness=1; fi
+
+        echo "$brightness" > ~/.config/bspwm/monitorBrightnessLevel.txt
+        notify-send --expire-time=500 "Monitor Brightness = $brightness"
+        xrandr --output HDMI-1 --brightness $(echo $brightness*0.1 | bc)
+    ;;
+
+    *) 
+        echo "Error: first arg must be keyboard, laptop, monitor, second arg must be inc/dec"
+    ;;
+
+esac
+
