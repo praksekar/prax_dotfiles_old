@@ -29,13 +29,5 @@ set clipboard=unnamedplus
 set undofile
 set undodir=~/.config/nvim/undodir
 
-"vim-latex plugin settings
-"let g:tex_flavor='latex'
-"let g:Tex_CompileRule_pdf = 'pdflatex -interaction=nonstopmode -file-line-error-style $*'
-
-"Enable solarized color scheme
-let g:solarized_termtrans=1
-" colorscheme solarized
-
 "vim native color scheme
 colorscheme elflord

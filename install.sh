@@ -21,6 +21,7 @@ apt_programs=(
     flameshot
     tree
     code
+    neofetch
 }
 
 for apt_program in "${apt_programs[@]}"; do

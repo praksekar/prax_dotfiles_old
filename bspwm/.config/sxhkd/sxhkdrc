@@ -39,7 +39,8 @@ alt + {_,shift + }{minus,equal}
 
 # terminal emulator
 alt + Return
-	~/.config/st/tabbed_st #$TERMINAL
+    ~/.config/st/tabbed_st
+    $TERMINAL
 
 # program launcher
 alt + space
@@ -129,8 +130,12 @@ alt + {_,shift + }c
 alt + shift + {y,u,i,o}
     bspc node -n {west,south,north,east} --follow
 
-# send to next/previous desktop
+# send desktop to other monitor
 alt + shift + {comma,period}
+    bspc desktop -m {west,east} --follow
+
+# send node to other monitor
+alt  + {comma,period}
     bspc node -m {west,east} --follow
 
 # focus or send to the given desktop

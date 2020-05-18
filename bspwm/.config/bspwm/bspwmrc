@@ -1,21 +1,10 @@
 #!/bin/sh
 
 sxhkd &
-
-#xcompmgr &
-
 setxkbmap -option caps:swapescape
-
-#xss-lock locker slock &
-
 ~/.config/polybar/launch_polybar &
 
-#bspc monitor eDP-1 -d 1 2 
-#bspc monitor HDMI-1 -d 3 4 5 6 7 8 9 10 "ranger"
-
-
-ranger_node="$(cat ~/.config/bspwm/ranger_node.txt)"
-
+#xcompmgr &
 
 bspc config focused_border_color "#9d03fc"
 #bspc config top_padding -10

@@ -8,6 +8,6 @@ export LESSHISTFILE="/dev/null"
 # default applications
 export LOCKER="i3lock"
 export BROWSER="chromium"
-export TERMINAL="st"
+export TERMINAL="/home/prakash/.config/st/tabbed_st"
 
 

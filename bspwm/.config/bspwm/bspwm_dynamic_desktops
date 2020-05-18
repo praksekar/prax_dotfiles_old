@@ -24,9 +24,7 @@ case "$1" in
     ;;
 esac
 
-
 #if the last focused desktop we just left is empty AND we explicitly are leaving this desktop, delete it.
-
 if [ "$desktop_to_focus" != "$last_focused" ] && [ -z "$(bspc query -N -d $last_focused)" ]
 then 
      bspc desktop "$last_focused" --remove 
