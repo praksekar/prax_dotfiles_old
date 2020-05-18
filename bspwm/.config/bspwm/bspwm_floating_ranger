@@ -8,7 +8,7 @@ then
     bspc desktop ranger --remove
     bspc monitor HDMI-1 --add-desktops ranger
     bspc desktop --focus ranger 
-    setsid launch_ranger &
+    setsid ~/.config/ranger/launch_ranger &
     while [ -z "$(bspc query --nodes -d ranger)" ]; do sleep 0.1; done; #wait until ranger has started up before saving the node ID.
     bspc desktop last -f
     bspc query --nodes --desktop ranger > ~/.config/bspwm/ranger_node.txt
