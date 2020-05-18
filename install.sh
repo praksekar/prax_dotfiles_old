@@ -4,6 +4,7 @@ apt_programs=(
     git
     stow
     bspwm
+    sxhkd
     dunst
     nvim
     polybar
@@ -15,6 +16,11 @@ apt_programs=(
     zsh
     i3lock
     xrandr
+    chromium
+    curl
+    flameshot
+    tree
+    code
 }
 
 for apt_program in "${apt_programs[@]}"; do

@@ -6,7 +6,7 @@ export HISTFILE="/home/prakash/.config/zsh/.zsh_history"
 export LESSHISTFILE="/dev/null"
 
 # default applications
-export LOCKER="i3-lock"
+export LOCKER="i3lock"
 export BROWSER="chromium"
 export TERMINAL="st"
 

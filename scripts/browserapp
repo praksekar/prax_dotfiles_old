@@ -1,0 +1,14 @@
+#!/bin/bash
+
+case "$1" in
+	telegram) url="https://web.telegram.org/#/im" ;;
+	hangouts) url="https://hangouts.google.com/" ;;
+	messages) url="https://messages.google.com/web/conversations" ;;
+    spotify) url="https://open.spotify.com" ;;
+	gmail_personal) url="https://mail.google.com/mail/u/?authuser=pkhsekar@gmail.com" ;;
+	gmail_school) url="https://mail.google.com/mail/u/?authuser=prakash.sekar@stonybrook.edu" ;;
+	*) echo "invalid argument"; exit 1;;
+esac
+
+$BROWSER --app="$url"
+

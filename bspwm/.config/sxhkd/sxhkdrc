@@ -6,7 +6,6 @@
 #alt + b
     #launch_hangouts; telegram-desktop; launch_messages
 
-
 # toggle floating ranger
 alt + r
     ~/.config/bspwm/bspwm_floating_ranger
@@ -24,7 +23,7 @@ alt + p
 
 # open chrome
 alt + b
-    chromium #$BROWSER
+    $BROWSER
 
 # open dmenu ranger
 #alt + r
@@ -40,7 +39,7 @@ alt + {_,shift + }{minus,equal}
 
 # terminal emulator
 alt + Return
-	~/prakashsCommands/tabbed_st #$TERMINAL
+	~/.config/st/tabbed_st #$TERMINAL
 
 # program launcher
 alt + space
