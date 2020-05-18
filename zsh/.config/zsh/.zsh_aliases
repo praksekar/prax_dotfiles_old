@@ -10,11 +10,12 @@ alias whatcanopen='mimeopen -a'
 alias newsession='setsid'
 alias r='ranger'
 
-# shortcut to configs
+# shortcut to config files/load configs
 alias i3conf='nvim ~/.config/i3/config'
-alias zshconf='nvim ~/.zshrc'
+alias zshconf='nvim ~/.config/zsh/.zshrc'
+alias zshload='source ~/.zshenv' 
 alias polyconf='nvim ~/.config/polybar/config'
-alias nvimconf='nvim ~/.vimrc'
+alias nvimconf='nvim ~/.config/nvim/init.vim'
 alias bspconf='nvim ~/.config/bspwm/bspwmrc'
 alias sxhconf='nvim ~/.config/sxhkd/sxhkdrc'
 
