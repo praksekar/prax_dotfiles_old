@@ -1,6 +1,7 @@
 #!/bin/sh
 
 apt_programs=(
+    neovim
     git
     stow
     bspwm
@@ -17,11 +18,12 @@ apt_programs=(
     i3lock
     xrandr
     chromium
-    curl
+    #curl
     flameshot
     tree
     code
     neofetch
+    python3-dev
 }
 
 for apt_program in "${apt_programs[@]}"; do

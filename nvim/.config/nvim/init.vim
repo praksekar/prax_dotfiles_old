@@ -1,8 +1,10 @@
 "Enable pathogen
 execute pathogen#infect()
 
-"Toggle mundo with F4
+"plugins
 nnoremap <F4> :MundoToggle<CR>
+nnoremap <F2> :NERDTreeToggle<CR>
+autocmd FileType vim let b:vcm_tab_complete = 'vim'
 
 "Basic settings
 filetype plugin indent on
