@@ -5,6 +5,7 @@ execute pathogen#infect()
 nnoremap <F4> :MundoToggle<CR>
 nnoremap <F2> :NERDTreeToggle<CR>
 autocmd FileType vim let b:vcm_tab_complete = 'vim'
+autocmd vimenter * colorscheme gruvbox
 
 "Basic settings
 filetype plugin indent on
