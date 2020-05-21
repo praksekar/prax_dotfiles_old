@@ -11,11 +11,8 @@ alt + r
     ~/.config/bspwm/bspwm_floating_ranger
 
 # volume controls
-XF86AudioLowerVolume 
-    amixer sset 'Master' 5%-
-
-XF86AudioRaiseVolume 
-    amixer sset 'Master' 5%+
+{XF86AudioLowerVolume,XF86AudioRaiseVolume}
+    {amixer sset 'Master' 5%-,amixer sset 'Master' 5%+}
 
 # screenshot
 alt + p
@@ -39,7 +36,6 @@ alt + {_,shift + }{minus,equal}
 
 # terminal emulator
 alt + Return
-    ~/.config/st/tabbed_st
     $TERMINAL
 
 # program launcher
@@ -145,11 +141,11 @@ alt  + {comma,period}
 #alt + {_,shift + }{1-9,0}
 	#bspc {desktop -f,node -d} '^{1-9,10}'
 
-alt + {1,2,3,4,5,6,7,8,9,0}
-	~/.config/bspwm/bspwm_dynamic_desktops focus {1,2,3,4,5,6,7,8,9,10}
+alt + {_,shift +}{1,2,3,4,5,6,7,8,9,0}
+	{~/.config/bspwm/bspwm_dynamic_desktops focus,~/.config/bspwm/bspwm_dynamic_desktops move_window_to} {1,2,3,4,5,6,7,8,9,10}
 
-alt + shift + {1,2,3,4,5,6,7,8,9,0}
-	~/.config/bspwm/bspwm_dynamic_desktops move_window_to {1,2,3,4,5,6,7,8,9,10}
+#alt + shift + {1,2,3,4,5,6,7,8,9,0}
+	#~/.config/bspwm/bspwm_dynamic_desktops move_window_to {1,2,3,4,5,6,7,8,9,10}
 #
 # preselect
 #

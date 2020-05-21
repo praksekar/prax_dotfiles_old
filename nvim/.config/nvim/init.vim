@@ -8,6 +8,7 @@ autocmd FileType vim let b:vcm_tab_complete = 'vim'
 
 "Basic settings
 filetype plugin indent on
+set relativenumber
 set background=dark
 set modeline
 set modelines=5

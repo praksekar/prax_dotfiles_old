@@ -2,6 +2,7 @@
 
 case "$1" in
     laptop-only)
+        bspc query -D --names | while read line; do bspc desktop "$line" -m eDP-1; done 
         xrandr --output HDMI-1 --off
     ;;
     monitor-connected)
