@@ -26,6 +26,10 @@ alt + b
 #alt + r
     #~/prakashsCommands/dmenu_ranger
 
+# connect/disconnect monitor from laptop
+alt + shift + {m,n}
+    ~/.config/bspwm/bspwm_moncon {monitor-connected,laptop-only}
+
 # lock and suspend
 alt + shift + s
     ~/.config/bspwm/lock_and_suspend #$LOCKER
