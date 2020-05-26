@@ -8,7 +8,7 @@ apt_programs=(
     sxhkd
     dunst
     nvim
-    polybar
+    lemonbar
     ranger
     #st
     sxiv

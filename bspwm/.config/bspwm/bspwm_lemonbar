@@ -4,16 +4,16 @@
 clock() {
     while true; do
         clocktime=$(date "+%I:%M")
-        echo "C$clocktime"
+        echo "T$clocktime"
         sleep 1s
     done
 }
 
 cal() {
     while true; do
-        caldate=$(date "+%a, %m %B %Y")
+        caldate=$(date "+%a, %d %B %Y")
         echo "D$caldate"
-        sleep 1s
+        sleep 60s
     done
 }
 
@@ -21,6 +21,21 @@ workspace() {
     bspc subscribe desktop_focus | while read; do
         workspace=$(bspc query -D -d focused --names)
         echo "W$workspace"
+    done
+}
+
+memory() {
+    while true; do
+        memory="$(free | grep Mem | awk '{print $3/$2 * 100.0}')"
+        echo "MMemory: $memory%"
+        sleep 3s
+    done
+}
+
+cpu() {
+    while true; do
+        cpu="$(awk '{u=$2+$4; t=$2+$4+$5; if (NR==1){u1=u; t1=t;} else print ($2+$4-u1) * 100 / (t-t1) "%"; }' <(grep 'cpu ' /proc/stat) <(sleep 1;grep 'cpu ' /proc/stat))"
+        echo "CCPU: $cpu"
     done
 }
 
@@ -84,7 +99,7 @@ wifi() {
             WIFISTR=$(( ${WIFISTR} * 100 / 70))
             ESSID=$(iwconfig wlp0s20f3 | grep ESSID | sed 's/ //g' | sed 's/.*://' | cut -d "\"" -f 2)
             if [ $WIFISTR -ge 1 ] ; then
-                wifi_name="${ESSID} ${WIFISTR}%"
+                wifi_name="$ESSID $WIFISTR%"
             fi
         fi
         echo "I$wifi_name"
@@ -107,26 +122,37 @@ output_stream() {
     volume &
     cal &
     wifi &
+    memory &
+    cpu &
     wait
 }
 
-# kill running instance of lemonbar, launch lemonbar with modules
+# kill running instance of lemonbar and bspwm_lemonbar, launch lemonbar with modules
+script_name=${BASH_SOURCE[0]}
+for pid in $(pidof -x $script_name); do
+    if [ $pid != $$ ]; then
+        kill -9 $pid
+    fi 
+done
+
 pgrep -x lemonbar > /dev/null && pkill -x lemonbar
 
 output_stream | while read line; do
     case $line in 
-        C*) clock="${line:1}" ;;
+        T*) clock="${line:1}" ;;
+        C*) cpu="${line:1}" ;;
         W*) workspace="${line:1}" ;;
         B*) battery="${line:1}" ;;
         A*) activewindow="${line:1}" ;;
         I*) wifi="${line:1}" ;;
         V*) volume="${line:1}" ;;
         D*) date="${line:1}" ;;
+        M*) memory="${line:1}" ;;
     esac
 
-	echo -e "%{l}$workspace" "%{c}$activewindow" "%{r}  $wifi  $volume  $date $clock $battery"
+	echo -e "%{l}$workspace" "%{c}$activewindow" "%{r}  $memory $cpu $wifi  $volume  $date $clock $battery"
 
-done | lemonbar -p
+done | lemonbar  -p -F 4287f5
 
 
 
