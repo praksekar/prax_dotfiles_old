@@ -7,6 +7,7 @@ apt_programs=(
     bspwm
     sxhkd
     dunst
+    dmenu
     nvim
     lemonbar
     ranger
@@ -22,7 +23,7 @@ apt_programs=(
     flameshot
     tree
     neofetch
-    python3-dev
+    #python3-dev
     chromium
     fzf
 }

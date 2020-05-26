@@ -3,8 +3,8 @@
 
 clock() {
     while true; do
-        clocktime=$(date "+%I:%M")
-        echo "T$clocktime"
+        clock=$(date "+%I:%M")
+        echo "T$clock"
         sleep 1s
     done
 }
@@ -27,6 +27,7 @@ workspace() {
 memory() {
     while true; do
         memory="$(free | grep Mem | awk '{print $3/$2 * 100.0}')"
+        memory=${memory%%.*} # only keep numbers before decimal
         echo "MMemory: $memory%"
         sleep 3s
     done
@@ -34,8 +35,9 @@ memory() {
 
 cpu() {
     while true; do
-        cpu="$(awk '{u=$2+$4; t=$2+$4+$5; if (NR==1){u1=u; t1=t;} else print ($2+$4-u1) * 100 / (t-t1) "%"; }' <(grep 'cpu ' /proc/stat) <(sleep 1;grep 'cpu ' /proc/stat))"
-        echo "CCPU: $cpu"
+        cpu="$(awk '{u=$2+$4; t=$2+$4+$5; if (NR==1){u1=u; t1=t;} else print ($2+$4-u1) * 100 / (t-t1) "%"; }' <(grep 'cpu ' /proc/stat) <(sleep 3;grep 'cpu ' /proc/stat))"
+        cpu=${cpu%%.*} # only keep numbers before decimal
+        echo "CCPU: $cpu%"
     done
 }
 
@@ -79,8 +81,9 @@ battery() {
     done  
 }
 
-activewindow() {
-    bspc subscribe node_focus | while read; do
+# alternative to bspc subscribe is: xprop -spy -root _NET_ACTIVE_WINDOW
+activewindow_event() {
+    bspc subscribe node_focus desktop_focus | while read; do
         len=$(echo -n "$(xdotool getwindowfocus getwindowname)" | wc -m)
         max_len=70
         if [ "$len" -gt "$max_len" ];then
@@ -89,6 +92,20 @@ activewindow() {
             windowname="$(xdotool getwindowfocus getwindowname)"
         fi
         echo -e "A$windowname" 
+    done 
+}
+
+activewindow_poll() {
+    while true; do
+        len=$(echo -n "$(xdotool getwindowfocus getwindowname)" | wc -m)
+        max_len=70
+        if [ "$len" -gt "$max_len" ];then
+            windowname="$(xdotool getwindowfocus getwindowname | cut -c 1-$max_len)..."
+        else
+            windowname="$(xdotool getwindowfocus getwindowname)"
+        fi
+        echo -e "A$windowname" 
+        sleep 1s
     done 
 }
 
@@ -103,7 +120,7 @@ wifi() {
             fi
         fi
         echo "I$wifi_name"
-        sleep 30s
+        sleep 10s
     done
 }
 
@@ -115,7 +132,8 @@ volume() {
 }
 
 output_stream() {
-    activewindow &
+    activewindow_event &
+    activewindow_poll &
     workspace &
     battery &
     clock &
@@ -134,7 +152,6 @@ for pid in $(pidof -x $script_name); do
         kill -9 $pid
     fi 
 done
-
 pgrep -x lemonbar > /dev/null && pkill -x lemonbar
 
 output_stream | while read line; do
