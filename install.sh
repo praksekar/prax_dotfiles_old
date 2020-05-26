@@ -21,9 +21,10 @@ apt_programs=(
     #curl
     flameshot
     tree
-    code
     neofetch
     python3-dev
+    chromium
+    fzf
 }
 
 for apt_program in "${apt_programs[@]}"; do

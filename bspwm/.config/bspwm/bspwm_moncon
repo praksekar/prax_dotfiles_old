@@ -10,7 +10,7 @@ case "$1" in
     monitor-connected)
         xrandr --output "$MONITOR_SECONDARY" --auto
         xrandr --output "$MONITOR_SECONDARY" --right-of "$MONITOR_PRIMARY"
-        ~/.config/polybar/launch_polybar > /dev/null 2>&1
+        $BAR > /dev/null 2>&1
         setxkbmap -option "caps:swapescape"
     ;;
     *) 

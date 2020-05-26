@@ -1,0 +1,135 @@
+#!/bin/bash
+
+
+clock() {
+    while true; do
+        clocktime=$(date "+%I:%M")
+        echo "C$clocktime"
+        sleep 1s
+    done
+}
+
+cal() {
+    while true; do
+        caldate=$(date "+%a, %m %B %Y")
+        echo "D$caldate"
+        sleep 1s
+    done
+}
+
+workspace() {
+    bspc subscribe desktop_focus | while read; do
+        workspace=$(bspc query -D -d focused --names)
+        echo "W$workspace"
+    done
+}
+
+battery() {
+    while true; do
+        BATTACPI=$(acpi --battery)
+        BATPERC=$(echo $BATTACPI | cut -d, -f2 | tr -d '[:space:]')
+
+        if [[ $BATTACPI == *"100%"* ]]
+        then
+            output="\uf00c $BATPERC"
+        elif [[ $BATTACPI == *"Discharging"* ]]
+        then
+            BATPERC=${BATPERC::-1}
+            if [ $BATPERC -le "10" ]
+            then
+                output="\uf244"
+            elif [ $BATPERC -le "25" ]
+            then
+                output="\uf243"
+            elif [ $BATPERC -le "50" ]
+            then
+                output="\uf242"
+            elif [ $BATPERC -le "75" ]
+            then
+                output="\uf241"
+            elif [ $BATPERC -le "100" ]
+            then
+                output="\uf240"
+            fi
+            output=" $BATPERC%"
+        elif [[ $BATTACPI == *"Charging"* && $BATTACPI != *"100%"* ]]
+        then
+            output="\uf0e7 $BATPERC"
+        elif [[ $BATTACPI == *"Unknown"* ]]
+        then
+            output="$BATPERC"
+        fi
+        echo "BBattery:$output"
+        sleep 60s
+    done  
+}
+
+activewindow() {
+    bspc subscribe node_focus | while read; do
+        len=$(echo -n "$(xdotool getwindowfocus getwindowname)" | wc -m)
+        max_len=70
+        if [ "$len" -gt "$max_len" ];then
+            windowname="$(xdotool getwindowfocus getwindowname | cut -c 1-$max_len)..."
+        else
+            windowname="$(xdotool getwindowfocus getwindowname)"
+        fi
+        echo -e "A$windowname" 
+    done 
+}
+
+wifi() {
+    while true; do
+        WIFISTR=$( iwconfig wlp0s20f3 | grep "Link" | sed 's/ //g' | sed 's/LinkQuality=//g' | sed 's/\/.*//g')
+        if [ ! -z $WIFISTR ] ; then
+            WIFISTR=$(( ${WIFISTR} * 100 / 70))
+            ESSID=$(iwconfig wlp0s20f3 | grep ESSID | sed 's/ //g' | sed 's/.*://' | cut -d "\"" -f 2)
+            if [ $WIFISTR -ge 1 ] ; then
+                wifi_name="${ESSID} ${WIFISTR}%"
+            fi
+        fi
+        echo "I$wifi_name"
+        sleep 30s
+    done
+}
+
+volume() {
+    pactl subscribe | while read; do
+        volume=$(awk -F"[][]" '/dB/ { print $2 }' <(amixer sget Master))
+        echo "VVolume: $volume"
+    done
+}
+
+output_stream() {
+    activewindow &
+    workspace &
+    battery &
+    clock &
+    volume &
+    cal &
+    wifi &
+    wait
+}
+
+# kill running instance of lemonbar, launch lemonbar with modules
+pgrep -x lemonbar > /dev/null && pkill -x lemonbar
+
+output_stream | while read line; do
+    case $line in 
+        C*) clock="${line:1}" ;;
+        W*) workspace="${line:1}" ;;
+        B*) battery="${line:1}" ;;
+        A*) activewindow="${line:1}" ;;
+        I*) wifi="${line:1}" ;;
+        V*) volume="${line:1}" ;;
+        D*) date="${line:1}" ;;
+    esac
+
+	echo -e "%{l}$workspace" "%{c}$activewindow" "%{r}  $wifi  $volume  $date $clock $battery"
+
+done | lemonbar -p
+
+
+
+
+
+

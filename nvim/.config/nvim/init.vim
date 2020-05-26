@@ -9,6 +9,7 @@ autocmd vimenter * colorscheme gruvbox
 
 "Basic settings
 filetype plugin indent on
+set nowrap
 set relativenumber
 set background=dark
 set modeline

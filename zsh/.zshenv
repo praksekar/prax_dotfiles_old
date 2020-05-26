@@ -10,6 +10,7 @@ export LESSHISTFILE="/dev/null"
 export LOCKER="i3lock"
 export BROWSER="chromium"
 export TERMINAL="/home/prakash/.config/st/tabbed_st"
+export BAR="/home/prakash/.config/bspwm/bspwm_lemonbar"
 
 # monitor
 export MONITOR_PRIMARY="eDP-1"

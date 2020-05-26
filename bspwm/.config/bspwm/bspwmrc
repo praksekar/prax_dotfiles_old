@@ -2,9 +2,8 @@
 
 sxhkd &
 setxkbmap -option caps:swapescape
-~/.config/polybar/launch_polybar &
-
-xcompmgr &
+#xcompmgr &
+~/.config/bspwm/bspwm_lemonbar &
 
 xinput set-prop '04CA00B1:00 04CA:00B1 Touchpad' 'libinput Tapping Enabled' 1
 xinput set-prop '04CA00B1:00 04CA:00B1 Touchpad' 'libinput Accel Speed' +0.5

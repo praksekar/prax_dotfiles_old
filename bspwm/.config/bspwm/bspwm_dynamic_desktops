@@ -14,11 +14,9 @@ fi
 case "$1" in 
     focus) 
         bspc desktop "$desktop_to_focus" -f
-        notify-send "$desktop_to_focus" -t 500
     ;;
     move_window_to) 
         bspc node -d "$desktop_to_focus" 
-        notify-send "Window sent to $desktop_to_focus" -t 500
     ;;
     *) echo "bad arg 2"; exit 1
     ;;
