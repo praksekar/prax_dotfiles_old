@@ -1,5 +1,13 @@
 #!/bin/bash
 
+# kill running instance of lemonbar and bspwm_lemonbar, launch lemonbar with modules
+pgrep -x lemonbar > /dev/null && pkill -x lemonbar
+script_name=${BASH_SOURCE[0]}
+for pid in $(pidof -x $script_name); do
+    if [ $pid != $$ ]; then
+        kill -9 $pid
+    fi 
+done
 
 clock() {
     while true; do
@@ -145,15 +153,6 @@ output_stream() {
     wait
 }
 
-# kill running instance of lemonbar and bspwm_lemonbar, launch lemonbar with modules
-script_name=${BASH_SOURCE[0]}
-for pid in $(pidof -x $script_name); do
-    if [ $pid != $$ ]; then
-        kill -9 $pid
-    fi 
-done
-pgrep -x lemonbar > /dev/null && pkill -x lemonbar
-
 output_stream | while read line; do
     case $line in 
         T*) clock="${line:1}" ;;
@@ -170,9 +169,5 @@ output_stream | while read line; do
 	echo -e "%{l}$workspace" "%{c}$activewindow" "%{r}  $memory $cpu $wifi  $volume  $date $clock $battery"
 
 done | lemonbar  -p -F 4287f5
-
-
-
-
 
 
