@@ -52,39 +52,8 @@ cpu() {
 battery() {
     while true; do
         BATTACPI=$(acpi --battery)
-        BATPERC=$(echo $BATTACPI | cut -d, -f2 | tr -d '[:space:]')
-
-        if [[ $BATTACPI == *"100%"* ]]
-        then
-            output="\uf00c $BATPERC"
-        elif [[ $BATTACPI == *"Discharging"* ]]
-        then
-            BATPERC=${BATPERC::-1}
-            if [ $BATPERC -le "10" ]
-            then
-                output="\uf244"
-            elif [ $BATPERC -le "25" ]
-            then
-                output="\uf243"
-            elif [ $BATPERC -le "50" ]
-            then
-                output="\uf242"
-            elif [ $BATPERC -le "75" ]
-            then
-                output="\uf241"
-            elif [ $BATPERC -le "100" ]
-            then
-                output="\uf240"
-            fi
-            output=" $BATPERC%"
-        elif [[ $BATTACPI == *"Charging"* && $BATTACPI != *"100%"* ]]
-        then
-            output="\uf0e7 $BATPERC"
-        elif [[ $BATTACPI == *"Unknown"* ]]
-        then
-            output="$BATPERC"
-        fi
-        echo "BBattery:$output"
+        output=$(echo $BATTACPI | cut -d, -f2 | tr -d '[:space:]')
+        echo "BBattery: $output%"
         sleep 60s
     done  
 }
