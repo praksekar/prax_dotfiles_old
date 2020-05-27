@@ -7,7 +7,7 @@ export HISTFILE="/home/prakash/.config/zsh/.zsh_history"
 export LESSHISTFILE="/dev/null"
 
 # default applications
-export LOCKER="i3lock"
+export LOCKER="slock"
 export BROWSER="chromium"
 export TERMINAL="/home/prakash/.config/st/tabbed_st"
 export BAR="/home/prakash/.config/bspwm/bspwm_lemonbar"

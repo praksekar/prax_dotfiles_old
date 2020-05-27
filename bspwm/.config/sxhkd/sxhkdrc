@@ -40,6 +40,8 @@ alt + shift + s
 # increase laptop/monitor brightness
 alt + {_,shift + }{minus,equal}
     ~/.config/bspwm/chbr {monitor,laptop} {dec,inc}
+#XF86MonBrightnessUp
+
 
 # terminal emulator
 alt + Return

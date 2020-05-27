@@ -16,7 +16,7 @@ apt_programs=(
     #tabbed
     zathura
     zsh
-    i3lock
+    slock
     xrandr
     chromium
     #curl
