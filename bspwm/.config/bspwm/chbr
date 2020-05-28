@@ -6,7 +6,6 @@
 # after, add user prakash to video group. changes only take effect after reboot.
 
 case "$1" in
-    
     keyboard)
         case "$2" in
             off) brightness=0 ;;
@@ -58,6 +57,5 @@ case "$1" in
     *) 
         echo "Error: first arg must be keyboard, laptop, monitor, second arg must be inc/dec"
     ;;
-
 esac
 

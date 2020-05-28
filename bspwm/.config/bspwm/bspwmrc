@@ -2,7 +2,7 @@
 
 sxhkd &
 setxkbmap -option caps:swapescape
-#xcompmgr &
+xcompmgr &
 ~/.config/bspwm/bspwm_lemonbar &
 
 xinput set-prop '04CA00B1:00 04CA:00B1 Touchpad' 'libinput Tapping Enabled' 1

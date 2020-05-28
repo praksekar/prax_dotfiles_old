@@ -12,6 +12,12 @@ save_next_created_ranger() {
     done
 }
 
+# create ranger desktop if not on current wm.
+if [ -z "$(bspc query -D --names | grep ranger)"]
+then
+    bspc monitor -a ranger
+fi
+
 # if ranger node is not on current wm, then create it.
 if [ -z "$(bspc query --nodes | grep $ranger_node)" ]
 then 

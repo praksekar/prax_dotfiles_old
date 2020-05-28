@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 apt_programs=(
     neovim
@@ -8,7 +8,6 @@ apt_programs=(
     sxhkd
     dunst
     dmenu
-    nvim
     lemonbar
     ranger
     #st
@@ -18,18 +17,19 @@ apt_programs=(
     zsh
     slock
     xrandr
-    chromium
+    chromium-browser
     #curl
     flameshot
     tree
     neofetch
     #python3-dev
     chromium
-    fzf
-}
+    #fzf
+    acpi
+    xcompmgr
+)
 
 for apt_program in "${apt_programs[@]}"; do
     sudo apt install "$apt_program"
 done
 
-stow * #fix this so it ignores the scripts file and others
