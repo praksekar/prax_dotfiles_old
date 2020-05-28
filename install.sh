@@ -10,23 +10,19 @@ apt_programs=(
     dmenu
     lemonbar
     ranger
-    #st
     sxiv
-    #tabbed
     zathura
     zsh
     slock
-    xrandr
     chromium-browser
-    #curl
     flameshot
     tree
     neofetch
-    #python3-dev
     chromium
     #fzf
     acpi
     xcompmgr
+    libxft-dev
 )
 
 for apt_program in "${apt_programs[@]}"; do
