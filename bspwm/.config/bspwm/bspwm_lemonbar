@@ -143,7 +143,7 @@ output_stream | while read line; do
         M*) memory="${line:1}" ;;
     esac
 
-	echo -e "%{S0}%{l}$workspace" "%{c}$activewindow" "%{r}  $memory $cpu $wifi  $volume  $date $clock $battery"
+	echo -e "%{l}$workspace" "%{c}$activewindow" "%{r}  $memory $cpu $wifi  $volume  $date $clock $battery"
     #if [ $two_monitors ] 
     #then 
         #echo -e "%{S1}%{l}$workspace" "%{c}$activewindow" "%{r}  $memory $cpu $wifi  $volume  $date $clock $battery"

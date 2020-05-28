@@ -1,6 +1,7 @@
 #!/bin/bash
 
 apt_programs=(
+    xdotool
     neovim
     git
     stow
@@ -16,9 +17,6 @@ apt_programs=(
     slock
     chromium-browser
     flameshot
-    tree
-    neofetch
-    chromium
     #fzf
     acpi
     xcompmgr
