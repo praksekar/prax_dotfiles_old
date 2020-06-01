@@ -17,10 +17,10 @@ if [ -x /usr/bin/dircolors ]; then
 fi
 
 # zsh native fuzzy completion
-zstyle ':completion:*' matcher-list '' \
-  'm:{a-z\-}={A-Z\_}' \
-  'r:[^[:alpha:]]||[[:alpha:]]=** r:|=* m:{a-z\-}={A-Z\_}' \
-  'r:|?=** m:{a-z\-}={A-Z\_}'
+#zstyle ':completion:*' matcher-list '' \
+  #'m:{a-z\-}={A-Z\_}' \
+  #'r:[^[:alpha:]]||[[:alpha:]]=** r:|=* m:{a-z\-}={A-Z\_}' \
+  #'r:|?=** m:{a-z\-}={A-Z\_}'
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -96,3 +96,5 @@ bindkey '^e' edit-command-line
 
 # Load syntax highlighting; should be last.
 source ~/.config/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh 
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
