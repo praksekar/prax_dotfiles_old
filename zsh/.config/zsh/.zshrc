@@ -97,4 +97,7 @@ bindkey '^e' edit-command-line
 # Load syntax highlighting; should be last.
 source ~/.config/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh 
 
+# source 
+source ~/.config/fzf/.fzf.zsh
+
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

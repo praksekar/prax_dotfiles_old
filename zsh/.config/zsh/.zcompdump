@@ -1,4 +1,4 @@
-#files: 954	version: 5.8
+#files: 953	version: 5.8
 
 _comps=(
 '-' '_precommand'
@@ -381,7 +381,6 @@ _comps=(
 'extractres' '_psutils'
 'fakeroot' '_fakeroot'
 'false' '_nothing'
-'fast-theme' '_fast-theme'
 'fc' '_fc'
 'fc-list' '_xft_fonts'
 'fc-match' '_xft_fonts'
@@ -2022,7 +2021,7 @@ autoload -Uz _bootctl _busctl _hostnamectl _journalctl _kernel-install \
             _zcompile _zed _zftp _zle _zmodload \
             _zmv _zparseopts _zpty _zsh-mime-handler _zsocket \
             _zstyle _ztodo _hwinfo _osc _SUSEconfig \
-            _yast _zypper _fast-theme
+            _yast _zypper
 autoload -Uz +X _call_program
 
 typeset -gUa _comp_assocs
