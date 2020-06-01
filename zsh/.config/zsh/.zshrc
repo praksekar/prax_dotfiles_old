@@ -21,7 +21,8 @@ fi
 # shopt -s checkwinsize
 
 # History in cache directory:
-HISTSIZE=10000
+HISTSIZE=
+HISTFILESIZE=
 SAVEHIST=10000
 HISTFILE=~/.config/zsh/.zsh_history
 
@@ -85,6 +86,8 @@ bindkey -s '^a' 'bc -l\n'
 bindkey -s '^f' 'cd "$(dirname "$(fzf)")"\n'
 
 bindkey '^[[P' delete-char
+
+bindkey '^R' history-incremental-search-backward
 
 # Edit line in vim with ctrl-e:
 autoload edit-command-line; zle -N edit-command-line

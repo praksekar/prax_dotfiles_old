@@ -3,14 +3,16 @@ export EDITOR="nvim"
 export VISUAL="nvim"
 export READER="zathura"
 export ZDOTDIR="/home/prakash/.config/zsh/"
+export GIT_CONFIG="/home/prakash/.config/git/config"
 export HISTFILE="/home/prakash/.config/zsh/.zsh_history"
 export LESSHISTFILE="/dev/null"
+export JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64"
 
 # default applications
 export LOCKER="slock"
 export BROWSER="chromium"
-export TERMINAL="/home/prakash/.config/st/tabbed_st"
-export BAR="/home/prakash/.config/bspwm/bspwm_lemonbar"
+export TERMINAL="tabbed_st"
+export BAR="bspwm_lemonbar"
 
 # monitor
 export MONITOR_PRIMARY="eDP-1"

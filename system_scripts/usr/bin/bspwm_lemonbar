@@ -149,6 +149,6 @@ output_stream | while read line; do
         #echo -e "%{S1}%{l}$workspace" "%{c}$activewindow" "%{r}  $memory $cpu $wifi  $volume  $date $clock $battery"
     #fi
 
-done | lemonbar  -p -F 4287f5
+done | lemonbar -U "#FFFFFF" -B "#000000" -u "5" -p
 
 

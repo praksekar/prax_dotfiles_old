@@ -22,7 +22,7 @@ fi
 if [ -z "$(bspc query --nodes | grep $ranger_node)" ]
 then 
     save_next_created_ranger &
-    setsid ~/.config/ranger/launch_ranger &
+    setsid launch_ranger &
 fi
 
 # if ranger node is on focused desktop, move ranger to ranger desktop. Otherwise, bring ranger into focus on the focused desktop.
