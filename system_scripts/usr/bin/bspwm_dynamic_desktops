@@ -4,7 +4,7 @@ desktop_to_focus="$2"
 last_focused="$(bspc query -D -d --names)"
 current_desktop_names="$(bspc query -D --names)"
 
-#if desktop name is not found in list, then add this desktop to current monitor.
+# if desktop name is not found in list, then add this desktop to current monitor.
 if [ -z "$(echo $current_desktop_names | grep $desktop_to_focus)" ] 
 then
     bspc monitor -a "$desktop_to_focus"; 
@@ -22,7 +22,7 @@ case "$1" in
     ;;
 esac
 
-#if the last focused desktop we just left is empty AND we explicitly are leaving this desktop, delete it.
+# if the last focused desktop we just left is empty AND we explicitly are leaving this desktop, delete it.
 if [ "$desktop_to_focus" != "$last_focused" ] && [ -z "$(bspc query -N -d $last_focused)" ]
 then 
      bspc desktop "$last_focused" --remove 

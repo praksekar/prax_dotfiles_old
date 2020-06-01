@@ -2,7 +2,6 @@
 alias swapcaps="setxkbmap -option caps:swapescape"
 alias copy="xclip -selection c"
 alias del='trash-put'
-alias untar='tar -zxvf '
 alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'

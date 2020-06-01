@@ -18,7 +18,7 @@ apt_programs=(
     slock
     chromium-browser
     flameshot
-    #fzf
+    fzf
     acpi
     xcompmgr
     libxft-dev

@@ -7,6 +7,7 @@ export GIT_CONFIG="/home/prakash/.config/git/config"
 export HISTFILE="/home/prakash/.config/zsh/.zsh_history"
 export LESSHISTFILE="/dev/null"
 export JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64"
+#export FZF_DEFAULT_OPS="--extended"
 
 # default applications
 export LOCKER="slock"

@@ -12,5 +12,6 @@
     },
     "java.semanticHighlighting.enabled": true,
     "vim.vimrc.enable": true,
-    "vim.vimrc.path": "~/.config/nvim/init.vim"
+    "vim.vimrc.path": "~/.config/nvim/init.vim",
+    "editor.lineNumbers": "relative"
 }

@@ -16,6 +16,12 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 
+# zsh native fuzzy completion
+zstyle ':completion:*' matcher-list '' \
+  'm:{a-z\-}={A-Z\_}' \
+  'r:[^[:alpha:]]||[[:alpha:]]=** r:|=* m:{a-z\-}={A-Z\_}' \
+  'r:|?=** m:{a-z\-}={A-Z\_}'
+
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
 # shopt -s checkwinsize
@@ -23,7 +29,7 @@ fi
 # History in cache directory:
 HISTSIZE=
 HISTFILESIZE=
-SAVEHIST=10000
+SAVEHIST=1000000
 HISTFILE=~/.config/zsh/.zsh_history
 
 # Load aliases and shortcuts if existent.
@@ -80,14 +86,9 @@ lfcd () {
 }
 
 bindkey -s '^o' 'lfcd\n'
-
 bindkey -s '^a' 'bc -l\n'
-
 bindkey -s '^f' 'cd "$(dirname "$(fzf)")"\n'
-
 bindkey '^[[P' delete-char
-
-bindkey '^R' history-incremental-search-backward
 
 # Edit line in vim with ctrl-e:
 autoload edit-command-line; zle -N edit-command-line
