@@ -1,0 +1,16 @@
+{
+    "editor.suggestSelection": "first",
+    "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+    "keyboard.dispatch": "keyCode",
+    "vim.hlsearch": true,
+    "vim.neovimPath": "/usr/bin/nvim",
+    "vim.enableNeovim": true,
+    "workbench.colorCustomizations": {
+        "statusBar.background": "#005f5f",
+        "statusBar.noFolderBackground": "#005f5f",
+        "statusBar.debuggingBackground": "#005f5f"
+    },
+    "java.semanticHighlighting.enabled": true,
+    "vim.vimrc.enable": true,
+    "vim.vimrc.path": "~/.config/nvim/init.vim"
+}
