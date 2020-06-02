@@ -22,13 +22,29 @@ apt_programs=(
     acpi
     xcompmgr
     libxft-dev
+    code
 )
 
 for apt_program in "${apt_programs[@]}"; do
     sudo apt install "$apt_program"
 done
 
-# remember to stow everything except install.sh and system_scripts regularly.
+# stow everything except install.sh and system_scripts regularly.
 # do sudo stow --target=/ system_scripts for system_scripts folder to stow in /usr/bin
+stow --ignore="bin" *
+stow --target=/ bin-system-scripts
 
-# move .fzf.zsh to .config/zsh
+# install tabbed and st
+cd ~/.config/tabbed
+sudo make clean install
+cd ~/.config/st
+sudo make clean install
+
+# install fzf, move .fzf.zsh to .config/zsh
+cd ~/.config/fzf
+./install.sh
+mv ~/.fzf.zsh ~/.config/zsh/
+
+chsh -s "$(which zsh)"
+
+echo "----------------RESTART TO FINISH INSTALLATION-----------------------"
