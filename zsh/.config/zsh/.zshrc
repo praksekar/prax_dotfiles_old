@@ -27,8 +27,8 @@ zstyle ':completion:*' matcher-list '' \
 # shopt -s checkwinsize
 
 # History in cache directory:
-HISTSIZE=
-HISTFILESIZE=
+HISTSIZE=1000000
+HISTFILESIZE=1000000
 SAVEHIST=1000000
 HISTFILE=~/.config/zsh/.zsh_history
 

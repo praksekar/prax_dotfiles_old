@@ -1,4 +1,4 @@
-#!/bin/bash
+!/bin/bash
 
 apt_programs=(
     hsetroot
@@ -30,3 +30,5 @@ done
 
 # remember to stow everything except install.sh and system_scripts regularly.
 # do sudo stow --target=/ system_scripts for system_scripts folder to stow in /usr/bin
+
+# move .fzf.zsh to .config/zsh
