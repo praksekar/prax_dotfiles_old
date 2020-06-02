@@ -32,7 +32,7 @@ done
 # stow everything except install.sh and system_scripts regularly.
 # do sudo stow --target=/ system_scripts for system_scripts folder to stow in /usr/bin
 stow --ignore="bin" *
-stow --target=/ bin-system-scripts
+stow --target=/ system-scripts-bin
 
 # install tabbed and st
 cd ~/.config/tabbed
