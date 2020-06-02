@@ -23,10 +23,10 @@ apt_programs=(
     xcompmgr
     libxft-dev
 )
-    sudo snap install code
+    sudo snap install code --classic
 
 for apt_program in "${apt_programs[@]}"; do
-    sudo apt install "$apt_program" --classic
+    sudo apt install "$apt_program" 
 done
 
 # stow everything except install.sh and system_scripts regularly.
