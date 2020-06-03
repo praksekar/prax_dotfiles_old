@@ -1,7 +1,7 @@
 # aliases
 alias swapcaps="setxkbmap -option caps:swapescape"
 alias copy="xclip -selection c"
-alias del='trash-put'
+alias trash='gio trash'
 alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
@@ -10,6 +10,7 @@ alias newsession='setsid'
 alias r='ranger'
 
 # shortcut to config files/load configs
+alias dots='cd ~/Dotfiles'
 alias i3conf='nvim ~/.config/i3/config'
 alias zshconf='nvim ~/.config/zsh/.zshrc'
 alias zshload='source ~/.zshenv' 

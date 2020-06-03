@@ -37,7 +37,7 @@ case "$1" in
     ;;
     
     monitor)
-        brightness=$(cat ~/.config/bspwm/monitorBrightnessLevel.txt)
+        brightness=$(cat ~/Dotfiles/system_scripts/usr/bin/monitor_brightness)
         increment=1
 
         case "$2" in 
@@ -49,13 +49,11 @@ case "$1" in
         if (($brightness > 10)); then brightness=10; fi
         if (($brightness < 1)); then brightness=1; fi
 
-        echo "$brightness" > ~/.config/bspwm/monitorBrightnessLevel.txt
+        echo "$brightness" > ~/Dotfiles/system_scripts/usr/bin/monitor_brightness
         notify-send --expire-time=500 "Monitor Brightness = $brightness"
         xrandr --output "$MONITOR_SECONDARY" --brightness $(echo $brightness*0.1 | bc)
     ;;
 
-    *) 
-        echo "Error: first arg must be keyboard, laptop, monitor, second arg must be inc/dec"
-    ;;
+    *) echo "Error: first arg must be keyboard, laptop, monitor, second arg must be inc/dec" ;;
 esac
 

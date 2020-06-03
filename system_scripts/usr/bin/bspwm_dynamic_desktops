@@ -10,19 +10,18 @@ then
     bspc monitor -a "$desktop_to_focus"; 
 fi
 
-# if we want to just focus, then simply focus. if we want to send, then send to desktop.
+# if we want to just focus, then simply focus. if we want to send, then send to desktop without focusing 
 case "$1" in 
     focus) 
         bspc desktop "$desktop_to_focus" -f
     ;;
     move_window_to) 
         bspc node -d "$desktop_to_focus" 
-    ;;
-    *) echo "bad arg 2"; exit 1
+        notify-send "window moved to desktop $desktop_to_focus"
     ;;
 esac
 
-# if the last focused desktop we just left is empty AND we explicitly are leaving this desktop, delete it.
+# finally, if the last focused desktop we just left is empty AND we explicitly are leaving this desktop, delete it.
 if [ "$desktop_to_focus" != "$last_focused" ] && [ -z "$(bspc query -N -d $last_focused)" ]
 then 
      bspc desktop "$last_focused" --remove 
