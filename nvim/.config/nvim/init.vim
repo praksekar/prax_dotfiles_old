@@ -32,6 +32,7 @@ map <leader>h :wincmd h<CR>
 map <leader>j :wincmd j<CR>
 map <leader>k :wincmd k<CR>
 map <leader>l :wincmd l<CR>
+let mapleader = " "
 
 "Allow copy pasting between vim documents
 set clipboard=unnamedplus

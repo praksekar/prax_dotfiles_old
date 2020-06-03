@@ -4,8 +4,8 @@ ranger_node="$(cat ~/Dotfiles/system_scripts/usr/bin/ranger_node_id)"
 
 save_next_created_ranger() {
     bspc subscribe node_add | while read; do 
-        bspc query -N -n newest > ~/Dotfiles/system_scripts/usr/bin/ranger_node_id
-        ranger_node="$(cat ~/.config/bspwm/ranger_node.txt)"
+        ranger_node="$(bspc query -N -n newest)"
+        echo $ranger_node > ~/Dotfiles/system_scripts/usr/bin/ranger_node_id
         bspc node "$ranger_node" --state floating
         bspc node "$ranger_node" --flag locked
         break
