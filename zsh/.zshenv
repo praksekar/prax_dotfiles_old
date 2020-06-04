@@ -7,6 +7,7 @@ export GIT_CONFIG="$HOME/.config/git/config"
 export HISTFILE="$HOME/.config/zsh/.zsh_history"
 export LESSHISTFILE="/dev/null"
 export JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64"
+export SPACEMACSDIR="$HOME/.config/spacemacs"
 
 # default applications
 export LOCKER="slock"
