@@ -11,13 +11,13 @@ alias r='ranger'
 
 # shortcut to config files/load configs
 alias dots='cd ~/Dotfiles'
-alias i3conf='nvim ~/.config/i3/config'
-alias zshconf='nvim ~/.config/zsh/.zshrc'
+alias i3conf='$EDITOR ~/.config/i3/config'
+alias zshconf='$EDITOR ~/.config/zsh/.zshrc'
 alias zshload='source ~/.zshenv' 
-alias polyconf='nvim ~/.config/polybar/config'
-alias nvimconf='nvim ~/.config/nvim/init.vim'
-alias bspconf='nvim ~/.config/bspwm/bspwmrc'
-alias sxhconf='nvim ~/.config/sxhkd/sxhkdrc'
+alias polyconf='$EDITOR ~/.config/polybar/config'
+alias nvimconf='$EDITOR ~/.config/nvim/init.vim'
+alias bspconf='$EDITOR ~/.config/bspwm/bspwmrc'
+alias sxhconf='$EDITOR ~/.config/sxhkd/sxhkdrc'
 
 # shortcuts to applications
 alias wifi='nmtui'
