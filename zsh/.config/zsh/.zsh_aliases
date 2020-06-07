@@ -18,6 +18,7 @@ alias polyconf='$EDITOR ~/.config/polybar/config'
 alias nvimconf='$EDITOR ~/.config/nvim/init.vim'
 alias bspconf='$EDITOR ~/.config/bspwm/bspwmrc'
 alias sxhconf='$EDITOR ~/.config/sxhkd/sxhkdrc'
+alias emacsconf='$EDITOR ~/.config/spacemacs/init.el &'
 
 # shortcuts to applications
 alias wifi='nmtui'

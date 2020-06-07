@@ -150,5 +150,3 @@ output_stream | while read line; do
     #fi
 
 done | lemonbar -U "#FFFFFF" -B "#000000" -u "5" -p
-
-
