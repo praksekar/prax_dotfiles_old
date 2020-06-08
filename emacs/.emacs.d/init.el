@@ -23,6 +23,22 @@
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 (package-initialize)
 
+;; install packages on new machines
+(setq package-selected-packages
+      '(ace-window
+        auto-complete
+	avy
+	evil-collection
+	annalist
+	evil
+	goto-chg
+	gruvbox-theme
+	autothemer
+	dash
+	popup
+	undo-tree))
+(package-install-selected-packages)
+
 ;; gruvbox
 (require 'gruvbox)
 (load-theme 'gruvbox t)
