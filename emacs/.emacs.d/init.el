@@ -1,34 +1,86 @@
-;;; init.el --- Spacemacs Initialization File
-;;
-;; Copyright (c) 2012-2017 Sylvain Benner & Contributors
-;;
-;; Author: Sylvain Benner <sylvain.benner@gmail.com>
-;; URL: https://github.com/syl20bnr/spacemacs
-;;
-;; This file is not part of GNU Emacs.
-;;
-;;; License: GPLv3
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   (quote
+    ("b89ae2d35d2e18e4286c8be8aaecb41022c1a306070f64a66fd114310ade88aa" default)))
+ '(inhibit-startup-screen t)
+ '(package-selected-packages (quote (gruvbox-theme ace-window auto-complete evil))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
 
-;; Without this comment emacs25 adds (package-initialize) here
-;; (package-initialize)
+;; ------------------------------------------------------------------------------------------
 
-;; Increase gc-cons-threshold, depending on your system you may set it back to a
-;; lower value in your dotfile (function `dotspacemacs/user-config')
-(setq gc-cons-threshold 100000000)
+;; add melpa to package list
+(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+(package-initialize)
 
-(defconst spacemacs-version         "0.200.13" "Spacemacs version.")
-(defconst spacemacs-emacs-min-version   "24.4" "Minimal version of Emacs.")
+;; gruvbox
+(require 'gruvbox)
+(load-theme 'gruvbox t)
 
-(if (not (version<= spacemacs-emacs-min-version emacs-version))
-    (error (concat "Your version of Emacs (%s) is too old. "
-                   "Spacemacs requires Emacs version %s or above.")
-           emacs-version spacemacs-emacs-min-version)
-  (load-file (concat (file-name-directory load-file-name)
-                     "core/core-load-paths.el"))
-  (require 'core-spacemacs)
-  (spacemacs/init)
-  (configuration-layer/sync)
-  (spacemacs-buffer/display-startup-note)
-  (spacemacs/setup-startup-hook)
-  (require 'server)
-  (unless (server-running-p) (server-start)))
+;; neotree
+(add-to-list 'load-path "~/.emacs.d/plugins/neotree")
+(require 'neotree)
+(global-set-key [f2] 'neotree-toggle)
+(setq neo-smart-open t)
+;; get neotree to work with evil
+(add-hook 'neotree-mode-hook
+	    (lambda ()
+	    (define-key evil-normal-state-local-map (kbd "TAB") 'neotree-enter)
+	    (define-key evil-normal-state-local-map (kbd "SPC") 'neotree-quick-look)
+	    (define-key evil-normal-state-local-map (kbd "q") 'neotree-hide)
+	    (define-key evil-normal-state-local-map (kbd "RET") 'neotree-enter)
+	    (define-key evil-normal-state-local-map (kbd "g") 'neotree-refresh)
+	    (define-key evil-normal-state-local-map (kbd "n") 'neotree-next-line)
+	    (define-key evil-normal-state-local-map (kbd "p") 'neotree-previous-line)
+	    (define-key evil-normal-state-local-map (kbd "A") 'neotree-stretch-toggle)
+	    (define-key evil-normal-state-local-map (kbd "H") 'neotree-hidden-file-toggle)))
+(setq-default neo-show-hidden-files t)
+
+;; evil 
+(require 'evil)
+(evil-mode 1)
+;; evil to work with list-packages
+(with-eval-after-load 'evil
+  ;; use evil mode in the buffer created from calling `list-packages'.
+  (add-to-list 'evil-buffer-regexps '("*Packages*" . normal))
+  (with-eval-after-load 'package
+    ;; movement keys j,k,l,h set up for free by defaulting to normal mode.
+    ;; mark, unmark, install
+    (evil-define-key 'normal package-menu-mode-map (kbd "m") #'package-menu-mark-install)
+    (evil-define-key 'normal package-menu-mode-map (kbd "u") #'package-menu-mark-unmark)
+    (evil-define-key 'normal package-menu-mode-map (kbd "x") #'package-menu-execute)))
+
+;; ace-window
+(require 'ace-window) 
+(global-set-key (kbd "M-o") 'ace-window)
+
+
+;; autocomplete
+(ac-config-default)
+
+;; disable menubar, scrollbar, toolbar
+(menu-bar-mode -1)
+(toggle-scroll-bar -1)
+(tool-bar-mode -1)
+
+;; super behave like meta
+(setq-default x-super-keysym 'meta)
+
+;; relative line numbers
+(setq-default display-line-numbers 'relative)
+
+;; undo-tree
+(require 'undo-tree)
+(global-undo-tree-mode)
+
+
