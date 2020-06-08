@@ -87,15 +87,9 @@
 
 ;; autocomplete
 (ac-config-default)
-(global-auto-complete-mode t)
-(setq ac-auto-show-menu    0.2)
-(setq ac-delay             0.2)
-(setq ac-menu-height       20)
-(setq ac-auto-start t)
-(setq ac-show-menu-immediately-on-auto-complete t)
 
 ;; disable menubar, scrollbar, toolbar
-(menu-bar-mode -1)
+;;(menu-bar-mode -1)
 (toggle-scroll-bar -1)
 (tool-bar-mode -1)
 
