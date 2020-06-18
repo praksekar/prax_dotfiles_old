@@ -1,0 +1,35 @@
+#!/bin/bash
+
+# only use in interactive shell
+[[ $- == *i* ]] && exit 1
+
+# create swallow desktop if not in current wm
+if [ -z "$(bspc query -D --names | grep swallow)" ]
+then
+    bspc monitor -a swallow
+fi
+
+node_to_swallow="$(bspc query -N -n)"
+echo $node_to_swallow >> /tmp/swallowed_nodes
+
+wait_for_child_window_to_close() {
+    bspc subscribe node_remove | while read line; do
+	search=$(echo "$line" | grep "$child_window")
+	if [ ! -z "$search" ]
+	then
+	    echo "child window closed"
+	    break
+	fi
+    done
+}
+
+save_next_created_node_id $@ 
+child_window="$(cat /tmp/last_node)"
+
+bspc node $child_window --to-desktop swallow
+bspc node $child_window --swap $node_to_swallow
+
+#wait_for_child_window_to_close
+#bspc node "$node_to_swallow" --to-desktop focused --follow
+#sed '/$node_to_swallow/d' /tmp/swallowed_nodes
+

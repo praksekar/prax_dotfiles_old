@@ -7,17 +7,23 @@
 
 case "$1" in
     keyboard)
+	brightness=$(cat /sys/class/leds/kbd_backlight/brightness)
         case "$2" in
             off) brightness=0 ;;
             on) brightness=127 ;;
             max) brightness=255 ;;
+	    toggle) if [ $brightness -gt 0 ] 
+		    then
+			brightness=0
+		    else
+			brightness=127
+		    fi ;;
             *) echo "invalid argument"; exit 1 ;;
         esac
 
-        echo "$brightness" | sudo tee /sys/class/leds/kbd_backlight/brightness
+        echo "$brightness" | tee /sys/class/leds/kbd_backlight/brightness
         notify-send "Keyboard Brightness = $brightness"
     ;;
-
     laptop)
         brightness=$(cat /sys/class/backlight/intel_backlight/brightness)
         max_brightness=$(cat /sys/class/backlight/intel_backlight/max_brightness)
@@ -33,9 +39,7 @@ case "$1" in
         if (($brightness < 1000)); then brightness=1000; fi
 
         echo "$brightness" | tee /sys/class/backlight/intel_backlight/brightness 
-        notify-send "Laptop Brightness = $brightness"
     ;;
-    
     monitor)
         brightness=$(cat ~/Dotfiles/system_scripts/usr/bin/monitor_brightness)
         increment=1
@@ -57,3 +61,11 @@ case "$1" in
     *) echo "Error: first arg must be keyboard, laptop, monitor, second arg must be inc/dec" ;;
 esac
 
+
+    #laptopp)
+        #case "$2" in
+            #inc) brightnessctl set +2% ;;
+            #dec) brightnessctl set 2%- ;;
+        #esac
+	#notify-send "$(cat /sys/class/backlight/intel_backlight/brightness)" 
+    #;; 

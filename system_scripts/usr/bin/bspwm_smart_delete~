@@ -1,0 +1,11 @@
+#!/bin/bash
+
+child_window="$(bspc query -N -n focused)" 
+terminal_window="$(bspc node -f @parent)"
+if [ ! -z "$(grep $terminal_window /tmp/swallowed_nodes)" ]
+then
+    bspc node $terminal_window --swap $child_window
+fi
+    
+bspc node $child_window -c
+     

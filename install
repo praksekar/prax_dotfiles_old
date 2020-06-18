@@ -1,5 +1,6 @@
 #!/bin/bash
 apt_programs=(
+    inotify-tools
     emacs
     hsetroot
     xdotool
@@ -22,6 +23,7 @@ apt_programs=(
     acpi
     xcompmgr
     libxft-dev
+    #brightnessctl
 )
     #sudo snap install code --classic
 
@@ -53,15 +55,23 @@ mv ~/.fzf.zsh ~/.config/zsh/
 chsh -s "$(which zsh)"
 
 # install source code pro
-set  -euo pipefail
-I1FS=$'\n\t'
-mkdir -p /tmp/adodefont
-cd /tmp/adodefont
-wget -q --show-progress -O source-code-pro.zip https://github.com/adobe-fonts/source-code-pro/archive/2.030R-ro/1.050R-it.zip
-unzip -q source-code-pro.zip -d source-code-pro
-mkdir -p ~/.fonts
-cp -v source-code-pro/*/OTF/*.otf ~/usr/local/share/fonts/
-fc-cache -f
-rm -rf source-code-pro{,.zip}
+#set  -euo pipefail
+#I1FS=$'\n\t'
+#mkdir -p /tmp/adodefont
+#cd /tmp/adodefont
+#wget -q --show-progress -O source-code-pro.zip https://github.com/adobe-fonts/source-code-pro/archive/2.030R-ro/1.050R-it.zip
+#unzip -q source-code-pro.zip -d source-code-pro
+#mkdir -p ~/.fonts
+#cp -v source-code-pro/*/OTF/*.otf ~/usr/local/share/fonts/
+#fc-cache -f
+#rm -rf source-code-pro{,.zip}
+
+#install inconsolata font
+sudo apt-get install fonts-inconsolata -y
+sudo fc-cache -fv
+
+# remove sudo permissions on keyboard and laptop brightnesss
+sudo chmod o+w /sys/class/leds/kbd_backlight/brightness
+sudo chmod o+w /sys/class/backlight/intel_backlight/brightness
 
 echo "----------------RESTART TO FINISH INSTALLATION-----------------------"

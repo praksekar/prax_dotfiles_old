@@ -14,9 +14,10 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "Source Code Pro" :foundry "ADBO" :slant normal :weight normal :height 98 :width normal)))))
+ '(default ((t (:family "DejaVu Sans" :foundry "PfEd" :slant normal :weight normal :height 113 :width normal)))))
 
 ;; ------------------------------------------------------------------------------------------
+
 
 ;; set font
 ;; (set-frame-font "ADBO-Source Code Pro-normal-normal-normal" nil t)
@@ -87,11 +88,17 @@
 
 ;; autocomplete
 (ac-config-default)
+(global-auto-complete-mode t)
+(setq ac-auto-show-menu    0.2)
+(setq ac-delay             0.2)
+(setq ac-menu-height       20)
+(setq ac-auto-start t)
+(setq ac-show-menu-immediately-on-auto-complete t)
 
 ;; disable menubar, scrollbar, toolbar
 ;;(menu-bar-mode -1)
-(toggle-scroll-bar -1)
-(tool-bar-mode -1)
+;;(toggle-scroll-bar -1)
+;;(tool-bar-mode -1)
 
 ;; super behave like meta
 (setq-default x-super-keysym 'meta)

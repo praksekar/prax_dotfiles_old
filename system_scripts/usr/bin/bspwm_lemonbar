@@ -55,9 +55,11 @@ battery() {
     while true; do
         BATTACPI=$(acpi --battery)
         output=$(echo $BATTACPI | cut -d, -f2 | tr -d '[:space:]')
-        echo "BBattery: $output%"
-        sleep 60s
-    done  
+        state=$(acpi | awk -v N=3 '{print $N}')
+        remaining=$(acpi | awk -v N=5 '{print $N}')
+        echo "BBattery: $output% ($state $remaining remaining)"
+        sleep 20s
+    done
 }
 
 # alternative to bspc subscribe is: xprop -spy -root _NET_ACTIVE_WINDOW
@@ -110,7 +112,19 @@ volume() {
     done
 }
 
+brightness() {
+    inotifywait -q -m -e close_write /sys/class/backlight/intel_backlight/brightness | while read -r filename event; do
+	curbrightness="$(cat /sys/class/backlight/intel_backlight/brightness)"
+	max_brightness="$(cat /sys/class/backlight/intel_backlight/max_brightness)"
+	brightness_dec="$(echo $curbrightness / $max_brightness | bc -l)"
+	brightness_perc=$(echo "$brightness_dec * 100" | bc -l)
+        brightness_truncated=${brightness_perc%%.*} # only keep numbers before decimal
+	echo "RBrightness: $brightness_truncated%"
+    done
+}
+
 output_stream() {
+    brightness & 
     activewindow_event &
     activewindow_poll &
     workspace &
@@ -141,9 +155,10 @@ output_stream | while read line; do
         V*) volume="${line:1}" ;;
         D*) date="${line:1}" ;;
         M*) memory="${line:1}" ;;
+	R*) brightness="${line:1}" ;;
     esac
 
-	echo -e "%{l}$workspace" "%{c}$activewindow" "%{r}  $memory $cpu $wifi  $volume  $date $clock $battery"
+	echo -e "%{l}$workspace" "%{c}$activewindow" "%{r}  $brightness $memory $cpu $wifi  $volume  $date $clock $battery"
     #if [ $two_monitors ] 
     #then 
         #echo -e "%{S1}%{l}$workspace" "%{c}$activewindow" "%{r}  $memory $cpu $wifi  $volume  $date $clock $battery"

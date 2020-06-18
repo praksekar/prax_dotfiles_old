@@ -40,8 +40,13 @@ alt + shift + s
 # increase laptop/monitor brightness
 alt + {_,shift + }{minus,equal}
     chbr {monitor,laptop} {dec,inc}
-#XF86MonBrightnessUp
 
+{XF86MonBrightnessUp,XF86MonBrightnessDown}
+    chbr laptop {inc,dec}
+
+# toggle keyboard brightness
+Fn + F8 #is there an xf86 key for this??
+   chbr keyboard toggle
 
 # terminal emulator
 alt + Return
@@ -49,11 +54,11 @@ alt + Return
 
 # program launcher
 alt + space
-	dmenu_run
+    dmenu_run
 
 # make sxhkd reload its configuration files:
 alt + Escape
-	pkill -USR1 -x sxhkd
+    pkill -USR1 -x sxhkd
 
 #
 # bspwm hotkeys
@@ -67,9 +72,11 @@ alt + shift + r
 # logout_menu
 alt + shift + e
     logout_menu
+
 # close 
 alt + BackSpace
-	bspc node -c
+    bspwm_smart_delete
+	#bspc node -c
 
 # alternate between the tiled and monocle layout
 # alt + m
