@@ -41,7 +41,8 @@ case "$1" in
         echo "$brightness" | tee /sys/class/backlight/intel_backlight/brightness 
     ;;
     monitor)
-        brightness=$(cat ~/Dotfiles/system_scripts/usr/bin/monitor_brightness)
+        [ ! -f /tmp/monitor_brightness ] && echo 10 > /tmp/monitor_brightness
+        brightness=$(cat /tmp/monitor_brightness)
         increment=1
 
         case "$2" in 
@@ -53,7 +54,7 @@ case "$1" in
         if (($brightness > 10)); then brightness=10; fi
         if (($brightness < 1)); then brightness=1; fi
 
-        echo "$brightness" > ~/Dotfiles/system_scripts/usr/bin/monitor_brightness
+        echo "$brightness" > /tmp/monitor_brightness
         notify-send --expire-time=500 "Monitor Brightness = $brightness"
         xrandr --output "$MONITOR_SECONDARY" --brightness $(echo $brightness*0.1 | bc)
     ;;

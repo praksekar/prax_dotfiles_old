@@ -8,6 +8,7 @@ alias mv='mv -i'
 alias whatcanopen='mimeopen -a'
 alias newsession='setsid'
 alias r='ranger'
+alias swlw='bspwm_swallow'
 
 # shortcut to config files/load configs
 alias dots='cd ~/Dotfiles'
@@ -26,6 +27,7 @@ alias lemonconf='$EDITOR ~/Dotfiles/system_scripts/usr/bin/bspwm_lemonbar'
 alias wifi='nmtui'
 
 # shortcuts to folders
+alias trashdir='cd ~/.local/share/Trash'
 alias schooldir='cd ~/Documents/School'
 alias bspdir='cd ~/.config/bspwm'
 alias zshdir='cd ~/.config/zsh'

@@ -1,10 +1,10 @@
 #!/bin/sh
 
-write_to_file() {
+write_node_id_to_file() {
     echo "$(bspc subscribe -c 1 node_add | awk '{print $NF}')" > /tmp/last_node
 }
 
-write_to_file & 
+write_node_id_to_file & 
 pid=$!
 $@ &
 wait $pid

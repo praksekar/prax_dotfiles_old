@@ -5,6 +5,7 @@ setxkbmap -option caps:swapescape
 xcompmgr &
 hsetroot -solid "#000000"
 bspwm_lemonbar &
+pidof bspwm_swallow || bspwm_swallow &
 
 xinput set-prop '04CA00B1:00 04CA:00B1 Touchpad' 'libinput Tapping Enabled' 1
 xinput set-prop '04CA00B1:00 04CA:00B1 Touchpad' 'libinput Accel Speed' +0.5

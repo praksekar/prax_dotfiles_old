@@ -114,12 +114,11 @@ volume() {
 
 brightness() {
     inotifywait -q -m -e close_write /sys/class/backlight/intel_backlight/brightness | while read -r filename event; do
-	curbrightness="$(cat /sys/class/backlight/intel_backlight/brightness)"
-	max_brightness="$(cat /sys/class/backlight/intel_backlight/max_brightness)"
-	brightness_dec="$(echo $curbrightness / $max_brightness | bc -l)"
-	brightness_perc=$(echo "$brightness_dec * 100" | bc -l)
-        brightness_truncated=${brightness_perc%%.*} # only keep numbers before decimal
-	echo "RBrightness: $brightness_truncated%"
+        curbrightness="$(cat /sys/class/backlight/intel_backlight/brightness)"
+        max_brightness="$(cat /sys/class/backlight/intel_backlight/max_brightness)"
+        brightness="$(echo $curbrightness / $max_brightness*100 | bc -l)"
+        brightness_truncated=${brightness%%.*} # only keep numbers before decimal
+        echo "RBrightness: $brightness_truncated%"
     done
 }
 

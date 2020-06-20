@@ -1,0 +1,3 @@
+#!/bin/bash 
+
+if [ $(bspc qery --nodes --node

@@ -9,13 +9,12 @@ export GIT_CONFIG="$HOME/.config/git/config"
 export HISTFILE="$HOME/.config/zsh/.zsh_history"
 export LESSHISTFILE="/dev/null"
 export JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64"
-export SPACEMACSDIR="$HOME/.config/spacemacs"
 export FZF_DEFAULT_COMMAND='find -L'
 
 # default applications
 export LOCKER="slock"
 export BROWSER="chromium"
-export TERMINAL="tabbed_st"
+export TERMINAL="st"
 export BAR="bspwm_lemonbar"
 export FILE_MANAGER="launch_ranger"
 

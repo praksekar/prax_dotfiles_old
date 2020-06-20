@@ -1,0 +1,14 @@
+#!/bin/bash
+
+parent_node=$(bspc query -N -n focused)
+$@ &
+WATCH=$(bspc subscribe -c 1 node_add)
+child_node=${WATCH##* }
+bspc node -s $parent_node
+bspc node $parent_node --flag hidden=on
+while read EVENT
+do
+  [ "${EVENT##* }" = "$child_node" ] && break
+done < <(bspc subscribe node_remove)
+bspc node $parent_node --flag hidden=off
+bspc node $parent_node --focus

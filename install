@@ -1,5 +1,7 @@
 #!/bin/bash
 apt_programs=(
+    xprop
+    tlp
     inotify-tools
     emacs
     hsetroot
@@ -26,6 +28,8 @@ apt_programs=(
     #brightnessctl
 )
     #sudo snap install code --classic
+
+sudo tlp start
 
 for apt_program in "${apt_programs[@]}"; do
     sudo apt install "$apt_program" 
