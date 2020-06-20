@@ -7,7 +7,9 @@
    (quote
     ("b89ae2d35d2e18e4286c8be8aaecb41022c1a306070f64a66fd114310ade88aa" default)))
  '(inhibit-startup-screen t)
- '(package-selected-packages (quote (gruvbox-theme ace-window auto-complete evil)))
+ '(package-selected-packages
+   (quote
+    (evil-mu4e gruvbox-theme ace-window auto-complete evil)))
  '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
