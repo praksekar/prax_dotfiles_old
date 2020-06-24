@@ -8,7 +8,6 @@
 static char *font = "mono:pixelsize=14:antialias=true:autohint=true";
 static char *font2[] = { "JoyPixels:pixelsize=10:antialias=true:autohint=true" };
 static int borderpx = 2;
-
 /*
  * What program is execed by st depends of these precedence rules:
  * 1: program passed with -e
@@ -142,7 +141,7 @@ static const char *colorname[] = {
  * foreground, background, cursor, reverse cursor
  */
 unsigned int defaultfg = 259;
-unsigned int defaultbg = 258;
+unsigned int defaultbg = 0;
 unsigned int defaultcs = 256;
 unsigned int defaultrcs = 257;
 

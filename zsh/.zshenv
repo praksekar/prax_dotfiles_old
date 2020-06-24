@@ -10,6 +10,9 @@ export HISTFILE="$HOME/.config/zsh/.zsh_history"
 export LESSHISTFILE="/dev/null"
 export JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64"
 export FZF_DEFAULT_COMMAND='find -L'
+export FZF_CTRL_T_COMMAND='find -L'
+export FZF_CTRL_T_OPTS='+m'
+export PKG_CONFIG_PATH=/snap/gnome-3-34-1804/36/usr/lib/x86_64-linux-gnu/pkgconfig/
 
 # default applications
 export LOCKER="slock"

@@ -8,7 +8,7 @@ alias mv='mv -i'
 alias whatcanopen='mimeopen -a'
 alias newsession='setsid'
 alias r='ranger'
-alias swlw='bspwm_swallow'
+alias s='bspwm_swallow'
 
 # shortcut to config files/load configs
 alias dots='cd ~/Dotfiles'

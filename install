@@ -1,5 +1,10 @@
 #!/bin/bash
+
+#sudo add-apt-repository ppa:mmstick76/alacritty
+
 apt_programs=(
+    #alacritty
+    tree
     xprop
     tlp
     inotify-tools
@@ -77,5 +82,11 @@ sudo fc-cache -fv
 # remove sudo permissions on keyboard and laptop brightnesss
 sudo chmod o+w /sys/class/leds/kbd_backlight/brightness
 sudo chmod o+w /sys/class/backlight/intel_backlight/brightness
+
+# dependencies for mu4e
+sudo apt-get install libgmime-3.0-dev libxapian-dev
+sudo apt install autoconf
+cd ~/Dotfiles/emacs/.emacs.d/plugins/mu4e
+./autogen.sh 
 
 echo "----------------RESTART TO FINISH INSTALLATION-----------------------"

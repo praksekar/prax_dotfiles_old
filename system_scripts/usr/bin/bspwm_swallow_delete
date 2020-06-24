@@ -1,0 +1,6 @@
+#!/bin/bash
+
+if [ grep $(bspc query -N -n) /tmp/child_node_ids ]
+then 
+    bspc  
+

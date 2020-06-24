@@ -95,17 +95,17 @@ lfcd () {
     fi
 }
 
-bindkey -s '^o' 'lfcd\n'
+#bindkey -s '^o' 'lfcd\n'
 bindkey -s '^a' 'bc -l\n'
-bindkey -s '^f' 'cd "$(dirname "$(fzf)")"\n'
+#bindkey -s '^f' 'cd "$(dirname "$(fzf)")"\n'
 bindkey '^[[P' delete-char
 
-# Edit line in vim with ctrl-e:
+# Edit line in desired text edt=itor with ctrl-e:
 autoload edit-command-line; zle -N edit-command-line
 bindkey '^e' edit-command-line
 
-# Load syntax highlighting; should be last.
-source ~/.config/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh 
-
 # source fzf 
 [ -f ~/.config/fzf/.fzf.zsh ] && source ~/.config/fzf/.fzf.zsh
+
+# Load syntax highlighting; should be last.
+source ~/.config/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh 

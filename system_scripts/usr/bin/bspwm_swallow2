@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# add swallow desktop if not on current wm
+[ -z "$(bspc query -D --names | grep swallow)" ] && bspc monitor -a swallow
+
+#swallow_and_add_entry() {
+parent_node=$(bspc query -N -n focused)
+$@ &
+WATCH=$(bspc subscribe -c 1 node_add)
+child_node=${WATCH##* }
+echo "$parent_node\t$child_node" >> /tmp/swallow_nodes
+#bspc node $parent_node -s $parent_node
+bspc node $parent_node --to-desktop swallow
+#bspc node $parent_node --flag hidden=on
+
+#}
+
+#swallow_and_add_entry
+
+#if [ "@1" == "deletespit" ]
+#then
+    #spit_and_delete_entry
+#else
+    #swallow_and_add_entry
+#fi

@@ -9,7 +9,7 @@
  '(inhibit-startup-screen t)
  '(package-selected-packages
    (quote
-    (evil-mu4e gruvbox-theme ace-window auto-complete evil)))
+    (company evil-mu4e gruvbox-theme ace-window auto-complete evil)))
  '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -41,6 +41,7 @@
 ;; install packages on new machines
 (setq package-selected-packages
       '(ace-window
+	company
         auto-complete
 	avy
 	evil-collection
@@ -97,13 +98,16 @@
 
 
 ;; autocomplete
-(ac-config-default)
-(global-auto-complete-mode t)
-(setq ac-auto-show-menu    0.2)
-(setq ac-delay             0.2)
-(setq ac-menu-height       20)
-(setq ac-auto-start t)
-(setq ac-show-menu-immediately-on-auto-complete t)
+;;(ac-config-default)
+;;(global-auto-complete-mode t)
+;;(setq ac-auto-show-menu    0.2)
+;;(setq ac-delay             0.2)
+;;(setq ac-menu-height       20)
+;;(setq ac-auto-start t)
+;;(setq ac-show-menu-immediately-on-auto-complete t)
+
+;; company
+(add-hook 'after-init-hook 'global-company-mode)
 
 ;; disable menubar, scrollbar, toolbar
 (menu-bar-mode -1)
@@ -119,5 +123,4 @@
 ;; undo-tree
 (require 'undo-tree)
 (global-undo-tree-mode)
-
 

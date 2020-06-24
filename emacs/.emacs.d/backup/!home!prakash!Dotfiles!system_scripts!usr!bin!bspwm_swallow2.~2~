@@ -1,0 +1,12 @@
+#!/bin/bash
+
+declare -A swallow_nodes
+
+
+swallow_and_add_entry() {
+
+}
+
+spit_and_delete_entry() {
+
+}

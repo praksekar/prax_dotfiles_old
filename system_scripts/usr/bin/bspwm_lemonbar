@@ -57,7 +57,7 @@ battery() {
         output=$(echo $BATTACPI | cut -d, -f2 | tr -d '[:space:]')
         state=$(acpi | awk -v N=3 '{print $N}')
         remaining=$(acpi | awk -v N=5 '{print $N}')
-        echo "BBattery: $output% ($state $remaining remaining)"
+        echo "BBattery: $output%" #($state $remaining remaining)
         sleep 20s
     done
 }
