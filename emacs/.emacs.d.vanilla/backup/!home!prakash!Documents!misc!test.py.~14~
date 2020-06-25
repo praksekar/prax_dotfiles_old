@@ -1,0 +1,21 @@
+impor
+def printsum(num1, num2):
+    return num1 + num2
+
+def hello()::
+    return nu
+          
+
+
+
+def main():
+    print("python main function")
+    print("hello")
+    print(printsum(3,4))
+    hello
+
+    
+
+
+if __name__ == '__main__':
+    main()
