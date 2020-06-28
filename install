@@ -1,14 +1,19 @@
 #!/bin/bash
 
-#sudo add-apt-repository ppa:mmstick76/alacritty
+languages=(
+    openjdk-8-jdk
+    openjdk-8-jre
+    golang-go
+}
 
-apt_programs=(
+programs=(
     #alacritty
+    #ripgrep
     tree
     xprop
     tlp
     inotify-tools
-    emacs
+    #emacs
     hsetroot
     xdotool
     neovim
@@ -19,7 +24,7 @@ apt_programs=(
     dunst
     dmenu
     lemonbar
-    ranger
+    #ranger
     sxiv
     zathura
     zsh
@@ -32,29 +37,34 @@ apt_programs=(
     libxft-dev
     #brightnessctl
 )
-    #sudo snap install code --classic
+    sudo snap install code --classic
 
-sudo tlp start
 
-for apt_program in "${apt_programs[@]}"; do
-    sudo apt install "$apt_program" 
+for apt_program in "${programs[@]}"; do
+    sudo apt install "$apt_program" -y
 done
 
 # stow everything except install.sh and system_scripts regularly.
 # do sudo stow --target=/ system_scripts for system_scripts folder to stow in /usr/bin
-ls | while read stowdir; do
-	if [ ! -z "$(echo $stowdir | grep system_scripts)" ]; then continue; fi
-	if [ ! -z "$(echo $stowdir | grep install)" ]; then continue; fi
-	stow $stowdir && echo "stowed $stowdir"
+dont_stow=(
+    install.sh
+    system_scripts
+    archived
+    )
+
+ls ~/Dotfiles/ | while read stowdir; do
+    for dont_stow_file in "${dont_stow[@]}"; do
+        if [ $stowdir -neq $dont_stow_file ]
+            stow $stowdir && echo "stowed $stowdir"
+        fi
+    done
 done
 
 sudo stow --target=/ system_scripts
 
 # install tabbed and st
-cd ~/.config/tabbed
-sudo make clean install
-cd ~/.config/st
-sudo make clean install
+cd ~/.config/tabbed && sudo make clean install
+cd ~/.config/st && sudo make clean install
 
 # install fzf, move .fzf.zsh to .config/zsh
 cd ~/.config/fzf
@@ -62,6 +72,26 @@ cd ~/.config/fzf
 mv ~/.fzf.zsh ~/.config/zsh/
 
 chsh -s "$(which zsh)"
+
+#install inconsolata font
+sudo apt-get install fonts-inconsolata -y
+sudo fc-cache -fv
+
+# remove sudo permissions on keyboard and laptop brightnesss
+sudo chmod o+w /sys/class/leds/kbd_backlight/brightness
+sudo chmod o+w /sys/class/backlight/intel_backlight/brightness
+
+
+
+sudo tlp start
+
+echo "----------------RESTART TO FINISH INSTALLATION-----------------------"
+
+# dependencies for mu4e
+#sudo apt-get install libgmime-3.0-dev libxapian-dev
+#sudo apt install autoconf
+#cd ~/Dotfiles/emacs/.emacs.d/plugins/mu4e
+#./autogen.sh 
 
 # install source code pro
 #set  -euo pipefail
@@ -75,18 +105,4 @@ chsh -s "$(which zsh)"
 #fc-cache -f
 #rm -rf source-code-pro{,.zip}
 
-#install inconsolata font
-sudo apt-get install fonts-inconsolata -y
-sudo fc-cache -fv
-
-# remove sudo permissions on keyboard and laptop brightnesss
-sudo chmod o+w /sys/class/leds/kbd_backlight/brightness
-sudo chmod o+w /sys/class/backlight/intel_backlight/brightness
-
-# dependencies for mu4e
-sudo apt-get install libgmime-3.0-dev libxapian-dev
-sudo apt install autoconf
-cd ~/Dotfiles/emacs/.emacs.d/plugins/mu4e
-./autogen.sh 
-
-echo "----------------RESTART TO FINISH INSTALLATION-----------------------"
+#sudo add-apt-repository ppa:mmstick76/alacritty
