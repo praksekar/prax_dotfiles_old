@@ -10,86 +10,69 @@ for pid in $(pidof -x $script_name); do
 done
 
 clock() {
-    while true; do
-        clock=$(date "+%I:%M")
-        echo "T$clock"
-        sleep 1s
-    done
+    clock=$(date "+%I:%M")
+    echo "T$clock"
+    sleep 1s
 }
 
 cal() {
-    while true; do
-        caldate=$(date "+%a, %d %B %Y")
-        echo "D$caldate"
-        sleep 60s
-    done
+    caldate=$(date "+%a, %d %B %Y")
+    echo "D$caldate"
+    sleep 60s
 }
 
 workspace() {
-    bspc subscribe desktop_focus | while read; do
-        workspace=$(bspc query -D -d focused --names)
-        echo "W$workspace"
-    done
+    workspace=$(bspc query -D -d focused --names)
+    echo "W$workspace"
 }
 
 memory() {
-    while true; do
-        memory="$(free | grep Mem | awk '{print $3/$2 * 100.0}')"
-        memory=${memory%%.*} # only keep numbers before decimal
-        echo "MMemory: $memory%"
-        sleep 3s
-    done
+    memory="$(free | grep Mem | awk '{print $3/$2 * 100.0}')"
+    memory=${memory%%.*} # only keep numbers before decimal
+    echo "MMemory: $memory%"
+    sleep 3s
 }
 
 cpu() {
-    while true; do
-        cpu="$(awk '{u=$2+$4; t=$2+$4+$5; if (NR==1){u1=u; t1=t;} else print ($2+$4-u1) * 100 / (t-t1) "%"; }' <(grep 'cpu ' /proc/stat) <(sleep 3;grep 'cpu ' /proc/stat))"
-        cpu=${cpu%%.*} # only keep numbers before decimal
-        echo "CCPU: $cpu%"
-    done
+    cpu="$(awk '{u=$2+$4; t=$2+$4+$5; if (NR==1){u1=u; t1=t;} else print ($2+$4-u1) * 100 / (t-t1) "%"; }' <(grep 'cpu ' /proc/stat) <(sleep 3;grep 'cpu ' /proc/stat))"
+    cpu=${cpu%%.*} # only keep numbers before decimal
+    echo "CCPU: $cpu%"
 }
 
 battery() {
-    while true; do
-        BATTACPI=$(acpi --battery)
-        output=$(echo $BATTACPI | cut -d, -f2 | tr -d '[:space:]')
-        state=$(acpi | awk -v N=3 '{print $N}')
-        remaining=$(acpi | awk -v N=5 '{print $N}')
-        echo "BBattery: $output%" #($state $remaining remaining)
-        sleep 20s
-    done
+    BATTACPI=$(acpi --battery)
+    output=$(echo $BATTACPI | cut -d, -f2 | tr -d '[:space:]')
+    state=$(acpi | awk -v N=3 '{print $N}')
+    remaining=$(acpi | awk -v N=5 '{print $N}')
+    echo "BBattery: $output%" #($state $remaining remaining)
+    sleep 20s
 }
 
 # alternative to bspc subscribe is: xprop -spy -root _NET_ACTIVE_WINDOW
 activewindow_event() {
-    bspc subscribe node_focus desktop_focus | while read; do
-        len=$(echo -n "$(xdotool getwindowfocus getwindowname)" | wc -m)
-        max_len=70
-        if [ "$len" -gt "$max_len" ];then
-            windowname="$(xdotool getwindowfocus getwindowname | cut -c 1-$max_len)..."
-        else
-            windowname="$(xdotool getwindowfocus getwindowname)"
-        fi
-        echo -e "A$windowname" 
-    done 
+    len=$(echo -n "$(xdotool getwindowfocus getwindowname)" | wc -m)
+    max_len=70
+    if [ "$len" -gt "$max_len" ];then
+        windowname="$(xdotool getwindowfocus getwindowname | cut -c 1-$max_len)..."
+    else
+        windowname="$(xdotool getwindowfocus getwindowname)"
+    fi
+    echo -e "A$windowname" 
 }
 
 activewindow_poll() {
-    while true; do
-        len=$(echo -n "$(xdotool getwindowfocus getwindowname)" | wc -m)
-        max_len=70
-        if [ "$len" -gt "$max_len" ];then
-            windowname="$(xdotool getwindowfocus getwindowname | cut -c 1-$max_len)..."
-        else
-            windowname="$(xdotool getwindowfocus getwindowname)"
-        fi
-        echo -e "A$windowname" 
-        sleep 1s
-    done 
+    len=$(echo -n "$(xdotool getwindowfocus getwindowname)" | wc -m)
+    max_len=70
+    if [ "$len" -gt "$max_len" ];then
+        windowname="$(xdotool getwindowfocus getwindowname | cut -c 1-$max_len)..."
+    else
+        windowname="$(xdotool getwindowfocus getwindowname)"
+    fi
+    echo -e "A$windowname" 
+    sleep 1s
 }
 
 wifi() {
-    while true; do
         WIFISTR=$( iwconfig wlp0s20f3 | grep "Link" | sed 's/ //g' | sed 's/LinkQuality=//g' | sed 's/\/.*//g')
         if [ ! -z $WIFISTR ] ; then
             WIFISTR=$(( ${WIFISTR} * 100 / 70))
@@ -100,42 +83,76 @@ wifi() {
         fi
         echo "I$wifi_name"
         sleep 10s
-    done
 }
 
 volume() {
-    pactl subscribe | while read; do
         volume=$(awk -F"[][]" '/dB/ { print $2 }' <(amixer sget Master))
         echo "VVolume: $volume"
-    done
 }
 
 brightness() {
-    inotifywait -q -m -e close_write /sys/class/backlight/intel_backlight/brightness | while read -r filename event; do
-        curbrightness="$(cat /sys/class/backlight/intel_backlight/brightness)"
-        max_brightness="$(cat /sys/class/backlight/intel_backlight/max_brightness)"
-        brightness="$(echo $curbrightness / $max_brightness*100 | bc -l)"
-        brightness_truncated=${brightness%%.*} # only keep numbers before decimal
-        echo "RBrightness: $brightness_truncated%"
-    done
+    curbrightness="$(cat /sys/class/backlight/intel_backlight/brightness)"
+    max_brightness="$(cat /sys/class/backlight/intel_backlight/max_brightness)"
+    brightness="$(echo $curbrightness / $max_brightness*100 | bc -l)"
+    brightness_truncated=${brightness%%.*} # only keep numbers before decimal
+    echo "RBrightness: $brightness_truncated%"
 }
 
 output_stream() {
-    brightness & 
-    activewindow_event &
-    activewindow_poll &
-    workspace &
-    battery &
-    clock &
-    volume &
-    cal &
-    wifi &
-    memory &
-    cpu &
+    inotifywait -q -m -e close_write /sys/class/backlight/intel_backlight/brightness | while read -r filename event; do
+        brightness 
+    done &
+
+    bspc subscribe node_focus desktop_focus | while read; do
+        activewindow_event 
+    done &
+
+    while true; do
+        activewindow_poll 
+    done &
+
+    bspc subscribe desktop_focus | while read; do
+        workspace 
+    done &
+    
+    while true; do
+        battery 
+    done &
+
+    while true; do
+        clock 
+    done &
+
+    pactl subscribe | while read; do
+        volume 
+    done &
+
+    while true; do
+        cal 
+    done &
+
+    while true; do
+        wifi 
+    done &
+
+    while true; do
+        memory 
+    done &
+
+    while true; do
+        cpu 
+    done &
+
     wait
 }
 
-output_stream | while read line; do
+format_string_for_bar() {
+	echo -e "%{l}$workspace %{c}$activewindow %{r}$brightness $memory $cpu $wifi $volume $date $clock $battery" 
+}
+
+
+
+construct_variables() {
     case $line in 
         T*) clock="${line:1}" ;;
         C*) cpu="${line:1}" ;;
@@ -146,13 +163,29 @@ output_stream | while read line; do
         V*) volume="${line:1}" ;;
         D*) date="${line:1}" ;;
         M*) memory="${line:1}" ;;
-	R*) brightness="${line:1}" ;;
+        R*) brightness="${line:1}" ;;
     esac
 
-	echo -e "%{l+u}$workspace" "%{c-u}$activewindow" "%{r}$brightness $memory $cpu $wifi $volume $date $clock $battery"
 
-done | lemonbar -U "#FFFFFF" -u "1" -p #-g x50 
+}
 
+# set initial values manually
+brightness=$(brightness | cut -c2-)
+activewindow_event=$(activewindow_event | cut -c2-)
+#activewindow_poll=$(activewindow_poll | cut -c2-)
+workspace=$(workspace | cut -c2-)
+#battery=$(battery | cut -c2-)
+#clock=$(clock | cut -c2-)
+volume=$(volume | cut -c2-)
+#cal=$(cal | cut -c2-)
+#wifi=$(wifi | cut -c2-)
+#memory=$(memory | cut -c2-)
+#cpu=$(cpu | cut -c2-)
+
+output_stream | while read line; do
+    construct_variables
+    format_string_for_bar
+done | lemonbar -p #-g x50 
 
 #two_monitors=false
 #if [ "$(xrandr | grep -w connected | wc -l)" -eq "2" ]
