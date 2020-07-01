@@ -17,6 +17,7 @@
     "python.pythonPath": "/usr/bin/python3",
     "python.languageServer": "Microsoft",
     "editor.formatOnPaste": true,
-    "editor.fontFamily": "'monospace'",
-    "vim.useSystemClipboard": true
+    "editor.fontFamily": "'Ubuntu Mono'",
+    "vim.useSystemClipboard": true,
+    "go.toolsGopath": "~/.config/go/"
 }

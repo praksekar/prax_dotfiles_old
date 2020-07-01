@@ -7,7 +7,7 @@
 #fi
 
 parent_node=$(bspc query -N -n focused)
-$@ &
+"$@" &
 WATCH=$(bspc subscribe -c 1 node_add)
 child_node=${WATCH##* }
 #echo $child_node >> /tmp/child_node_ids

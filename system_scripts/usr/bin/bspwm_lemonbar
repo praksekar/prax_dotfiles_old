@@ -9,8 +9,6 @@ for pid in $(pidof -x $script_name); do
     fi 
 done
 
-# get number of monitors, display on each monitor
-
 clock() {
     while true; do
         clock=$(date "+%I:%M")
@@ -137,12 +135,6 @@ output_stream() {
     wait
 }
 
-#two_monitors=false
-#if [ "$(xrandr | grep -w connected | wc -l)" -eq "2" ]
-#then
-    #two_monitors=true
-#fi
-
 output_stream | while read line; do
     case $line in 
         T*) clock="${line:1}" ;;
@@ -157,10 +149,17 @@ output_stream | while read line; do
 	R*) brightness="${line:1}" ;;
     esac
 
-	echo -e "%{l}$workspace" "%{c}$activewindow" "%{r}  $brightness $memory $cpu $wifi  $volume  $date $clock $battery"
+	echo -e "%{l+u}$workspace" "%{c-u}$activewindow" "%{r}$brightness $memory $cpu $wifi $volume $date $clock $battery"
+
+done | lemonbar -U "#FFFFFF" -u "1" -p #-g x50 
+
+
+#two_monitors=false
+#if [ "$(xrandr | grep -w connected | wc -l)" -eq "2" ]
+#then
+    #two_monitors=true
+#fi
     #if [ $two_monitors ] 
     #then 
         #echo -e "%{S1}%{l}$workspace" "%{c}$activewindow" "%{r}  $memory $cpu $wifi  $volume  $date $clock $battery"
     #fi
-
-done | lemonbar -U "#FFFFFF" -B "#000000" -u "5" -p

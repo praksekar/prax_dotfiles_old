@@ -13,9 +13,11 @@ then
 fi
 
 # toggle bewteen hiddne and unhidden when program is invoked
-if [ $(bspc query -N -n $ranger_node.hidden) ]
-then 
-    bspc node $ranger_node --flag hidden=off --focus
-else
-    bspc node $ranger_node --flag hidden=on
-fi
+#if [ $(bspc query -N -n $ranger_node.hidden) ]
+#then 
+    #bspc node $ranger_node --flag hidden=off --focus
+#else
+    #bspc node $ranger_node --flag hidden=on
+#fi
+
+bspc node $ranger_node --flag hidden
