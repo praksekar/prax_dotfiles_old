@@ -185,7 +185,7 @@ volume=$(volume | cut -c2-)
 output_stream | while read line; do
     construct_variables
     format_string_for_bar
-done | lemonbar -p -f  "Ubuntu Mono" #-g x50 
+done | lemonbar -p -f  "Inconsolata:size=12" #-g x50 
 
 #two_monitors=false
 #if [ "$(xrandr | grep -w connected | wc -l)" -eq "2" ]

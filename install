@@ -77,6 +77,10 @@ mv ~/.fzf.zsh ~/.config/zsh/
 
 chsh -s "$(which zsh)"
 
+# install lemonbar-xft fork
+sudo apt install build-essential libx11-dev libxft-dev libx11-xcb-dev libxcb-randr0-dev libxcb-xinerama0-dev
+cd ~/.config/lemonbar && sudo make clean install
+
 #install inconsolata font
 sudo apt-get install fonts-inconsolata -y
 sudo fc-cache -fv
@@ -84,8 +88,6 @@ sudo fc-cache -fv
 # remove sudo permissions on keyboard and laptop brightnesss
 sudo chmod o+w /sys/class/leds/kbd_backlight/brightness
 sudo chmod o+w /sys/class/backlight/intel_backlight/brightness
-
-
 
 sudo tlp start
 
