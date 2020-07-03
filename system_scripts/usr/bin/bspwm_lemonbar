@@ -29,22 +29,22 @@ workspace() {
 memory() {
     memory="$(free | grep Mem | awk '{print $3/$2 * 100.0}')"
     memory=${memory%%.*} # only keep numbers before decimal
-    echo "MMemory: $memory%"
+    echo "MMemory: $memory%%"
     sleep 3s
 }
 
 cpu() {
     cpu="$(awk '{u=$2+$4; t=$2+$4+$5; if (NR==1){u1=u; t1=t;} else print ($2+$4-u1) * 100 / (t-t1) "%"; }' <(grep 'cpu ' /proc/stat) <(sleep 3;grep 'cpu ' /proc/stat))"
     cpu=${cpu%%.*} # only keep numbers before decimal
-    echo "CCPU: $cpu%"
+    echo "CCPU: $cpu%%"
 }
 
 battery() {
     BATTACPI=$(acpi --battery)
-    output=$(echo $BATTACPI | cut -d, -f2 | tr -d '[:space:]')
+    output=$(echo $BATTACPI | cut -d, -f2 | tr -d '[:space:]' | sed 's/%//')
     state=$(acpi | awk -v N=3 '{print $N}')
     remaining=$(acpi | awk -v N=5 '{print $N}')
-    echo "BBattery: $output%" #($state $remaining remaining)
+    echo "BBattery: $output%%" #($state $remaining remaining)
     sleep 20s
 }
 
@@ -73,21 +73,21 @@ activewindow_poll() {
 }
 
 wifi() {
-        WIFISTR=$( iwconfig wlp0s20f3 | grep "Link" | sed 's/ //g' | sed 's/LinkQuality=//g' | sed 's/\/.*//g')
-        if [ ! -z $WIFISTR ] ; then
-            WIFISTR=$(( ${WIFISTR} * 100 / 70))
-            ESSID=$(iwconfig wlp0s20f3 | grep ESSID | sed 's/ //g' | sed 's/.*://' | cut -d "\"" -f 2)
-            if [ $WIFISTR -ge 1 ] ; then
-                wifi_name="$ESSID $WIFISTR%"
-            fi
+    WIFISTR=$( iwconfig wlp0s20f3 | grep "Link" | sed 's/ //g' | sed 's/LinkQuality=//g' | sed 's/\/.*//g')
+    if [ ! -z $WIFISTR ] ; then
+        WIFISTR=$(( ${WIFISTR} * 100 / 70))
+        ESSID=$(iwconfig wlp0s20f3 | grep ESSID | sed 's/ //g' | sed 's/.*://' | cut -d "\"" -f 2)
+        if [ $WIFISTR -ge 1 ] ; then
+            wifi_name="$ESSID $WIFISTR%%"
         fi
-        echo "I$wifi_name"
-        sleep 10s
+    fi
+    echo "I$wifi_name"
+    sleep 10s
 }
 
 volume() {
-        volume=$(awk -F"[][]" '/dB/ { print $2 }' <(amixer sget Master))
-        echo "VVolume: $volume"
+    volume=$(amixer sget Master | awk -F"[][]" '/dB/ { print $2 }' | sed 's/%//')
+    echo "VVolume: $volume%%"
 }
 
 brightness() {
@@ -95,7 +95,7 @@ brightness() {
     max_brightness="$(cat /sys/class/backlight/intel_backlight/max_brightness)"
     brightness="$(echo $curbrightness / $max_brightness*100 | bc -l)"
     brightness_truncated=${brightness%%.*} # only keep numbers before decimal
-    echo "RBrightness: $brightness_truncated%"
+    echo "RBrightness: $brightness_truncated%%"
 }
 
 output_stream() {
@@ -147,7 +147,7 @@ output_stream() {
 }
 
 format_string_for_bar() {
-	echo -e "%{l}$workspace %{c}$activewindow %{r}$brightness $memory $cpu $wifi $volume $date $clock $battery" 
+	echo -e "%{l+u}$workspace%{-u} %{c+uU#bdbcb1}$activewindow%{-u} %{r+uU#000000}$brightness%{-u} %{+uU#03851d}$memory%{-u} %{+uU#f90000}$cpu%{-u} %{+uU#9f78e1}$wifi%{-u} %{+uU#0aeaf2}$volume%{-u} %{+uU#0a6cf5}$date%{-u} %{+uU#fc8d05}$clock%{-u} %{+uU#ffb52a}$battery%{-u}" 
 }
 
 
@@ -185,7 +185,7 @@ volume=$(volume | cut -c2-)
 output_stream | while read line; do
     construct_variables
     format_string_for_bar
-done | lemonbar -p -f  "Inconsolata:size=12" #-g x50 
+done | lemonbar -p -f  "Inconsolata:size=12" -u 2 # -B "#000000" #-g x50 
 
 #two_monitors=false
 #if [ "$(xrandr | grep -w connected | wc -l)" -eq "2" ]
