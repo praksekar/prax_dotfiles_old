@@ -40,6 +40,7 @@ programs=(
     xcompmgr
     libxft-dev
     #brightnessctl
+    nodejs
 )
     sudo snap install code --classic
 

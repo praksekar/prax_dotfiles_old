@@ -1,11 +1,19 @@
+call plug#begin('~/.config/nvim/plugged')
 "Enable pathogen
-execute pathogen#infect()
+"execute pathogen#infect()
 
 "plugins
 nnoremap <F4> :MundoToggle<CR>
 nnoremap <F2> :NERDTreeToggle<CR>
-autocmd FileType vim let b:vcm_tab_complete = 'vim'
+"autocmd FileType vim let b:vcm_tab_complete = 'vim'
 autocmd vimenter * colorscheme gruvbox
+
+Plug 'simnalamburt/vim-mundo'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'morhetz/gruvbox'
+Plug 'scrooloose/nerdtree'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 
 "Basic settings
 filetype plugin indent on
@@ -42,4 +50,6 @@ set undofile
 set undodir=~/.config/nvim/undodir
 
 "vim native color scheme
-colorscheme elflord
+"colorscheme gruvbox  
+
+call plug#end()
