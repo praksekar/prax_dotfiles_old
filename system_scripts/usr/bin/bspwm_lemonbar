@@ -22,7 +22,7 @@ cal() {
 }
 
 workspace() {
-    workspace=$(bspc query -D -d focused --names)
+    workspace=$(workspace_module)
     echo "W$workspace"
 }
 
@@ -146,13 +146,13 @@ output_stream() {
     wait
 }
 
+
 format_string_for_bar() {
-	echo -e "%{l+u}$workspace%{-u} %{c+uU#bdbcb1}$activewindow%{-u} %{r+uU#000000}$brightness%{-u} %{+uU#03851d}$memory%{-u} %{+uU#f90000}$cpu%{-u} %{+uU#9f78e1}$wifi%{-u} %{+uU#0aeaf2}$volume%{-u} %{+uU#0a6cf5}$date%{-u} %{+uU#fc8d05}$clock%{-u} %{+uU#ffb52a}$battery%{-u}" 
+	echo -e "$workspace %{c+uU#bdbcb1}$activewindow%{-u} %{r+uU#000000}$brightness%{-u} %{+uU#03851d}$memory%{-u} %{+uU#f90000}$cpu%{-u} %{+uU#9f78e1}$wifi%{-u} %{+uU#0aeaf2}$volume%{-u} %{+uU#0a6cf5}$date%{-u} %{+uU#fc8d05}$clock%{-u} %{+uU#ffb52a}$battery%{-u}" 
 }
 
 
-
-construct_variables() {
+assign_variables() {
     case $line in 
         T*) clock="${line:1}" ;;
         C*) cpu="${line:1}" ;;
@@ -165,9 +165,8 @@ construct_variables() {
         M*) memory="${line:1}" ;;
         R*) brightness="${line:1}" ;;
     esac
-
-
 }
+
 
 # set initial values manually
 brightness=$(brightness | cut -c2-)
@@ -183,7 +182,7 @@ volume=$(volume | cut -c2-)
 #cpu=$(cpu | cut -c2-)
 
 output_stream | while read line; do
-    construct_variables
+    assign_variables
     format_string_for_bar
 done | lemonbar -p -f  "Inconsolata:size=12" -u 2 # -B "#000000" #-g x50 
 

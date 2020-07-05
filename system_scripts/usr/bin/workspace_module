@@ -1,0 +1,55 @@
+#!/usr/bin/python3
+
+import subprocess
+
+def bash_command(command):
+    process = subprocess.Popen(command.split(), stdout=subprocess.PIPE, universal_newlines=True)
+    output, error = process.communicate()
+    return output.rstrip()
+
+
+def get_workspaces():
+    return bash_command("bspc query -D --names")
+
+
+def workspaces_to_list(workspaces):
+    workspaces_list=list()
+    workspaces=str(workspaces)
+    for workspace in workspaces.splitlines():
+        workspaces_list.append(int(workspace))
+    workspaces_list.sort()
+    return workspaces_list
+
+
+def get_current_workspace():
+    return bash_command("bspc query -D -d --names")
+
+
+def construct_lemonbar_string(workspaces_list, current_workspace):
+    focused_workspace_formatting_block_opening="%{+uU#FFFFFF}"
+    focused_workspace_formatting_block_closing="%{-u}"
+    lemonbar_string=""
+    #print("stuff")
+    for workspace_number in workspaces_list:
+        #print(str(workspace_number) + str(current_workspace))
+        if workspace_number == int(current_workspace):
+            lemonbar_string += focused_workspace_formatting_block_opening + current_workspace.rstrip() + focused_workspace_formatting_block_closing + " "
+        else:
+            lemonbar_string+=str(workspace_number)+" "
+    return lemonbar_string
+
+def main():
+    #print("python main function")
+    workspaces=get_workspaces()
+    workspaces_list=workspaces_to_list(workspaces)
+    current_workspace=get_current_workspace()
+    #print("workspaces = " + str(workspaces))
+    #print("workspaces_list = " + str(workspaces_list))
+    #print("current_workspace = " + str(current_workspace))
+    #print("construct_lemonbar_string = " + str(construct_lemonbar_string(workspaces_list, current_workspace)))
+    print(construct_lemonbar_string(workspaces_list, current_workspace))
+
+
+
+if __name__ == '__main__':
+    main()
