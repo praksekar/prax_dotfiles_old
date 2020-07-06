@@ -43,6 +43,7 @@ programs=(
     nodejs
 )
     sudo snap install code --classic
+    sudo snap install spotify
 
 
 for apt_program in "${programs[@]}"; do
