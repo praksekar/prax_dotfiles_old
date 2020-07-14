@@ -1,12 +1,14 @@
 #!/bin/bash
 
+# ppa repos 
 sudo add-apt-repository ppa:mmstick76/alacritty
 
 languages=(
     openjdk-8-jdk
     openjdk-8-jre
     golang-go
-}
+    python3
+)
 
 programs=(
     i3lock
@@ -18,7 +20,8 @@ programs=(
     tlp
     inotify-tools
     #emacs
-    hsetroot
+    #hsetroot
+    feh
     xdotool
     neovim
     git
@@ -27,7 +30,7 @@ programs=(
     sxhkd
     dunst
     dmenu
-    lemonbar
+    #lemonbar
     #ranger
     sxiv
     zathura
@@ -42,55 +45,82 @@ programs=(
     #brightnessctl
     nodejs
 )
-    sudo snap install code --classic
-    sudo snap install spotify
 
-
-for apt_program in "${programs[@]}"; do
-    sudo apt install "$apt_program" -y
-done
-
-# stow everything except install.sh and system_scripts regularly.
-# do sudo stow --target=/ system_scripts for system_scripts folder to stow in /usr/bin
 dont_stow=(
     install.sh
     system_scripts
     archived
     )
 
-ls ~/Dotfiles/ | while read stowdir; do
-    for dont_stow_file in "${dont_stow[@]}"; do
-        if [ $stowdir -neq $dont_stow_file ]
-            stow $stowdir && echo "stowed $stowdir"
-        fi
+install_languages() {
+    for language in "${languages[@]}"; do
+        sudo apt install "$language" -y
     done
-done
+}
 
-sudo stow --target=/ system_scripts
+install_apt_snap_programs() {
+    for apt_program in "${programs[@]}"; do
+        sudo apt install "$apt_program" -y
+    done
 
-# install tabbed and st
-cd ~/.config/tabbed && sudo make clean install
-cd ~/.config/st && sudo make clean install
+    sudo snap install code --classic
+    sudo snap install spotify
+    sudo snap install telegram-desktop
+    #sudo snap install android-studio
+}
 
-# install fzf, move .fzf.zsh to .config/zsh
-cd ~/.config/fzf
-./install --no-bash --no-fish
-mv ~/.fzf.zsh ~/.config/zsh/
+stow_directories() {
+    ls ~/Dotfiles/ | while read stowdir; do
+        for dont_stow_file in "${dont_stow[@]}"; do
+            if [ $stowdir -neq $dont_stow_file ]
+                stow $stowdir && echo "stowed $stowdir"
+            fi
+        done
+    done
+
+    sudo stow --target=/ system_scripts
+}
+
+install_st() {
+    #cd ~/.config/tabbed && sudo make clean install
+    cd ~/.src/st && sudo make clean install
+}
+
+install_fzf() {
+    cd ~/.src/fzf
+    ./install --no-bash --no-fish
+    mv ~/.fzf.zsh ~/.src/zsh/
+}
+
+
+install_lemonbar_xft() {
+    sudo apt install build-essential libx11-dev libxft-dev libx11-xcb-dev libxcb-randr0-dev libxcb-xinerama0-dev
+    cd ~/.config/lemonbar && sudo make clean install
+}
+
+install_fonts() {
+    sudo apt-get install fonts-inconsolata -y
+    sudo fc-cache -fv
+}
+
+remove_sudo_for_brightness() {
+    #sudo chmod o+w /sys/class/leds/kbd_backlight/brightness
+    #sudo chmod o+w /sys/class/backlight/intel_backlight/brightness
+    sudo chown "$USER" /sys/class/leds/kbd_backlight/brightness
+    sudo chown "$USER" /sys/class/backlight/intel_backlight/brightness
+}
+
+
+install_languages
+install_apt_snap_programs
+stow_directories
+install_st
+install_fzf
+install_lemonbar_xft
+install_fonts
+remove_sudo_for_brightness
 
 chsh -s "$(which zsh)"
-
-# install lemonbar-xft fork
-sudo apt install build-essential libx11-dev libxft-dev libx11-xcb-dev libxcb-randr0-dev libxcb-xinerama0-dev
-cd ~/.config/lemonbar && sudo make clean install
-
-#install inconsolata font
-sudo apt-get install fonts-inconsolata -y
-sudo fc-cache -fv
-
-# remove sudo permissions on keyboard and laptop brightnesss
-sudo chmod o+w /sys/class/leds/kbd_backlight/brightness
-sudo chmod o+w /sys/class/backlight/intel_backlight/brightness
-
 sudo tlp start
 
 echo "----------------RESTART TO FINISH INSTALLATION-----------------------"
@@ -112,4 +142,5 @@ echo "----------------RESTART TO FINISH INSTALLATION-----------------------"
 #cp -v source-code-pro/*/OTF/*.otf ~/usr/local/share/fonts/
 #fc-cache -f
 #rm -rf source-code-pro{,.zip}
+
 

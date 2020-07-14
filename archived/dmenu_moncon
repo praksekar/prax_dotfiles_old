@@ -1,0 +1,14 @@
+#!/usr/bin/python3
+
+import subprocess
+
+def bash_command(command):
+    process = subprocess.Popen(command.split(), stdout=subprocess.PIPE, universal_newlines=True)
+    output, error = process.communicate()
+    return output.rstrip()
+
+print(bash_command("notify-send test"))
+
+
+
+

@@ -1,19 +1,97 @@
 #!/bin/bash
 
+monitors_remaining=()
+num_connected_monitors=0
+primary_monitor=$MONITOR_PRIMARY
+
+get_connected_monitors() {
+    while read monitor; do
+        if [ "$monitor" != "$primary_monitor" ]; then
+            monitors_remaining+=( "$monitor" )
+        fi
+    done < <(xrandr | grep -w connected | awk '{print $1}') 
+}
+
+get_number_of_remaining_monitors() {
+
+    for count in "${monitors_remaining[@]}"; do
+        ((num_connected_monitors++))
+    done
+    notify-send $num_connected_monitors
+    if [ $num_connected_monitors == 0 ]; then 
+        notify-send "No connected monitors detected." 
+        exit 1
+    fi
+
+}
+
+remove_element_from_array() {
+    array="$1"
+    element_to_remove="$2"
+    new_array=()
+    for element in "${array[@]}"; do
+        if [ "$element" != "$element_to_remove" ]; then
+            new_array+=( "$element" )
+        fi
+    done
+    echo $new_array
+}
+
+dmenu_prompt() {                    
+    #monitors_remaining=("${(@)monitors_remaining:$last_selected_monitor}")
+    dmenu_list_monitors_string=""
+    for monitor in "${monitors_remaining[@]}"; do
+            dmenu_list_monitors_string="$dmenu_list_monitors_string$monitor\n"
+    done
+    remove_element_from_array "$monitors" "$last_selected_monitor"
+    selected_dir=$(echo -e "--right-of\n--left-of\n--above\n--below\n--same-as" | dmenu -p "which direction is this monitor relative to the last monitor connected?" -i)
+    selected_monitor=$(echo -e "$dmenu_list_monitors_string" | dmenu -p "now, which monitor to connect in this direction?" -i)
+}
+
+make_xrandr_commands() {
+    last_selected_monitor=$primary_monitor
+    i=0
+    while [ $i -lt $num_connected_monitors ]; do
+        dmenu_prompt
+        notify-send "xrandr --output $selected_monitor $selected_dir $last_selected_monitor"
+        xrandr --auto
+        xrandr --output $selected_monitor $selected_dir $last_selected_monitor
+        last_selected_monitor=$selected_monitor
+        ((i++))
+    done
+}
+
+#-----------------------------------------
+
+connect_monitors () {
+    get_connected_monitors
+    get_number_of_remaining_monitors
+    make_xrandr_commands
+}
+
+#disconnect_monitors () {
+    #bspc monitor "$MONITOR_SECONDARY" -a placeholder
+    #bspc query -D --names | while read line 
+        #do [ "$line" != "placeholder" ] && bspc desktop "$line" -m "$MONITOR_PRIMARY" 
+    #done 
+    #xrandr --output "$MONITOR_SECONDARY" --off
+    #bspc desktop placeholder --remove
+#}
+
+disconnect_monitors () {
+    bspc query -M --names | while read monitor; do
+        [ "$monitor" == "$primary_monitor" ] && continue
+        bspc monitor -a placeholder
+        bspc query -D -m $monitor | while read desktop; do
+            bspc desktop $desktop -d $primary_monitor
+        done
+        bspc desktop placeholder -r 
+    done
+}
+
 case "$1" in
-    laptop-only)
-        bspc monitor "$MONITOR_SECONDARY" -a placeholder
-        bspc query -D --names | while read line; do [ "$line" != "placeholder" ] && bspc desktop "$line" -m "$MONITOR_PRIMARY"; done 
-        xrandr --output "$MONITOR_SECONDARY" --off
-        bspc desktop placeholder --remove
-    ;;
-    monitor-connected)
-        xrandr --output "$MONITOR_SECONDARY" --auto
-        xrandr --output "$MONITOR_SECONDARY" --right-of "$MONITOR_PRIMARY"
-        $BAR > /dev/null 2>&1
-        setxkbmap -option "caps:swapescape"
-    ;;
-    *) 
-        echo "Error: first arg must be laptop-only/monitor-connected"
-    ;;
+    --connect-monitors) connect_monitors ;;
+    --primary-only) disconnect_monitors ;;
+    *) echo "invalid argument"; exit 1 ;;
 esac
+

@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# touchpad config
+export TOUCHPAD="04CA00B1:00 04CA:00B1 Touchpad"
+
+# backlight/keyboard brightness device
+

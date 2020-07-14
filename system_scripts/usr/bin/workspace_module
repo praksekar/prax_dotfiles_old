@@ -1,5 +1,10 @@
 #!/usr/bin/python3
 
+blacklist_desktops={"Desktop", "placeholder"}
+
+focused_workspace_formatting_block_opening="%{+uU#f090d6}"
+focused_workspace_formatting_block_closing="%{-u}"
+
 import subprocess
 
 def bash_command(command):
@@ -16,7 +21,8 @@ def workspaces_to_list(workspaces):
     workspaces_list=list()
     workspaces=str(workspaces)
     for workspace in workspaces.splitlines():
-        workspaces_list.append(int(workspace))
+            if workspace not in blacklist_desktops:
+                workspaces_list.append(int(workspace))
     workspaces_list.sort()
     return workspaces_list
 
@@ -26,8 +32,6 @@ def get_current_workspace():
 
 
 def construct_lemonbar_string(workspaces_list, current_workspace):
-    focused_workspace_formatting_block_opening="%{+uU#f090d6}"
-    focused_workspace_formatting_block_closing="%{-u}"
     lemonbar_string=""
     #print("stuff")
     for workspace_number in workspaces_list:
@@ -37,6 +41,7 @@ def construct_lemonbar_string(workspaces_list, current_workspace):
         else:
             lemonbar_string+=str(workspace_number)+" "
     return lemonbar_string
+
 
 def main():
     #print("python main function")

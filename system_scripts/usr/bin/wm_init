@@ -1,0 +1,13 @@
+#!/bin/bash
+
+source ~/.zshenv
+sxhkd &
+setxkbmap -option caps:swapescape
+xcompmgr &
+feh --bg-fill ~/Pictures/wallpapers/canyon.jpg #--randomize 
+#hsetroot -fill "#000000"
+bspwm_lemonbar &
+
+#notify-send "$TOUCHPAD"
+xinput set-prop "$TOUCHPAD" 'libinput Tapping Enabled' 1
+xinput set-prop "$TOUCHPAD" 'libinput Accel Speed' +0.5

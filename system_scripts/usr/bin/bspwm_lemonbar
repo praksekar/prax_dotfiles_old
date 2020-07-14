@@ -12,13 +12,11 @@ done
 clock() {
     clock=$(date "+%I:%M")
     echo "T$clock"
-    sleep 1s
 }
 
 cal() {
     caldate=$(date "+%a, %d %B %Y")
     echo "D$caldate"
-    sleep 60s
 }
 
 workspace() {
@@ -30,7 +28,6 @@ memory() {
     memory="$(free | grep Mem | awk '{print $3/$2 * 100.0}')"
     memory=${memory%%.*} # only keep numbers before decimal
     echo "MMemory: $memory%%"
-    sleep 3s
 }
 
 cpu() {
@@ -40,12 +37,12 @@ cpu() {
 }
 
 battery() {
-    BATTACPI=$(acpi --battery)
-    output=$(echo $BATTACPI | cut -d, -f2 | tr -d '[:space:]' | sed 's/%//')
-    state=$(acpi | awk -v N=3 '{print $N}')
-    remaining=$(acpi | awk -v N=5 '{print $N}')
+    #BATTACPI=$()
+    output=$(acpi --battery| cut -d, -f2 | tr -d '[:space:]' | sed 's/%//')
+    #state=$(acpi | awk -v N=3 '{print $N}')
+    #remaining=$(acpi | awk -v N=5 '{print $N}')
+    #output=$(cat "$BATTERY_LEVEL_FILE")
     echo "BBattery: $output%%" #($state $remaining remaining)
-    sleep 20s
 }
 
 # alternative to bspc subscribe is: xprop -spy -root _NET_ACTIVE_WINDOW
@@ -69,20 +66,18 @@ activewindow_poll() {
         windowname="$(xdotool getwindowfocus getwindowname)"
     fi
     echo -e "A$windowname" 
-    sleep 1s
 }
 
 wifi() {
-    WIFISTR=$( iwconfig wlp0s20f3 | grep "Link" | sed 's/ //g' | sed 's/LinkQuality=//g' | sed 's/\/.*//g')
+    WIFISTR=$( iwconfig "$WIFI_CARD" | grep "Link" | sed 's/ //g' | sed 's/LinkQuality=//g' | sed 's/\/.*//g')
     if [ ! -z $WIFISTR ] ; then
         WIFISTR=$(( ${WIFISTR} * 100 / 70))
-        ESSID=$(iwconfig wlp0s20f3 | grep ESSID | sed 's/ //g' | sed 's/.*://' | cut -d "\"" -f 2)
+        ESSID=$(iwconfig "$WIFI_CARD" | grep ESSID | sed 's/ //g' | sed 's/.*://' | cut -d "\"" -f 2)
         if [ $WIFISTR -ge 1 ] ; then
             wifi_name="$ESSID $WIFISTR%%"
         fi
     fi
     echo "I$wifi_name"
-    sleep 10s
 }
 
 volume() {
@@ -98,8 +93,24 @@ brightness() {
     echo "RBrightness: $brightness_truncated%%"
 }
 
+
+initialize() {
+    # set initial values manually
+    brightness=$(brightness | cut -c2-)
+    activewindow_event=$(activewindow_event | cut -c2-)
+    #activewindow_poll=$(activewindow_poll | cut -c2-)
+    workspace=$(workspace | cut -c2-)
+    #battery="$(battery | cut -c2-)"
+    #clock=$(clock | cut -c2-)
+    volume=$(volume | cut -c2-)
+    #cal=$(cal | cut -c2-)
+    #wifi=$(wifi | cut -c2-)
+    #memory=$(memory | cut -c2-)
+    #cpu=$(cpu | cut -c2-)
+}
+
 output_stream() {
-    inotifywait -q -m -e close_write /sys/class/backlight/intel_backlight/brightness | while read -r filename event; do
+    inotifywait -q -m -e close_write "$LAPTOP_BRIGHTNESS_FILE" | while read -r filename event; do
         brightness 
     done &
 
@@ -109,6 +120,7 @@ output_stream() {
 
     while true; do
         activewindow_poll 
+        sleep 1s
     done &
 
     bspc subscribe desktop_focus | while read; do
@@ -117,10 +129,12 @@ output_stream() {
     
     while true; do
         battery 
+        sleep 30s
     done &
 
     while true; do
         clock 
+        sleep 1s
     done &
 
     pactl subscribe | while read; do
@@ -129,14 +143,17 @@ output_stream() {
 
     while true; do
         cal 
+        sleep 60s
     done &
 
     while true; do
         wifi 
+        sleep 10s
     done &
 
     while true; do
         memory 
+        sleep 3s
     done &
 
     while true; do
@@ -145,12 +162,6 @@ output_stream() {
 
     wait
 }
-
-
-format_string_for_bar() {
-	echo -e "$workspace %{c+uU#bdbcb1}$activewindow%{-u} %{r+uU#000000}$brightness%{-u} %{+uU#03851d}$memory%{-u} %{+uU#f90000}$cpu%{-u} %{+uU#9f78e1}$wifi%{-u} %{+uU#0aeaf2}$volume%{-u} %{+uU#0a6cf5}$date%{-u} %{+uU#fc8d05}$clock%{-u} %{+uU#ffb52a}$battery%{-u}" 
-}
-
 
 assign_variables() {
     case $line in 
@@ -167,24 +178,18 @@ assign_variables() {
     esac
 }
 
+format_string_for_bar() {
+	echo -e "%{S0}$workspace %{c+uU#bdbcb1}$activewindow%{-u} %{r+uU#000000}$brightness%{-u} %{+uU#03851d}$memory%{-u} %{+uU#f90000}$cpu%{-u} %{+uU#9f78e1}$wifi%{-u} %{+uU#0aeaf2}$volume%{-u} %{+uU#0a6cf5}$date%{-u} %{+uU#fc8d05}$clock%{-u} %{+uU#ffb52a}$battery%{-u}" 
+}
 
-# set initial values manually
-brightness=$(brightness | cut -c2-)
-activewindow_event=$(activewindow_event | cut -c2-)
-#activewindow_poll=$(activewindow_poll | cut -c2-)
-workspace=$(workspace | cut -c2-)
-#battery=$(battery | cut -c2-)
-#clock=$(clock | cut -c2-)
-volume=$(volume | cut -c2-)
-#cal=$(cal | cut -c2-)
-#wifi=$(wifi | cut -c2-)
-#memory=$(memory | cut -c2-)
-#cpu=$(cpu | cut -c2-)
+
+initialize
 
 output_stream | while read line; do
     assign_variables
     format_string_for_bar
-done | lemonbar -p -f  "Inconsolata:size=12" -u 2 # -B "#000000" #-g x50 
+done | lemonbar -p -f  "Inconsolata:size=12" -u 2 #-B "#000000" -g x30 #-o -3 #-u -3
+
 
 #two_monitors=false
 #if [ "$(xrandr | grep -w connected | wc -l)" -eq "2" ]

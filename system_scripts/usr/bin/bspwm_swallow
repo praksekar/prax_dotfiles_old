@@ -2,14 +2,15 @@
 
 #if [ -z "$@" ]
 #then   
-    #echo "needs arg"
-    #exit 1
-#fi
+ #   echo "needs arg"
+ #   exit 1
+#  fi
 
 parent_node=$(bspc query -N -n focused)
 "$@" &
 WATCH=$(bspc subscribe -c 1 node_add)
 child_node=${WATCH##* }
+#child_node=$(get_next_created_node_id "$@")
 #echo $child_node >> /tmp/child_node_ids
 bspc node -s $parent_node
 bspc node $parent_node --flag hidden=on

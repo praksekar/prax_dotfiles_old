@@ -2,14 +2,13 @@
 # wm independent hotkeys
 #
 
-# open spotify 
+# open spotify, spotify commands
 alt + v 
     spotify
 
-#spotify commands
 alt + {bracketleft, bracketright, backslash}
-    {dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous, 
-    dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next, 
+    {dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous, \
+    dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next, \
     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause}
 
 
@@ -18,45 +17,44 @@ alt + m; {1-2}
     {browserapp gmail_personal, browserapp gmail_school}
 
 alt + n; {1-3}
-    {browserapp hangouts, browserapp messages, browserapp telegram}
-
-#open
+    {browserapp hangouts, browserapp messages, browserapp telegram-desktop}
 
 # toggle floating ranger
 alt + r
     bspwm_toggle_ranger
-    notify-send "beepboop"
 
 # volume controls
 {XF86AudioLowerVolume,XF86AudioRaiseVolume}
+    {amixer sset 'Master' 5%-,amixer sset 'Master' 5%+}
+alt + {minus, equal}
     {amixer sset 'Master' 5%-,amixer sset 'Master' 5%+}
 
 # screenshot
 alt + p
     flameshot gui
 
-# open chrome
+# open browser
 alt + b
     $BROWSER
 
 # connect/disconnect monitor from laptop
 alt + shift + {m,n}
-    bspwm_moncon {monitor-connected,laptop-only}
+    bspwm_moncon {--connect-monitors,--primary-only}
 
 # lock and suspend
 alt + shift + s
     lock_and_suspend #$LOCKER
 
 # increase laptop/monitor brightness
-alt + {_,shift + }{minus,equal}
-    chbr {monitor,laptop} {dec,inc}
+alt + shift + {minus,equal}
+    bspwm_chbr msb {dec,inc}
 
 {XF86MonBrightnessUp,XF86MonBrightnessDown}
-    chbr laptop {inc,dec}
+    bspwm_chbr laptop {inc,dec}
 
 # toggle keyboard brightness
 Fn + F8 #is there an xf86 key for this??
-   chbr keyboard toggle
+   bspwm_chbr keyboard toggle
 
 # terminal emulator
 alt + Return
