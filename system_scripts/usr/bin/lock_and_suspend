@@ -3,3 +3,5 @@
 #$LOCKER systemctl suspend
 
 $LOCKER -i ~/Pictures/wallpapers/canyon.png && systemctl suspend
+#systemctl suspend && $LOCKER -i ~/Pictures/wallpapers/canyon.png 
+

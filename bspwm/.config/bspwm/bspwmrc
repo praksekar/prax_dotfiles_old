@@ -1,6 +1,6 @@
 #!/bin/sh
 
-#sourc system_config
+#sxhkd &
 wm_init
 
 bspc config focused_border_color "#9d03fc"

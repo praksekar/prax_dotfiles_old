@@ -1,6 +1,6 @@
 #!/bin/bash
 
-keyboard () {
+keyboard_brightness () {
     case "$1" in 
         toggle) if [ $(brightnessctl -d "$KEYBRD_DEV" get) == 0 ]; then
                     brightnessctl -d "$KEYBRD_DEV" set +100%
@@ -10,33 +10,32 @@ keyboard () {
     esac
 }
 
-laptop_backlight () {
+laptop_backlight_brightness () {
     case "$1" in 
         inc) brightnessctl set +1% ;;
         dec) brightnessctl set 1%- ;;
     esac
 }
 
-focused_monitor () {
-    current_monitor=$(bspc query -M -m --names)
-    if [ -f /tmp/brightness_$current_monitor ]; then
-        echo 1 > /tmp/brightness_$current_monitor 
+focused_monitor_brightness () {
+    current_monitor="$(bspc query -M -m --names)"
+    monitor_specific_brightness_file="/tmp/brightness_$current_monitor"
+    if [ -f "$monitor_specific_brightness_file" ]; then
+        echo 10 > "$monitor_specific_brightness_file"
     else 
-        brightness=$(cat /tmp/brightness_$current_monitor)
-        increment=1
-
+        monitor_brightness=$(cat "$monitor_specific_brightness_file")
         case "$1" in 
-            inc) brightness=$(($brightness+$increment));;
-            dec) brightness=$(($brightness-$increment));;
-            *) echo "invalid argument"; exit 1;;
+            inc) ((monitor_brightness++)) ;;
+            dec) ((monitor_brightness--)) ;;
+            *) echo "invalid argument"; exit 1 ;;
         esac
 
-        if (($brightness > 10)); then brightness=10; fi
-        if (($brightness < 1)); then brightness=1; fi
+        if (($monitor_brightness > 10)); then monitor_brightness=10; fi
+        if (($monitor_brightness < 1)); then monitor_brightness=1; fi
 
-        echo "$brightness" > /tmp/brightness_$current_monitor 
-        notify-send --expire-time=500 "$current_monitor Brightness = $brightness"
-        xrandr --output "$current_monitor" --brightness $(echo $brightness*0.1 | bc)
+        echo "$monitor_brightness" > $monitor_specific_brightness_file 
+        notify-send --expire-time=500 "$current_monitor Brightness = $monitor_brightness"
+        xrandr --output "$current_monitor" --brightness "$(echo $monitor_brightness*0.1 | bc)"
     fi
 }
 
@@ -48,14 +47,14 @@ monitor_specific_brightness() {
     primary_monitor="$MONITOR_PRIMARY"
     focused_monitor=$(bspc query -M -m --names)
     if [ "$focused_monitor" == "$primary_monitor" ]; then
-        laptop_backlight $inc_or_dec
+        laptop_backlight_brightness "$inc_or_dec"
     else 
-        focused_monitor $inc_or_dec
+        focused_monitor_brightness "$inc_or_dec"
     fi
 }
 
 case $1 in 
     msb) monitor_specific_brightness "$2" ;;
-    keyboard) keyboard "$2" ;;
-    laptop) laptop_backlight "$2" ;;
+    keyboard) keyboard_brightness "$2" ;;
+    laptop) laptop_backlight_brightness "$2" ;;
 esac

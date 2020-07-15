@@ -13,4 +13,5 @@ then
     bspc node $ranger_node --state floating --flag locked --flag sticky --flag hidden=off
 fi
 
+bspc node $ranger_node --state floating
 bspc node $ranger_node --flag hidden --focus

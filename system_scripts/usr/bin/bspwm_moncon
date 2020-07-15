@@ -13,7 +13,6 @@ get_connected_monitors() {
 }
 
 get_number_of_remaining_monitors() {
-
     for count in "${monitors_remaining[@]}"; do
         ((num_connected_monitors++))
     done
@@ -22,7 +21,6 @@ get_number_of_remaining_monitors() {
         notify-send "No connected monitors detected." 
         exit 1
     fi
-
 }
 
 remove_element_from_array() {
@@ -79,6 +77,7 @@ connect_monitors () {
 #}
 
 disconnect_monitors () {
+    notify-send alsdkfjklj
     bspc query -M --names | while read monitor; do
         [ "$monitor" == "$primary_monitor" ] && continue
         bspc monitor -a placeholder
