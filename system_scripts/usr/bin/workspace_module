@@ -1,21 +1,19 @@
 #!/usr/bin/python3
 
-blacklist_desktops={"Desktop", "placeholder"}
+import subprocess
 
+blacklist_desktops={"Desktop", "placeholder"}
 focused_workspace_formatting_block_opening="%{+uU#f090d6}"
 focused_workspace_formatting_block_closing="%{-u}"
 
-import subprocess
 
 def bash_command(command):
     process = subprocess.Popen(command.split(), stdout=subprocess.PIPE, universal_newlines=True)
     output, error = process.communicate()
     return output.rstrip()
 
-
 def get_workspaces():
     return bash_command("bspc query -D --names")
-
 
 def workspaces_to_list(workspaces):
     workspaces_list=list()
@@ -55,6 +53,6 @@ def main():
     print(construct_lemonbar_string(workspaces_list, current_workspace))
 
 
-
 if __name__ == '__main__':
     main()
+

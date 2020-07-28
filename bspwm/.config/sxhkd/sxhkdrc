@@ -16,8 +16,8 @@ alt + {bracketleft, bracketright, backslash}
 alt + m; {1-2}
     {browserapp gmail_personal, browserapp gmail_school}
 
-alt + n; {1-3}
-    {browserapp hangouts, browserapp messages, telegram-desktop}
+alt + n; {1-5}
+    {browserapp hangouts, browserapp messages, telegram-desktop, browserapp telegram, browserapp news}
 
 # toggle floating ranger
 alt + r

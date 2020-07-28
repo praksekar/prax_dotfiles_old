@@ -9,6 +9,41 @@ for pid in $(pidof -x $script_name); do
     fi 
 done
 
+# get monitors and save to monitors array
+primary_monitor="$MONITOR_PRIMARY"
+monitors=()
+external_monitor_brightness_files_string=""
+while read monitor; do
+    monitors+=( "$monitor" )
+    if [ "$monitor" != "$primary_monitor" ]; then
+         external_monitor_brightness_files_string=" /tmp/brightness_$monitor $external_monitor_brightness_files_string"; fi
+done < <(bspc query -M --names)
+notify-send "$monitors"
+
+get_element_by_index () {
+    string="$1"
+    index=$(("$2"+1))
+    echo $string | cut -d " " -f "$index"
+}
+
+brightnesses() {
+    brightnesses=""
+    for monitor in $monitors; do
+        if [ $monitor == $primary_monitor ]; then
+            brightness="$(cat $LAPTOP_BRIGHTNESS_FILE)"
+            brightness="$(echo $brightness / 120000*100 | bc -l)"
+            brightness=${brightness%%.*} # only keep numbers before decimal
+            brightnesses="$brightnesses $brightness "
+        else
+            brightness="$(cat /tmp/brightness_$monitor)"
+            brightness="$(echo $brightness / 10*100 | bc -l)"
+            brightness=${brightness%%.*} # only keep numbers before decimal
+            brightnesses="$brightnesses $brightness "
+        fi
+    done
+    echo "S$brightnesses"
+}
+
 clock() {
     clock=$(date "+%I:%M")
     echo "T$clock"
@@ -46,7 +81,7 @@ battery() {
 }
 
 # alternative to bspc subscribe is: xprop -spy -root _NET_ACTIVE_WINDOW
-activewindow_event() {
+activewindow() {
     len=$(echo -n "$(xdotool getwindowfocus getwindowname)" | wc -m)
     max_len=70
     if [ "$len" -gt "$max_len" ];then
@@ -57,16 +92,6 @@ activewindow_event() {
     echo -e "A$windowname" 
 }
 
-activewindow_poll() {
-    len=$(echo -n "$(xdotool getwindowfocus getwindowname)" | wc -m)
-    max_len=70
-    if [ "$len" -gt "$max_len" ]; then
-        windowname="$(xdotool getwindowfocus getwindowname | cut -c 1-$max_len)..."
-    else
-        windowname="$(xdotool getwindowfocus getwindowname)"
-    fi
-    echo -e "A$windowname" 
-}
 
 wifi() {
     WIFISTR=$( iwconfig "$WIFI_CARD" | grep "Link" | sed 's/ //g' | sed 's/LinkQuality=//g' | sed 's/\/.*//g')
@@ -93,11 +118,10 @@ brightness() {
     echo "RBrightness: $brightness_truncated%%"
 }
 
-
 initialize() {
     # set initial values manually
     brightness=$(brightness | cut -c2-)
-    activewindow_event=$(activewindow_event | cut -c2-)
+    activewindow=$(activewindow | cut -c2-)
     #activewindow_poll=$(activewindow_poll | cut -c2-)
     workspace=$(workspace | cut -c2-)
     #battery="$(battery | cut -c2-)"
@@ -110,16 +134,25 @@ initialize() {
 }
 
 output_stream() {
-    inotifywait -q -m -e close_write "$LAPTOP_BRIGHTNESS_FILE" | while read -r filename event; do
+    #while true; do
+        #brightnesses
+        #sleep 1s
+    #done &
+
+    inotifywait -q -m -e modify "$LAPTOP_BRIGHTNESS_FILE" | while read -r filename event; do
+        brightnesses
+    done &
+#
+    inotifywait -q -m -e modify "$external_monitor_brightness_files_string" | while read -r filename event; do
         brightness 
     done &
 
     bspc subscribe node_focus desktop_focus | while read; do
-        activewindow_event 
+        activewindow
     done &
 
     while true; do
-        activewindow_poll 
+        activewindow 
         sleep 1s
     done &
 
@@ -163,7 +196,7 @@ output_stream() {
     wait
 }
 
-assign_variables() {
+assign_incoming_variable() {
     case $line in 
         T*) clock="${line:1}" ;;
         C*) cpu="${line:1}" ;;
@@ -175,6 +208,7 @@ assign_variables() {
         D*) date="${line:1}" ;;
         M*) memory="${line:1}" ;;
         R*) brightness="${line:1}" ;;
+        S*) brightnesses="${line:1}" ;;
     esac
 }
 
@@ -183,11 +217,31 @@ format_string_for_bar() {
 }
 
 
+format_string_for_bar_multi_monitor() {
+    formatted_string=""
+    counter=0
+    for iterate in $monitors; do
+        formatted_string="$formatted_string %{S$counter}$workspace %{c+uU#bdbcb1}$activewindow%{-u} %{r+uU#000000}Brightness: $(get_element_by_index $brightnesses $counter)%%%{-u} %{+uU#03851d}$memory%{-u} %{+uU#f90000}$cpu%{-u} %{+uU#9f78e1}$wifi%{-u} %{+uU#0aeaf2}$volume%{-u} %{+uU#0a6cf5}$date%{-u} %{+uU#fc8d05}$clock%{-u} %{+uU#ffb52a}$battery%{-u} "
+        ((counter++))
+    done
+    echo -e "$formatted_string"
+}
+
+format_string_for_bar_multi_monitor2() {
+    formatted_string=""
+    counter=0
+    while [ $counter -lt 2 ]; do
+        formatted_string="$formatted_string%{S$counter}$workspace %{c+uU#bdbcb1}$activewindow%{-u} %{r+uU#000000}Brightness: $(get_element_by_index $brightnesses $counter)%%%{-u} %{+uU#03851d}$memory%{-u} %{+uU#f90000}$cpu%{-u} %{+uU#9f78e1}$wifi%{-u} %{+uU#0aeaf2}$volume%{-u} %{+uU#0a6cf5}$date%{-u} %{+uU#fc8d05}$clock%{-u} %{+uU#ffb52a}$battery%{-u} "
+        ((counter++))
+    done
+    echo -e "$formatted_string"
+}
+
 initialize
 
 output_stream | while read line; do
-    assign_variables
-    format_string_for_bar
+    assign_incoming_variable
+    format_string_for_bar_multi_monitor2
 done | lemonbar -p -f  "Inconsolata:size=12" -u 2 #-B "#000000" -g x30 #-o -3 #-u -3
 
 

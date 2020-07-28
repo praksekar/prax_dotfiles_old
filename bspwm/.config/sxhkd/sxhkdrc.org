@@ -1,0 +1,13 @@
+#+TITLE: Sxhkdrc
+
+| Keybinding         | Command         | Comments        | hello                                      |
+|--------------------+-----------------+-----------------+--------------------------------------------|
+| example keybinding | example command | example comment | concat(example keybinding) example command |
+|                    |                 |                 |                                            |
+|                    |                 |                 |                                            |
+|                    |                 |                 |                                            |
+|                    |                 |                 |                                            |
+|                    |                 |                 |                                            |
+|                    |                 |                 |                                            |
+|                    |                 |                 |                                            |
+|                    |                 |                 |                                            |

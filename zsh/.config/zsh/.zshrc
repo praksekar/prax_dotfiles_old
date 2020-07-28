@@ -16,7 +16,6 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 
-
 # zsh native fuzzy completion
 zstyle ':completion:*' matcher-list '' \
   'm:{a-z\-}={A-Z\_}' \
@@ -98,5 +97,8 @@ bindkey '^e' edit-command-line
 # source fzf 
 [ -f ~/.src/fzf/.fzf.zsh ] && source ~/.src/fzf/.fzf.zsh 
 
+# load autocomplete
+# source ~/.config/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+
 # Load syntax highlighting; should be last.
-source ~/.config/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh 
+source ~/.src/zsh-plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh 

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 keyboard_brightness () {
-    case "$1" in 
+    case "$1" in
         toggle) if [ $(brightnessctl -d "$KEYBRD_DEV" get) == 0 ]; then
                     brightnessctl -d "$KEYBRD_DEV" set +100%
                 else
@@ -20,7 +20,8 @@ laptop_backlight_brightness () {
 focused_monitor_brightness () {
     current_monitor="$(bspc query -M -m --names)"
     monitor_specific_brightness_file="/tmp/brightness_$current_monitor"
-    if [ -f "$monitor_specific_brightness_file" ]; then
+    if [ ! -f "$monitor_specific_brightness_file" ]; then
+        notify-send "hello"
         echo 10 > "$monitor_specific_brightness_file"
     else 
         monitor_brightness=$(cat "$monitor_specific_brightness_file")
@@ -40,7 +41,7 @@ focused_monitor_brightness () {
 }
 
 monitor_specific_brightness() {
-    case $1 in 
+    case "$1" in
         inc) inc_or_dec="inc" ;;
         dec) inc_or_dec="dec" ;;
     esac

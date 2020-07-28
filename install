@@ -142,5 +142,3 @@ echo "----------------RESTART TO FINISH INSTALLATION-----------------------"
 #cp -v source-code-pro/*/OTF/*.otf ~/usr/local/share/fonts/
 #fc-cache -f
 #rm -rf source-code-pro{,.zip}
-
-

@@ -8,6 +8,7 @@ xcompmgr &
 feh --bg-fill ~/Pictures/wallpapers/canyon.jpg #--randomize 
 #hsetroot -fill "#000000"
 bspwm_lemonbar &
+#emacs --daemon
 
 #notify-send "$TOUCHPAD"
 xinput set-prop "$TOUCHPAD" 'libinput Tapping Enabled' 1
