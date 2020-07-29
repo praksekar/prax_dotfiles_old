@@ -72,18 +72,18 @@ kept-old-versions      5) ; and how many of the old
 
 ;;(setq lsp-keymap-prefix "s-l")
 
-(require 'lsp-mode)
-(add-hook 'prog-mode-hook #'lsp)
-
-(require 'lsp-java)
-(add-hook 'java-mode-hook #'lsp)
-
-(use-package lsp-ui)
-
-(use-package lsp-mode
-  :commands lsp
-  :hook
-  (sh-mode . lsp))
+;;(require 'lsp-mode)
+;;(add-hook 'prog-mode-hook #'lsp)
+;;
+;;(require 'lsp-java)
+;;(add-hook 'java-mode-hook #'lsp)
+;;
+;;(use-package lsp-ui)
+;;
+;;(use-package lsp-mode
+  ;;:commands lsp
+  ;;:hook
+  ;;(sh-mode . lsp))
 
 ;;(setq lsp-ui-doc-enable t)
  ;; :bind ("M-o" . lsp-ui-doc-enable))
