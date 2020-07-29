@@ -58,4 +58,4 @@ export PATH=$PATH:$HOME/.local/bin
 export PATH=$PATH:$HOME/.emacs.d/bin
 
 # source system specific config
-source export_system_env_vars 
+source ~/.system_envvars

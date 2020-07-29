@@ -20,7 +20,7 @@ font:
   size: 6.5
 
 
-background_opacity: 0.6
+background_opacity: 0.5
 dynamic_title: true
 
 vi_mode_cursor:

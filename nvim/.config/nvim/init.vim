@@ -6,12 +6,12 @@ call plug#begin('~/.config/nvim/plugged')
 nnoremap <F4> :MundoToggle<CR>
 nnoremap <F2> :NERDTreeToggle<CR>
 "autocmd FileType vim let b:vcm_tab_complete = 'vim'
-autocmd vimenter * colorscheme gruvbox
 
 Plug 'vim-airline/vim-airline'
 Plug 'simnalamburt/vim-mundo'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'morhetz/gruvbox'
+Plug 'drewtempelmeyer/palenight.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
@@ -36,6 +36,10 @@ set showcmd
 set incsearch
 set hlsearch
 "set iskeyword-=_
+
+"colorscheme
+autocmd vimenter * colorscheme gruvbox
+"colorscheme palenight
 
 "remaps
 map <leader>h :wincmd h<CR>

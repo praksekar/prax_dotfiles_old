@@ -1,0 +1,9 @@
+public class Animals {
+    public static double pricePerCat(double budget, int dogs, int cats) {
+        return budget/(cats + 3*dogs);
+        
+    }
+    public static void main(String [] args) {
+        System.out.println(pricePerCat(2541.78, 54, 25));
+    }
+   

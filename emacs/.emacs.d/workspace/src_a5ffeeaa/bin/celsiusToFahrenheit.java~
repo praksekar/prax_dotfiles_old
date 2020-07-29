@@ -1,0 +1,11 @@
+import java.util.Scanner;
+
+public class celsiusToFahrenheit {
+	public static void main(String[] args) {
+		System.out.println("Enter a degree in celsius:");
+		Scanner input = new Scanner(System.in);
+		double celsius = input.nextDouble();
+		double fahrenheit = 9.0/5 * celsius + 32;
+		System.out.println(celsius + " temperature in Celsius is " + fahrenheit + " in Fahrenheit degrees.");
+	}
+}

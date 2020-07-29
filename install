@@ -110,6 +110,10 @@ remove_sudo_for_brightness() {
     sudo chown "$USER" /sys/class/backlight/intel_backlight/brightness
 }
 
+ncurses_stuff() {
+    sudo apt-get install libncurses5-dev libncursesw5-dev
+}
+
 
 install_languages
 install_apt_snap_programs
@@ -124,6 +128,8 @@ chsh -s "$(which zsh)"
 sudo tlp start
 
 echo "----------------RESTART TO FINISH INSTALLATION-----------------------"
+
+
 
 # dependencies for mu4e
 #sudo apt-get install libgmime-3.0-dev libxapian-dev

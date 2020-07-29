@@ -1,0 +1,73 @@
+#+TITLE: Config
+
+* Font
+  #+BEGIN_SRC emacs-lisp
+  (add-to-list 'default-frame-alist
+			'(font . "Ubuntu Mono-12"))
+  #+END_SRC
+* Backup files directory
+  #+BEGIN_SRC emacs-lisp
+    (setq backup-directory-alist '(("." . "~/.emacs.d/backup"))
+	backup-by-copying      t  ; Don't de-link hard links
+	version-control        t  ; Use version numbers on backups
+	delete-old-versions    t  ; Automatically delete excess backups:
+	kept-new-versions      20 ; how many of the newest versions to keep
+	kept-old-versions      5) ; and how many of the old
+  #+END_SRC
+* Evil
+  #+BEGIN_SRC emacs-lisp
+(require 'evil)
+(evil-mode 1)
+;; evil to work with list-packages
+(with-eval-after-load 'evil
+  ;; use evil mode in the buffer created from calling `list-packages'.
+  (add-to-list 'evil-buffer-regexps '("*Packages*" . normal))
+  (with-eval-after-load 'package
+    ;; movement keys j,k,l,h set up for free by defaulting to normal mode.
+    ;; mark, unmark, install
+    (evil-define-key 'normal package-menu-mode-map (kbd "m") #'package-menu-mark-install)
+    (evil-define-key 'normal package-menu-mode-map (kbd "u") #'package-menu-mark-unmark)
+    (evil-define-key 'normal package-menu-mode-map (kbd "x") #'package-menu-execute)))
+  #+END_SRC
+* Ace-window
+  #+BEGIN_SRC emacs-lisp
+(require 'ace-window)
+(global-set-key (kbd "M-o") 'ace-window)
+  #+END_SRC
+* Relative line numbers 
+  #+BEGIN_SRC emacs-lisp
+  (setq-default display-line-numbers 'relative)
+  #+END_SRC
+* Super behave like meta
+  #+BEGIN_SRC emacs-lisp
+(setq-default x-super-keysym 'meta)
+  #+END_SRC
+* Disable menubar, scrollbar, toolbar
+  #+BEGIN_SRC emacs-lisp
+(menu-bar-mode -1)
+(toggle-scroll-bar -1)
+(tool-bar-mode -1)
+(setq inhibit-startup-screen t)
+  #+END_SRC
+* Gruvbox
+  #+BEGIN_SRC emacs-lisp
+(require 'gruvbox)
+(load-theme 'gruvbox t)
+  #+END_SRC
+* Chrome default browser
+  #+BEGIN_SRC emacs-lisp
+(setq browse-url-browser-function 'browse-url-generic
+      browse-url-generic-program "chromium-browser")
+  #+END_SRC
+* Company-mode, company-quickhelp
+  #+BEGIN_SRC emacs-lisp
+(add-hook 'after-init-hook 'global-company-mode)
+(company-quickhelp-mode)
+(setq company-quickhelp-delay 0.1)
+  #+END_SRC
+* Flycheck-pos-tip
+  #+BEGIN_SRC emacs-lisp
+(global-flycheck-mode)
+(with-eval-after-load 'flycheck
+  (flycheck-pos-tip-mode))
+  #+END_SRC

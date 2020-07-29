@@ -1,0 +1,20 @@
+(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+(package-initialize)
+
+;; install packages on new machines
+(setq package-selected-packages
+   '(ace-window
+    avy
+    evil-collection
+    goto-chg
+    gruvbox-theme
+    autothemer
+    dash
+    flycheck-pos-tip
+    company-quickhelp
+    ))
+(package-install-selected-packages)
+
+(org-babel-load-file "~/.emacs.d/config.org")
