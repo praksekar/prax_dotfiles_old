@@ -1,5 +1,6 @@
 #!/bin/bash
 
+
 case "$1" in
 	telegram) url="https://web.telegram.org/#/im" ;;
 	hangouts) url="https://hangouts.google.com/" ;;
@@ -8,7 +9,7 @@ case "$1" in
 	gmail_personal) url="https://mail.google.com/mail/u/?authuser=pkhsekar@gmail.com" ;;
 	gmail_school) url="https://mail.google.com/mail/u/?authuser=prakash.sekar@stonybrook.edu" ;;
 	news) url="https://news.google.com/topstories?hl=en-US&gl=US&ceid=US:en" ;;
-	*) echo "invalid argument"; exit 1;;
+	--custom) url="$2"
 esac
 
 $BROWSER --app="$url"

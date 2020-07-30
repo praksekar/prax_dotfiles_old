@@ -8,6 +8,7 @@ alias mv="mv -i"
 alias whatcanopen="mimeopen -a"
 alias r="ranger"
 alias s="bspwm_swallow"
+alias newsboat="newsboat --config-file=~/.config/newsboat/config --url-file=~/.config/newsboat/urls --cache-file=~/.config/newsboat/cache"
 
 # shortcut to config files/load configs
 alias dots="cd ~/Dotfiles"
@@ -33,9 +34,9 @@ alias weather="curl wttr.in"
 alias smcs="bspwm_swallow emacsclient -c -n --alternate-editor nvim"
 
 # shortcuts to folders
-alias trashdir="cd ~/.local/share/Trash"
-alias schooldir="cd ~/Documents/School"
-alias bspdir="cd ~/.config/bspwm"
-alias zshdir="cd ~/.config/zsh"
-alias scripts="cd ~/Dotfiles/system_scripts/usr/bin"
-alias doomdir="cd ~/.config/doom"
+alias trashdir="cd ~/.local/share/Trash; ls -a"
+alias schooldir="cd ~/Documents/School; ls -a"
+alias bspdir="cd ~/.config/bspwm; ls -a"
+alias zshdir="cd ~/.config/zsh; ls -a"
+alias scripts="cd ~/Dotfiles/system_scripts/usr/bin; ls -a"
+alias doomdir="cd ~/.config/doom; ls -a"
