@@ -1,3 +1,0 @@
-#!/bin/bash
-
-newsboat --config-file "~/.config/newsboat/config" --url-file "~/.config/newsboat/urls" --cache-file "~/.cache/newsboat/cache.db"

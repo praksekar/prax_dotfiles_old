@@ -1,60 +1,21 @@
 #!/bin/bash
 
-sudo apt install python3-pip
-pip3 install ytsearch --user --upgrade
-
-# ppa repos 
-sudo add-apt-repository ppa:mmstick76/alacritty
 
 languages=(
-    openjdk-8-jdk
-    openjdk-8-jre
-    golang-go
-    python3
+    openjdk-8-jre-headless
 )
 
 programs=(
-    jq
-    newsboat
-    i3lock
-    imagemagick
-    alacritty
-    #ripgrep
     tree
-    xprop
-    tlp
-    inotify-tools
-    #emacs
-    #hsetroot
-    feh
-    xdotool
     neovim
     git
     stow
-    bspwm
-    sxhkd
-    dunst
-    dmenu
-    #lemonbar
-    #ranger
-    sxiv
-    zathura
     zsh
-    slock
-    chromium-browser
-    flameshot
-    fzf
-    acpi
-    xcompmgr
-    libxft-dev
-    #brightnessctl
-    nodejs
+    tmux
 )
 
 dont_stow=(
-    install.sh
-    system_scripts
-    archived
+    install
     )
 
 install_languages() {
@@ -67,89 +28,24 @@ install_apt_snap_programs() {
     for apt_program in "${programs[@]}"; do
         sudo apt install "$apt_program" -y
     done
-
-    sudo snap install code --classic
-    sudo snap install spotify
-    sudo snap install telegram-desktop
-    #sudo snap install android-studio
 }
 
 stow_directories() {
-    ls ~/Dotfiles/ | while read stowdir; do
+    ls ~/Dotfiles | while read stowdir; do
         for dont_stow_file in "${dont_stow[@]}"; do
-            if [ $stowdir -neq $dont_stow_file ]
+            if [ $stowdir != $dont_stow_file ]; then
                 stow $stowdir && echo "stowed $stowdir"
             fi
         done
     done
-
-    sudo stow --target=/ system_scripts
 }
-
-install_st() {
-    #cd ~/.config/tabbed && sudo make clean install
-    cd ~/.src/st && sudo make clean install
-}
-
-install_fzf() {
-    cd ~/.src/fzf
-    ./install --no-bash --no-fish
-    mv ~/.fzf.zsh ~/.src/zsh/
-}
-
-
-install_lemonbar_xft() {
-    sudo apt install build-essential libx11-dev libxft-dev libx11-xcb-dev libxcb-randr0-dev libxcb-xinerama0-dev
-    cd ~/.config/lemonbar && sudo make clean install
-}
-
-install_fonts() {
-    sudo apt-get install fonts-inconsolata -y
-    sudo fc-cache -fv
-}
-
-remove_sudo_for_brightness() {
-    #sudo chmod o+w /sys/class/leds/kbd_backlight/brightness
-    #sudo chmod o+w /sys/class/backlight/intel_backlight/brightness
-    sudo chown "$USER" /sys/class/leds/kbd_backlight/brightness
-    sudo chown "$USER" /sys/class/backlight/intel_backlight/brightness
-}
-
-ncurses_stuff() {
-    sudo apt-get install libncurses5-dev libncursesw5-dev
-}
-
 
 install_languages
 install_apt_snap_programs
 stow_directories
-install_st
-install_fzf
-install_lemonbar_xft
-install_fonts
-remove_sudo_for_brightness
 
 chsh -s "$(which zsh)"
-sudo tlp start
 
 echo "----------------RESTART TO FINISH INSTALLATION-----------------------"
 
 
-
-# dependencies for mu4e
-#sudo apt-get install libgmime-3.0-dev libxapian-dev
-#sudo apt install autoconf
-#cd ~/Dotfiles/emacs/.emacs.d/plugins/mu4e
-#./autogen.sh 
-
-# install source code pro
-#set  -euo pipefail
-#I1FS=$'\n\t'
-#mkdir -p /tmp/adodefont
-#cd /tmp/adodefont
-#wget -q --show-progress -O source-code-pro.zip https://github.com/adobe-fonts/source-code-pro/archive/2.030R-ro/1.050R-it.zip
-#unzip -q source-code-pro.zip -d source-code-pro
-#mkdir -p ~/.fonts
-#cp -v source-code-pro/*/OTF/*.otf ~/usr/local/share/fonts/
-#fc-cache -f
-#rm -rf source-code-pro{,.zip}
