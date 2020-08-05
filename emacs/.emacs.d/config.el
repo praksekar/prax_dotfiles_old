@@ -42,6 +42,7 @@ kept-old-versions      5) ; and how many of the old
 ;;(use-package gruvbox
  ;;   :config
   ;;  (load-theme 'gruvbox t))
+  (use-package modus-vivendi-theme :ensure)
 
 (setq browse-url-browser-function 'browse-url-generic
       browse-url-generic-program "chromium-browser")

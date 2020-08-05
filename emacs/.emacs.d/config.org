@@ -61,6 +61,7 @@
 ;;(use-package gruvbox
  ;;   :config
   ;;  (load-theme 'gruvbox t))
+  (use-package modus-vivendi-theme :ensure)
   #+END_SRC
 * Chrome default browser
   #+BEGIN_SRC emacs-lisp

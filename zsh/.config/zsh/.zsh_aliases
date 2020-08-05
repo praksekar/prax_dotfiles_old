@@ -2,13 +2,15 @@
 alias swapcaps="setxkbmap -option caps:swapescape"
 alias copy="xclip -selection c"
 alias trash="gio trash"
+alias ll="ls -l"
+alias la="ls -a"
 alias rm="rm -i"
 alias cp="cp -i"
 alias mv="mv -i"
 alias whatcanopen="mimeopen -a"
 alias r="ranger"
 alias s="bspwm_swallow"
-alias newsboat="newsboat --config-file=~/.config/newsboat/config --url-file=~/.config/newsboat/urls --cache-file=~/.config/newsboat/cache"
+#alias newsboat="newsboat --config-file=~/.config/newsboat/config --url-file=~/.config/newsboat/urls --cache-file=~/.cache/newsboat/cache.db --log-files=~/newsboat.log"
 
 # shortcut to config files/load configs
 alias dots="cd ~/Dotfiles"

@@ -1,11 +1,19 @@
 http://lukesmith.xyz/rss.xml
 https://notrelated.libsyn.com/rss
 https://www.archlinux.org/feeds/news/ "tech"
-http://feeds.abcnews.com/abcnews/usheadlines
 
+http://feeds.abcnews.com/abcnews/usheadlines
 http://rss.nytimes.com/services/xml/rss/nyt/Politics.xml
 http://rss.nytimes.com/services/xml/rss/nyt/Business.xml
+http://www.nytimes.com/services/xml/rss/nyt/Business.xml
+https://rss.nytimes.com/services/xml/rss/nyt/US.xml
 http://rss.cnn.com/rss/cnn_health.rss
+http://rss.cnn.com/rss/cnn_topstories.rss
+http://newsrss.bbc.co.uk/rss/newsonline_world_edition/front_page/rss.xml
+http://blogs.wsj.com/washwire/feed/?mod=WSJ_Politics%2520and%2520Policy
+http://online.wsj.com/xml/rss/3_7014.xml
+http://purl.org/rss/1.0/modules/content/
+https://www.washingtonpost.com/arcio/rss/
 
 https://www.youtube.com/feeds/videos.xml?channel_id=UC2eYFnH61tmytImy1mTYvhA "Luke Smith (YouTube)"
 https://www.youtube.com/feeds/videos.xml?channel_id=UCVls1GmFKf6WlTraIb_IaJg "DistroTube (YouTube)" 
@@ -18,3 +26,13 @@ https://www.youtube.com/feeds/videos.xml?channel_id=UC0WP5P-ufpRfjbNrmOWwLBQ
 https://www.youtube.com/feeds/videos.xml?channel_id=UC-2ePlhDlfJyzU7vypHFgBQ
 https://www.youtube.com/feeds/videos.xml?channel_id=UCtHaxi4GTYDpJgMSGy7AeSw
 https://www.youtube.com/feeds/videos.xml?channel_id=UCTkXRDQl0luXxVQrRQvWS6w
+https://www.youtube.com/feeds/videos.xml?channel_id=UCqnbDFdCpuN8CMEg0VuEBqA
+https://www.youtube.com/feeds/videos.xml?channel_id=UCckETVOT59aYw80B36aP9vw
+https://www.youtube.com/feeds/videos.xml?channel_id=UCYO_jab_esuFRV4b17AJtAw
+https://www.youtube.com/feeds/videos.xml?channel_id=UC9-y-6csu5WGm29I7JiwpnA
+https://www.youtube.com/feeds/videos.xml?channel_id=UCAuUUnT6oDeKwE6v1NGQxug
+https://www.youtube.com/feeds/videos.xml?channel_id=UC0uTPqBCFIpZxlz_Lv1tk_g
+https://www.youtube.com/feeds/videos.xml?channel_id=UCSuT9FSddzI6W5Bij9XwtmA
+
+https://www.reddit.com/r/bspwm/.rss
+https://www.reddit.com/r/unixporn/.rss
