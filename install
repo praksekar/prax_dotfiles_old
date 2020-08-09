@@ -77,7 +77,7 @@ install_apt_snap_programs() {
 stow_directories() {
     ls ~/Dotfiles/ | while read stowdir; do
         for dont_stow_file in "${dont_stow[@]}"; do
-            if [ $stowdir -neq $dont_stow_file ]
+            if [ $stowdir != $dont_stow_file ]; then
                 stow $stowdir && echo "stowed $stowdir"
             fi
         done

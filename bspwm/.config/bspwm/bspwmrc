@@ -21,8 +21,7 @@ bspc rule -a Kupfer.py focus=on
 bspc rule -a Screenkey manage=off
 bspc rule -a Zathura state=tiled
 bspc rule -a Emacs state=tiled
-
-bspc rule -a chromium fullscreen=off
+bspc rule -a Chromium fullscreen=off
 
 # if desktops 1 and 2 dont exist already, create them.
 if [ -z "$(bspc query --desktops --names | grep 1)" ]; then

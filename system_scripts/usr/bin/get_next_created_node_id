@@ -11,7 +11,7 @@ pid=$!
 # start process
 $@ &
 wait $pid
-echo $(cat /tmp/last_node)
+echo "$(cat /tmp/last_node)" 
 
 
 
