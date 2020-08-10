@@ -15,6 +15,7 @@ export JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64"
 export GOPATH="/usr/lib/go"
 export FZF_DEFAULT_OPTS='--bind tab:down --cycle --bind btab:up --cycle --bind ctrl-space:toggle+down'
 export FZF_DEFAULT_COMMAND="find -L"
+export FZF_CTRL_T_COMMAND="find -L"
 export _JAVA_AWT_WM_NONREPARENTING=1
 # android studio
 #export ANDROID_AVD_HOME="$HOME/.AndroidStudio4.0/avd"

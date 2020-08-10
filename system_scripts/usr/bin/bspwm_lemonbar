@@ -1,24 +1,20 @@
 #!/bin/bash
 
-# kill running instance of lemonbar and bspwm_lemonbar, launch lemonbar with modules
-pgrep -x lemonbar > /dev/null && pkill -x lemonbar
-script_name=${BASH_SOURCE[0]}
-for pid in $(pidof -x $script_name); do
-    if [ $pid != $$ ]; then
-        kill -9 $pid
-    fi 
-done
-
-# get monitors and save to monitors array
 primary_monitor="$MONITOR_PRIMARY"
-monitors=()
-external_monitor_brightness_files_string=""
-while read monitor; do
-    monitors+=( "$monitor" )
-    if [ "$monitor" != "$primary_monitor" ]; then
-         external_monitor_brightness_files_string=" /tmp/brightness_$monitor $external_monitor_brightness_files_string"; fi
-done < <(bspc query -M --names)
-notify-send "$monitors"
+num_monitors=$(bspc query -M --names | wc -l)
+
+# kill running instance of lemonbar and bspwm_lemonbar, launch lemonbar with modules
+kill_running_instance() {
+    pgrep -x lemonbar > /dev/null && pkill -x lemonbar
+    script_name=${BASH_SOURCE[0]}
+    for pid in $(pidof -x $script_name); do
+        if [ $pid != $$ ]; then
+            kill -9 $pid
+        fi 
+    done
+}
+
+# values across all monitors are simply stored as variables; monitor specific values are stored as a space delimited string
 
 get_element_by_index () {
     string="$1"
@@ -26,62 +22,79 @@ get_element_by_index () {
     echo $string | cut -d " " -f "$index"
 }
 
+get_laptop_brightness() {
+    curbrightness="$(cat /sys/class/backlight/intel_backlight/brightness)"
+    max_brightness="$(cat /sys/class/backlight/intel_backlight/max_brightness)"
+    brightness="$(echo $curbrightness / $max_brightness*100 | bc -l)"
+    brightness_truncated=${brightness%%.*} # only keep numbers before decimal
+    echo "$brightness_truncated"
+}
+
+get_monitor_brightness() {
+    brightness="$(cat /tmp/brightness_$monitor)"
+    brightness="$(echo $brightness / 10*100 | bc -l)"
+    brightness=${brightness%%.*} # only keep numbers before decimal
+    echo "$brightness"
+}
+
 brightnesses() {
+    label="S"
     brightnesses=""
-    for monitor in $monitors; do
+    while read monitor; do
         if [ $monitor == $primary_monitor ]; then
-            brightness="$(cat $LAPTOP_BRIGHTNESS_FILE)"
-            brightness="$(echo $brightness / 120000*100 | bc -l)"
-            brightness=${brightness%%.*} # only keep numbers before decimal
-            brightnesses="$brightnesses $brightness "
+            brightnesses="$brightnesses $(get_laptop_brightness)"
         else
-            brightness="$(cat /tmp/brightness_$monitor)"
-            brightness="$(echo $brightness / 10*100 | bc -l)"
-            brightness=${brightness%%.*} # only keep numbers before decimal
-            brightnesses="$brightnesses $brightness "
+            brightnesses="$brightnesses $(get_monitor_brightness)"
         fi
-    done
-    echo "S$brightnesses"
+    done < <(bspc query -M --names)
+    echo "$label$brightnesses"
 }
 
 clock() {
+    label="T"
     clock=$(date "+%I:%M")
-    echo "T$clock"
+    echo "$label$clock"
 }
 
 cal() {
+    label="D"
     caldate=$(date "+%a, %d %B %Y")
-    echo "D$caldate"
+    echo "$label$caldate"
 }
 
 workspace() {
+    label="W"
     workspace=$(workspace_module)
-    echo "W$workspace"
+    echo "$label$workspace"
 }
 
 memory() {
+    label="M"
     memory="$(free | grep Mem | awk '{print $3/$2 * 100.0}')"
     memory=${memory%%.*} # only keep numbers before decimal
-    echo "MMemory: $memory%%"
+    echo "$label$memory"
 }
 
 cpu() {
+    label="C"
     cpu="$(awk '{u=$2+$4; t=$2+$4+$5; if (NR==1){u1=u; t1=t;} else print ($2+$4-u1) * 100 / (t-t1) "%"; }' <(grep 'cpu ' /proc/stat) <(sleep 3;grep 'cpu ' /proc/stat))"
     cpu=${cpu%%.*} # only keep numbers before decimal
-    echo "CCPU: $cpu%%"
+    echo "$label$cpu"
 }
 
 battery() {
+    label="B"
     #BATTACPI=$()
-    output=$(acpi --battery| cut -d, -f2 | tr -d '[:space:]' | sed 's/%//')
+    battery=$(acpi --battery| cut -d, -f2 | tr -d '[:space:]' | sed 's/%//')
     #state=$(acpi | awk -v N=3 '{print $N}')
     #remaining=$(acpi | awk -v N=5 '{print $N}')
     #output=$(cat "$BATTERY_LEVEL_FILE")
-    echo "BBattery: $output%%" #($state $remaining remaining)
+    echo "$label$battery" #($state $remaining remaining)
 }
 
 # alternative to bspc subscribe is: xprop -spy -root _NET_ACTIVE_WINDOW
 activewindow() {
+    label="A"
     len=$(echo -n "$(xdotool getwindowfocus getwindowname)" | wc -m)
     max_len=70
     if [ "$len" -gt "$max_len" ];then
@@ -89,11 +102,12 @@ activewindow() {
     else
         windowname="$(xdotool getwindowfocus getwindowname)"
     fi
-    echo -e "A$windowname" 
+    echo -e "$label$windowname" 
 }
 
 
 wifi() {
+    label="I"
     WIFISTR=$( iwconfig "$WIFI_CARD" | grep "Link" | sed 's/ //g' | sed 's/LinkQuality=//g' | sed 's/\/.*//g')
     if [ ! -z $WIFISTR ] ; then
         WIFISTR=$(( ${WIFISTR} * 100 / 70))
@@ -102,25 +116,20 @@ wifi() {
             wifi_name="$ESSID $WIFISTR%%"
         fi
     fi
-    echo "I$wifi_name"
+    echo "$label$wifi_name"
 }
 
 volume() {
+    label="V"
     volume=$(amixer sget Master | awk -F"[][]" '/dB/ { print $2 }' | sed 's/%//')
-    echo "VVolume: $volume%%"
+    echo "$label$volume"
 }
 
-brightness() {
-    curbrightness="$(cat /sys/class/backlight/intel_backlight/brightness)"
-    max_brightness="$(cat /sys/class/backlight/intel_backlight/max_brightness)"
-    brightness="$(echo $curbrightness / $max_brightness*100 | bc -l)"
-    brightness_truncated=${brightness%%.*} # only keep numbers before decimal
-    echo "RBrightness: $brightness_truncated%%"
-}
 
 initialize() {
     # set initial values manually
-    brightness=$(brightness | cut -c2-)
+    #brightness=$( | cut -c2-)
+    brightnesses=$(brightnesses | cut -c2-)
     activewindow=$(activewindow | cut -c2-)
     #activewindow_poll=$(activewindow_poll | cut -c2-)
     workspace=$(workspace | cut -c2-)
@@ -134,17 +143,8 @@ initialize() {
 }
 
 output_stream() {
-    #while true; do
-        #brightnesses
-        #sleep 1s
-    #done &
-
     inotifywait -q -m -e modify "$LAPTOP_BRIGHTNESS_FILE" | while read -r filename event; do
         brightnesses
-    done &
-#
-    inotifywait -q -m -e modify "$external_monitor_brightness_files_string" | while read -r filename event; do
-        brightness 
     done &
 
     bspc subscribe node_focus desktop_focus | while read; do
@@ -212,45 +212,23 @@ assign_incoming_variable() {
     esac
 }
 
-format_string_for_bar() {
-	echo -e "%{S0}$workspace %{c+uU#bdbcb1}$activewindow%{-u} %{r+uU#000000}$brightness%{-u} %{+uU#03851d}$memory%{-u} %{+uU#f90000}$cpu%{-u} %{+uU#9f78e1}$wifi%{-u} %{+uU#0aeaf2}$volume%{-u} %{+uU#0a6cf5}$date%{-u} %{+uU#fc8d05}$clock%{-u} %{+uU#ffb52a}$battery%{-u}" 
-}
-
-
-format_string_for_bar_multi_monitor() {
-    formatted_string=""
-    counter=0
-    for iterate in $monitors; do
-        formatted_string="$formatted_string %{S$counter}$workspace %{c+uU#bdbcb1}$activewindow%{-u} %{r+uU#000000}Brightness: $(get_element_by_index $brightnesses $counter)%%%{-u} %{+uU#03851d}$memory%{-u} %{+uU#f90000}$cpu%{-u} %{+uU#9f78e1}$wifi%{-u} %{+uU#0aeaf2}$volume%{-u} %{+uU#0a6cf5}$date%{-u} %{+uU#fc8d05}$clock%{-u} %{+uU#ffb52a}$battery%{-u} "
-        ((counter++))
-    done
-    echo -e "$formatted_string"
-}
-
 format_string_for_bar_multi_monitor2() {
     formatted_string=""
     counter=0
-    while [ $counter -lt 2 ]; do
-        formatted_string="$formatted_string%{S$counter}$workspace %{c+uU#bdbcb1}$activewindow%{-u} %{r+uU#000000}Brightness: $(get_element_by_index $brightnesses $counter)%%%{-u} %{+uU#03851d}$memory%{-u} %{+uU#f90000}$cpu%{-u} %{+uU#9f78e1}$wifi%{-u} %{+uU#0aeaf2}$volume%{-u} %{+uU#0a6cf5}$date%{-u} %{+uU#fc8d05}$clock%{-u} %{+uU#ffb52a}$battery%{-u} "
+    while [ $counter -lt $num_monitors ]; do
+        formatted_string="$formatted_string%{S$counter}$workspace %{c+uU#bdbcb1}$activewindow%{-u} %{r+uU#000000}$(get_element_by_index $brightnesses $counter)%%%{-u} %{+uU#03851d}$memory%{-u} %{+uU#f90000}$cpu%{-u} %{+uU#9f78e1}$wifi%{-u} %{+uU#0aeaf2}$volume%{-u} %{+uU#0a6cf5}$date%{-u} %{+uU#fc8d05}$clock%{-u} %{+uU#ffb52a}$battery%{-u} "
         ((counter++))
     done
     echo -e "$formatted_string"
 }
 
-initialize
+# main code; look here to actually understand program logic!
 
+kill_running_instance
+initialize
 output_stream | while read line; do
     assign_incoming_variable
     format_string_for_bar_multi_monitor2
 done | lemonbar -p -f  "Inconsolata:size=12" -u 2 #-B "#000000" -g x30 #-o -3 #-u -3
 
 
-#two_monitors=false
-#if [ "$(xrandr | grep -w connected | wc -l)" -eq "2" ]
-#then
-    #two_monitors=true
-#fi
-    #if [ $two_monitors ] 
-    #then 
-        #echo -e "%{S1}%{l}$workspace" "%{c}$activewindow" "%{r}  $memory $cpu $wifi  $volume  $date $clock $battery"
-    #fi
