@@ -9,7 +9,7 @@ alias cp="cp -i"
 alias mv="mv -i"
 alias whatcanopen="mimeopen -a"
 alias r="ranger"
-alias s="bspwm_swallow"
+alias swallow="bspwm_swallow"
 #alias newsboat="newsboat --config-file=~/.config/newsboat/config --url-file=~/.config/newsboat/urls --cache-file=~/.cache/newsboat/cache.db --log-files=~/newsboat.log"
 
 # shortcut to config files/load configs
@@ -18,7 +18,7 @@ alias i3conf="$EDITOR ~/.config/i3/config"
 alias zshrc="$EDITOR ~/.config/zsh/.zshrc"
 alias zshaliases="$EDITOR ~/.config/zsh/.zsh_aliases"
 alias zshenv="$EDITOR ~/.zshenv"
-alias zshload="source ~/.zshenv" 
+alias zshload="source ~/.zshenv; source $ZDOTDIR/.zshrc" 
 alias polyconf="$EDITOR ~/.config/polybar/config"
 alias nvimconf="$EDITOR ~/.config/nvim/init.vim"
 alias bspconf="$EDITOR ~/.config/bspwm/bspwmrc"
@@ -33,7 +33,6 @@ alias alacrittyconf="$EDITOR ~/.config/alacritty/alacritty.yml"
 # shortcuts to applications
 alias wifi="nmtui"
 alias weather="curl wttr.in"
-alias smcs="bspwm_swallow emacsclient -c -n --alternate-editor nvim"
 
 # shortcuts to folders
 alias trashdir="cd ~/.local/share/Trash && ls -a"

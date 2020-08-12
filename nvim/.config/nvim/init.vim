@@ -42,11 +42,11 @@ autocmd vimenter * colorscheme gruvbox
 "colorscheme palenight
 
 "remaps
+map <Space> <Leader>
 map <leader>h :wincmd h<CR>
 map <leader>j :wincmd j<CR>
 map <leader>k :wincmd k<CR>
 map <leader>l :wincmd l<CR>
-map <Space> <Leader>
 
 "Allow copy pasting between vim documents
 set clipboard=unnamedplus

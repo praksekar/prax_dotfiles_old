@@ -1,8 +1,12 @@
+# Load aliases and shortcuts if existent.
+[ -f ~/.config/zsh/.zsh_aliases ] && source ~/.config/zsh/.zsh_aliases
+
 #Enable colors and change prompt:
 autoload -U colors && colors	# Load colors
 PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$fg[red]%}]%{$reset_color%}$%b "
-setopt autocd		# Automatically cd into typed directory.
-stty stop undef		# Disable ctrl-s to freeze terminal.
+
+# Disable ctrl-s to freeze terminal.
+stty stop undef		
 
 # colored man pages in less
 export LESS=-R
@@ -26,6 +30,15 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 
+# some nice cd modifications
+setopt autocd		# Automatically cd into typed directory.
+#autoload -U add-zsh-hook # automatically is after cd'ing into directory
+#add-zsh-hook -Uz chpwd (){ ls; }
+function chpwd() {
+    emulate -L zsh
+    ls 
+}
+
 # zsh native fuzzy completion
 zstyle ':completion:*' matcher-list '' \
   'm:{a-z\-}={A-Z\_}' \
@@ -42,8 +55,6 @@ HISTFILESIZE=1000000
 SAVEHIST=1000000
 HISTFILE=~/.config/zsh/.zsh_history
 
-# Load aliases and shortcuts if existent.
-[ -f ~/.config/zsh/.zsh_aliases ] && source ~/.config/zsh/.zsh_aliases
 
 # Basic auto/tab complete:
 autoload -U compinit
@@ -96,7 +107,7 @@ lfcd () {
     fi
 }
 
-#bindkey -s '^o' 'lfcd\n'
+bindkey -s '^o' 'lfcd\n'
 bindkey -s '^a' 'bc -l\n'
 #bindkey -s '^f' 'cd "$(dirname "$(fzf)")"\n'
 bindkey '^[[P' delete-char
@@ -105,12 +116,23 @@ bindkey '^[[P' delete-char
 autoload edit-command-line; zle -N edit-command-line
 bindkey '^e' edit-command-line
 
+# run bspwm_swallow on current text
+run_replace () {
+    echo
+    eval bspwm_swallow $BUFFER
+    echo $BUFFER >> $HISTFILE
+    BUFFER=''
+    zle reset-prompt
+}
+
+zle -N run_replace
+bindkey '^ ' run_replace
+
 # source fzf 
 [ -f ~/.src/fzf/.fzf.zsh ] && source ~/.src/fzf/.fzf.zsh 
 
 # Load syntax highlighting; should be last.
 [ -f ~/.src/zsh-plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh ] && source ~/.src/zsh-plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh 
-
 
 # load autocomplete
 # source ~/.config/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh

@@ -14,13 +14,13 @@ kill_running_instance() {
     done
 }
 
-# values across all monitors are simply stored as variables; monitor specific values are stored as a space delimited string
-
 get_element_by_index () {
     string="$1"
     index=$(("$2"+1))
     echo $string | cut -d " " -f "$index"
 }
+
+# values across all monitors are simply stored as variables; monitor specific values are stored as a space delimited string
 
 get_laptop_brightness() {
     curbrightness="$(cat /sys/class/backlight/intel_backlight/brightness)"
@@ -127,22 +127,13 @@ volume() {
 
 
 initialize() {
-    # set initial values manually
-    #brightness=$( | cut -c2-)
     brightnesses=$(brightnesses | cut -c2-)
     activewindow=$(activewindow | cut -c2-)
-    #activewindow_poll=$(activewindow_poll | cut -c2-)
     workspace=$(workspace | cut -c2-)
-    #battery="$(battery | cut -c2-)"
-    #clock=$(clock | cut -c2-)
     volume=$(volume | cut -c2-)
-    #cal=$(cal | cut -c2-)
-    #wifi=$(wifi | cut -c2-)
-    #memory=$(memory | cut -c2-)
-    #cpu=$(cpu | cut -c2-)
 }
 
-output_stream() {
+start_output_stream() {
     inotifywait -q -m -e modify "$LAPTOP_BRIGHTNESS_FILE" | while read -r filename event; do
         brightnesses
     done &
@@ -196,22 +187,6 @@ output_stream() {
     wait
 }
 
-assign_incoming_variable() {
-    case $line in 
-        T*) clock="${line:1}" ;;
-        C*) cpu="${line:1}" ;;
-        W*) workspace="${line:1}" ;;
-        B*) battery="${line:1}" ;;
-        A*) activewindow="${line:1}" ;;
-        I*) wifi="${line:1}" ;;
-        V*) volume="${line:1}" ;;
-        D*) date="${line:1}" ;;
-        M*) memory="${line:1}" ;;
-        R*) brightness="${line:1}" ;;
-        S*) brightnesses="${line:1}" ;;
-    esac
-}
-
 format_string_for_bar_multi_monitor2() {
     formatted_string=""
     counter=0
@@ -222,13 +197,26 @@ format_string_for_bar_multi_monitor2() {
     echo -e "$formatted_string"
 }
 
-# main code; look here to actually understand program logic!
+# MAIN CODE; look here to actually understand program logic!
 
 kill_running_instance
 initialize
-output_stream | while read line; do
-    assign_incoming_variable
-    format_string_for_bar_multi_monitor2
-done | lemonbar -p -f  "Inconsolata:size=12" -u 2 #-B "#000000" -g x30 #-o -3 #-u -3
+start_output_stream | while read line; do
+    unlabeled_line="${line:1}" # cut label from beginning of string
+    case "$line" in # assign each output stream output to variable
+        T*) clock="$unlabeled_line" ;;
+        C*) cpu="$unlabeled_line" ;;
+        W*) workspace="$unlabeled_line" ;;
+        B*) battery="$unlabeled_line" ;;
+        A*) activewindow="$unlabeled_line" ;;
+        I*) wifi="$unlabeled_line" ;;
+        V*) volume="$unlabeled_line" ;;
+        D*) date="$unlabeled_line" ;;
+        M*) memory="$unlabeled_line" ;;
+        R*) brightness="$unlabeled_line" ;;
+        S*) brightnesses="$unlabeled_line" ;;
+    esac
+    format_string_for_bar_multi_monitor2 # each time, format the string for the bar
+done | lemonbar -p -f  "Inconsolata:size=12" -u 2 #-B "#000000" -g x30 #-o -3 #-u -3 # finally, display the string
 
 

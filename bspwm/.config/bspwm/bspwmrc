@@ -1,7 +1,8 @@
 #!/bin/sh
 
 #sxhkd &
-wm_init
+#./bspwm_init
+~/.config/bspwm/bspwm_init
 
 bspc config focused_border_color "#9d03fc"
 bspc config border_width         5

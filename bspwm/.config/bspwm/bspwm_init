@@ -1,12 +1,12 @@
 #!/bin/bash
 
-notify-send "wm_init executed"
 source ~/.zshenv
+
+notify-send "wm_init executed"
 sxhkd &
 setxkbmap -option caps:swapescape
 xcompmgr &
 feh --bg-fill ~/Pictures/wallpapers/canyon.jpg #--randomize 
-#hsetroot -fill "#000000"
 bspwm_lemonbar &
 #emacs --daemon
 

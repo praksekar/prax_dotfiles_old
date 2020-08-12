@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ -z "$@" ]
+if [[ -z "$@" ]]
 then   
    echo "needs arg"
    exit 1
@@ -9,7 +9,7 @@ fi
 swallower_node=$(bspc query -N -n focused)
 get_next_created_node_id "$@" 
 swallowed_node=$(cat /tmp/last_node)
-echo $swallowed_node
+#echo $swallowed_node
 bspc node -s $swallower_node
 bspc node $swallower_node --flag hidden=on
 while read EVENT
