@@ -1,5 +1,5 @@
 # env variables
-#export EDITOR="bspwm_swallow emacsclient -c -n"
+#vaexport EDITOR="bspwm_swallow emacsclient -c -n"
 #export VISUAL="bspwm_swallow emacsclient -c -n"
 export EDITOR="nvim"
 export VISUAL="nvim"
@@ -11,7 +11,7 @@ export ZDOTDIR="$HOME/.config/zsh/"
 export GIT_CONFIG="$HOME/.config/git/config"
 export HISTFILE="$HOME/.config/zsh/.zsh_history"
 export LESSHISTFILE="/dev/null"
-export JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64"
+export JAVA_HOME="/usr/lib/jvm/jdk-11.0.8"
 export GOPATH="/usr/lib/go"
 export FZF_DEFAULT_OPTS='--bind tab:down --cycle --bind btab:up --cycle --bind ctrl-space:toggle+down'
 export FZF_DEFAULT_COMMAND="find -L"
@@ -24,10 +24,11 @@ export ANDROID_HOME=$ANDROID_SDK_ROOT
 #export SPACEMACSDOTDIR="$HOME/.config/spacemacs"
 
 # default applications
-export LOCKER="i3lock"
+export LOCKER="slock"
 export BROWSER="chromium"
 export TERMINAL="alacritty"
 export BAR="bspwm_lemonbar"
+export FONT="Ubuntu Mono"
 #export FILE_MANAGER="launch_ranger"
 
 # monitor

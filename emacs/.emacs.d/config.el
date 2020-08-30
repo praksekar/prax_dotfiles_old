@@ -47,47 +47,46 @@ kept-old-versions      5) ; and how many of the old
 (setq browse-url-browser-function 'browse-url-generic
       browse-url-generic-program "chromium-browser")
 
-;;(use-package company)
-;;(use-package company-quickhelp 
-  ;;:config
-  ;;(global-company-mode)
-  ;;(company-quickhelp-mode)
-  ;;(add-to-list 'company-backends 'company-files)
-  ;;(setq company-quickhelp-delay 0.1))
-  ;;
-;;(use-package company-anaconda
-  ;;:after (anaconda-mode company)
-  ;;:config (add-to-list 'company-backends 'company-anaconda))
-;;
-;;(use-package company-shell 
-  ;;:after (company)
-  ;;:config (add-to-list 'company-backends 'company-shell))
+(use-package company)
+(use-package company-quickhelp 
+  :config
+  (global-company-mode)
+  (company-quickhelp-mode)
+  (add-to-list 'company-backends 'company-files)
+  (setq company-quickhelp-delay 0.1))
 
-;;(use-package flycheck-pos-tip
-;;:config
-  ;;(global-flycheck-mode)
-  ;;(with-eval-after-load 'flycheck
-      ;;(flycheck-pos-tip-mode)))
+(use-package company-anaconda
+  :after (anaconda-mode company)
+  :config (add-to-list 'company-backends 'company-anaconda))
+
+(use-package company-shell 
+  :after (company)
+  :config (add-to-list 'company-backends 'company-shell))
+
+(use-package flycheck-pos-tip
+:config
+  (global-flycheck-mode)
+  (with-eval-after-load 'flycheck
+      (flycheck-pos-tip-mode)))
 
 (setq python-shell-interpreter "/usr/bin/python3")
 
-;;(setq lsp-keymap-prefix "s-l")
+(setq lsp-keymap-prefix "s-l")
 
-;;(require 'lsp-mode)
-;;(add-hook 'prog-mode-hook #'lsp)
-;;
-;;(require 'lsp-java)
-;;(add-hook 'java-mode-hook #'lsp)
-;;
-;;(use-package lsp-ui)
-;;
-;;(use-package lsp-mode
-  ;;:commands lsp
-  ;;:hook
-  ;;(sh-mode . lsp))
+(require 'lsp-mode)
+(add-hook 'prog-mode-hook #'lsp)
 
-;;(setq lsp-ui-doc-enable t)
- ;; :bind ("M-o" . lsp-ui-doc-enable))
+(require 'lsp-java)
+(add-hook 'java-mode-hook #'lsp)
+
+(use-package lsp-ui)
+
+(use-package lsp-mode
+ :commands lsp
+ :hook
+ (sh-mode . lsp))
+
+(setq lsp-ui-doc-enable t)
 (use-package company-box
   :hook (company-mode . company-box-mode))
 

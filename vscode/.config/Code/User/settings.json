@@ -1,4 +1,5 @@
 {
+    "java.home" : "/usr/lib/jvm/jdk-11.0.8",
     "editor.suggestSelection": "first",
     "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
     "keyboard.dispatch": "keyCode",
@@ -31,5 +32,9 @@
         "editor.suggestSelection": "first",
         "editor.tabCompletion": "onlySnippets",
         "editor.wordBasedSuggestions": false
-    }
+    },
+    "explorer.confirmDragAndDrop": false,
+    "java.refactor.renameFromFileExplorer": "autoApply",
+    "java.configuration.checkProjectSettingsExclusions": false,
+    "window.zoomLevel": 0
 }

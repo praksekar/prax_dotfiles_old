@@ -28,25 +28,22 @@
 
 
 [ "$#" -eq 1 ] || { echo "Pass only one argument: north,east,south,west"; exit 1; }
-
-# Check if argument is a valid direction.
-case "$1" in
-	north|east|south|west)
-		dir="$1"
-		;;
-	*)
-		echo "Not a valid argument."
-		echo "Use one of: north,east,south,west"
-		exit 1
-		;;
-esac
+dir="$1"
 
 _query_nodes() {
 	bspc query -N -n "$@"
 }
 
-# Do not operate on floating windows!
-[ -z "$(_query_nodes focused.floating)" ] || { echo "Only move tiled windows."; exit 1; }
+# if floating, then move floating window without disrupting other windows.
+if [ ! -z "$(_query_nodes focused.floating)"  ]; then 
+    case "$1" in # set dir multiplier 
+        west) xmult=-1; ymult=0 ;;
+        north) xmult=0; ymult=-1 ;;
+        east) xmult=1; ymult=0 ;;
+        south) xmult=0; ymult=1 ;;
+    esac
+    bspc node -v $((20*$xmult)) $((20*$ymult)); exit 1
+fi
 
 receptacle="$(_query_nodes 'any.leaf.!window')"
 

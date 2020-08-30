@@ -1,0 +1,13 @@
+cd ..
+cd 
+ls
+cd Documents/
+ls
+cd ..
+cd .emacs.d.
+ls
+la
+ls -a
+cd .emacs.d
+ls
+semacs config.el

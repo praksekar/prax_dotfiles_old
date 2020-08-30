@@ -1,7 +1,10 @@
 #!/bin/bash
 
+sudo apt update && sudo apt upggrade
+
 sudo apt install python3-pip
-pip3 install ytsearch --user --upgrade
+pip3 install youtube-dl
+#pip3 install ytsearch --user --upgrade
 
 # ppa repos 
 sudo add-apt-repository ppa:mmstick76/alacritty
@@ -14,6 +17,9 @@ languages=(
 )
 
 programs=(
+    speedtest-cli
+    texlive-latex-extra
+    pandoc
     arandr
     xclip
     jq

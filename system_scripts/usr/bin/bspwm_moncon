@@ -4,11 +4,18 @@ monitors_remaining=()
 num_connected_monitors=0
 primary_monitor=$MONITOR_PRIMARY
 
+choose_starting_monitor() {
+    construct_remaining_monitor_string
+    echo $monitors_remaining
+    starting_monitor=$(echo -e "$dmenu_list_monitors_string" | dmenu -i -p "choose starting point (default: primary)")
+    monitors_remaining="$(remove_element_from_array "$monitors_remaining" "$primary_monitor")"
+    echo "monitors_remaining:$monitors_remaining"
+    last_selected_monitor=$starting_monitor
+}
+
 get_connected_monitors() {
     while read monitor; do
-        if [ "$monitor" != "$primary_monitor" ]; then
-            monitors_remaining+=( "$monitor" )
-        fi
+        monitors_remaining+=( "$monitor" )
     done < <(xrandr | grep -w connected | awk '{print $1}') 
 }
 
@@ -16,7 +23,7 @@ get_number_of_remaining_monitors() {
     for count in "${monitors_remaining[@]}"; do
         ((num_connected_monitors++))
     done
-    notify-send $num_connected_monitors
+    notify-send "available external monitors: $num_connected_monitors"
     if [ $num_connected_monitors == 0 ]; then 
         notify-send "No connected monitors detected." 
         exit 1
@@ -32,22 +39,25 @@ remove_element_from_array() {
             new_array+=( "$element" )
         fi
     done
-    echo $new_array
+    echo "$new_array"
 }
 
-dmenu_prompt() {                    
-    #monitors_remaining=("${(@)monitors_remaining:$last_selected_monitor}")
+construct_remaining_monitor_string() {
     dmenu_list_monitors_string=""
     for monitor in "${monitors_remaining[@]}"; do
             dmenu_list_monitors_string="$dmenu_list_monitors_string$monitor\n"
     done
-    remove_element_from_array "$monitors" "$last_selected_monitor"
-    selected_dir=$(echo -e "--right-of\n--left-of\n--above\n--below\n--same-as" | dmenu -p "which direction is this monitor relative to the last monitor connected?" -i)
-    selected_monitor=$(echo -e "$dmenu_list_monitors_string" | dmenu -p "now, which monitor to connect in this direction?" -i)
+}
+
+dmenu_prompt() {                    
+    #monitors_remaining=("${(@)monitors_remaining:$last_selected_monitor}")
+    construct_remaining_monitor_string
+    monitors_remaining=$(remove_element_from_array "$monitors" "$last_selected_monitor")
+    selected_dir=$(echo -e "--right-of\n--left-of\n--above\n--below\n--same-as" | dmenu -i -p "which direction is this monitor relative to the last monitor connected?" -i)
+    selected_monitor=$(echo -e "$dmenu_list_monitors_string" | dmenu -i -p "now, which monitor to connect in this direction?" -i)
 }
 
 make_xrandr_commands() {
-    last_selected_monitor=$primary_monitor
     i=0
     while [ $i -lt $num_connected_monitors ]; do
         dmenu_prompt
@@ -63,6 +73,7 @@ make_xrandr_commands() {
 
 connect_monitors () {
     get_connected_monitors
+    choose_starting_monitor
     get_number_of_remaining_monitors
     make_xrandr_commands
 }

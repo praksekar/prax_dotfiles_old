@@ -1,7 +1,5 @@
 #!/bin/bash
 
-primary_monitor="$MONITOR_PRIMARY"
-num_monitors=$(bspc query -M --names | wc -l)
 
 # kill running instance of lemonbar and bspwm_lemonbar, launch lemonbar with modules
 kill_running_instance() {
@@ -14,37 +12,36 @@ kill_running_instance() {
     done
 }
 
-get_element_by_index () {
+get_element_by_index() {
     string="$1"
-    index=$(("$2"+1))
-    echo $string | cut -d " " -f "$index"
+    index="$2"
+    arr=($string)
+    echo ${arr[$index]}
 }
+
 
 # values across all monitors are simply stored as variables; monitor specific values are stored as a space delimited string
 
 get_laptop_brightness() {
-    curbrightness="$(cat /sys/class/backlight/intel_backlight/brightness)"
-    max_brightness="$(cat /sys/class/backlight/intel_backlight/max_brightness)"
-    brightness="$(echo $curbrightness / $max_brightness*100 | bc -l)"
+    brightness="$(echo $(cat /sys/class/backlight/intel_backlight/brightness) / $(cat /sys/class/backlight/intel_backlight/max_brightness)*100 | bc -l)"
     brightness_truncated=${brightness%%.*} # only keep numbers before decimal
     echo "$brightness_truncated"
 }
 
 get_monitor_brightness() {
-    brightness="$(cat /tmp/brightness_$monitor)"
-    brightness="$(echo $brightness / 10*100 | bc -l)"
-    brightness=${brightness%%.*} # only keep numbers before decimal
-    echo "$brightness"
+    brightness="$(echo $(cat /tmp/brightness_$monitor)/ 10*100 | bc -l)"
+    brightness_truncated=${brightness%%.*} # only keep numbers before decimal
+    echo "$brightness_truncated"
 }
 
 brightnesses() {
     label="S"
     brightnesses=""
-    while read monitor; do
-        if [ $monitor == $primary_monitor ]; then
-            brightnesses="$brightnesses $(get_laptop_brightness)"
+    while read monitor_name; do
+        if [ $monitor_name == $primary_monitor ]; then
+            brightnesses="$brightnesses $(bspwm_chbr --get-laptop-brightness)"
         else
-            brightnesses="$brightnesses $(get_monitor_brightness)"
+            brightnesses="$brightnesses $(bspwm_chbr --get-monitor-brightness $monitor_name)"
         fi
     done < <(bspc query -M --names)
     echo "$label$brightnesses"
@@ -64,7 +61,7 @@ cal() {
 
 workspace() {
     label="W"
-    workspace=$(workspace_module)
+    workspace="$(workspace_module)"
     echo "$label$workspace"
 }
 
@@ -126,16 +123,11 @@ volume() {
 }
 
 
-initialize() {
-    brightnesses=$(brightnesses | cut -c2-)
-    activewindow=$(activewindow | cut -c2-)
-    workspace=$(workspace | cut -c2-)
-    volume=$(volume | cut -c2-)
-}
 
 start_output_stream() {
-    inotifywait -q -m -e modify "$LAPTOP_BRIGHTNESS_FILE" | while read -r filename event; do
+    inotifywait -q -m -e modify /tmp/brightness* $LAPTOP_BRIGHTNESS_FILE | while read -r filename event; do
         brightnesses
+        sleep 0.1
     done &
 
     bspc subscribe node_focus desktop_focus | while read; do
@@ -182,41 +174,50 @@ start_output_stream() {
 
     while true; do
         cpu 
+        # no need to sleep; bulilt in to cpu function
     done &
 
     wait
 }
 
-format_string_for_bar_multi_monitor2() {
-    formatted_string=""
-    counter=0
-    while [ $counter -lt $num_monitors ]; do
-        formatted_string="$formatted_string%{S$counter}$workspace %{c+uU#bdbcb1}$activewindow%{-u} %{r+uU#000000}$(get_element_by_index $brightnesses $counter)%%%{-u} %{+uU#03851d}$memory%{-u} %{+uU#f90000}$cpu%{-u} %{+uU#9f78e1}$wifi%{-u} %{+uU#0aeaf2}$volume%{-u} %{+uU#0a6cf5}$date%{-u} %{+uU#fc8d05}$clock%{-u} %{+uU#ffb52a}$battery%{-u} "
-        ((counter++))
-    done
-    echo -e "$formatted_string"
-}
 
 # MAIN CODE; look here to actually understand program logic!
 
+num_monitors=$(bspc query -M --names | wc -l)
+primary_monitor="$MONITOR_PRIMARY"
+
 kill_running_instance
-initialize
+
+brightnesses_string=$(brightnesses | cut -c2-)
+activewindow_bar=$(activewindow | cut -c2-)
+workspace_bar=$(workspace | cut -c2-)
+volume_bar=$(volume | cut -c2-)
+
+notify-send "stuff:$workspace_bar"
+
 start_output_stream | while read line; do
     unlabeled_line="${line:1}" # cut label from beginning of string
     case "$line" in # assign each output stream output to variable
-        T*) clock="$unlabeled_line" ;;
-        C*) cpu="$unlabeled_line" ;;
-        W*) workspace="$unlabeled_line" ;;
-        B*) battery="$unlabeled_line" ;;
-        A*) activewindow="$unlabeled_line" ;;
-        I*) wifi="$unlabeled_line" ;;
-        V*) volume="$unlabeled_line" ;;
-        D*) date="$unlabeled_line" ;;
-        M*) memory="$unlabeled_line" ;;
-        R*) brightness="$unlabeled_line" ;;
-        S*) brightnesses="$unlabeled_line" ;;
+        T*) clock_bar="$unlabeled_line" ;;
+        C*) cpu_bar="$unlabeled_line" ;;
+        W*) workspace_bar="$unlabeled_line" ;;
+        B*) battery_bar="$unlabeled_line" ;;
+        A*) activewindow_bar="$unlabeled_line" ;;
+        I*) wifi_bar="$unlabeled_line" ;;
+        V*) volume_bar="$unlabeled_line" ;;
+        D*) date_bar="$unlabeled_line" ;;
+        M*) memory_bar="$unlabeled_line" ;;
+        R*) brightness_bar="$unlabeled_line" ;;
+        S*) brightnesses_string="$unlabeled_line" ;;
     esac
-    format_string_for_bar_multi_monitor2 # each time, format the string for the bar
+
+    formatted_string=""
+    counter=0
+    while [ $counter -lt $num_monitors ]; do
+        formatted_string="$formatted_string %{S$counter} $workspace_bar %{c+uU#bdbcb1}$activewindow_bar%{-u} %{r+uU#000000}Brightness: $(get_element_by_index "$brightnesses_string" $counter)%%%{-u} %{+uU#03851d}Memory: $memory_bar%%%{-u} %{+uU#f90000}CPU: $cpu_bar%%%{-u} %{+uU#9f78e1}$wifi_bar%{-u} %{+uU#0aeaf2}Volume: $volume_bar%%%{-u} %{+uU#0a6cf5}$date_bar%{-u} %{+uU#fc8d05}$clock_bar%{-u} %{+uU#ffb52a}Battery: $battery_bar%%%{-u}"
+        ((counter++))
+    done
+    echo -e "$formatted_string"
 done | lemonbar -p -f  "Inconsolata:size=12" -u 2 #-B "#000000" -g x30 #-o -3 #-u -3 # finally, display the string
 
 

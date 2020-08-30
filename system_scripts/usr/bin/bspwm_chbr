@@ -2,7 +2,7 @@
 
 # helper functions
 
-keyboard_brightness () {
+set_keyboard_brightness () {
     case "$1" in
         toggle) if [ $(brightnessctl -d "$KEYBRD_DEV" get) == 0 ]; then
                     brightnessctl -d "$KEYBRD_DEV" set +100%
@@ -12,22 +12,28 @@ keyboard_brightness () {
     esac
 }
 
-laptop_backlight_brightness () {
+set_laptop_brightness () {
     case "$1" in 
         inc) brightnessctl set +1% ;;
         dec) brightnessctl set 1%- ;;
+        #get) echo $(echo brightnessctl get/$B
     esac
 }
 
-focused_monitor_brightness () {
-    current_monitor="$(bspc query -M -m --names)"
-    monitor_specific_brightness_file="/tmp/brightness_$current_monitor"
+get_laptop_brightness() {
+    brightness="$(echo $(cat /sys/class/backlight/intel_backlight/brightness) / $(cat /sys/class/backlight/intel_backlight/max_brightness)*100 | bc -l)"
+    brightness_truncated=${brightness%%.*} # only keep numbers before decimal
+    echo "$brightness_truncated"
+}
+
+set_monitor_brightness () {
+    monitor_to_set="$1"
+    monitor_specific_brightness_file="/tmp/brightness_$monitor_to_set"
     if [ ! -f "$monitor_specific_brightness_file" ]; then
-        notify-send "hello"
         echo 10 > "$monitor_specific_brightness_file"
     else 
         monitor_brightness=$(cat "$monitor_specific_brightness_file")
-        case "$1" in 
+        case "$2" in 
             inc) ((monitor_brightness++)) ;;
             dec) ((monitor_brightness--)) ;;
             *) echo "invalid argument"; exit 1 ;;
@@ -37,29 +43,48 @@ focused_monitor_brightness () {
         if (($monitor_brightness < 1)); then monitor_brightness=1; fi
 
         echo "$monitor_brightness" > $monitor_specific_brightness_file 
-        notify-send --expire-time=500 "$current_monitor Brightness = $monitor_brightness"
-        xrandr --output "$current_monitor" --brightness "$(echo $monitor_brightness*0.1 | bc)"
+        notify-send --expire-time=500 "$monitor_to_set Brightness = $monitor_brightness"
+        xrandr --output "$monitor_to_set" --brightness "$(echo $monitor_brightness*0.1 | bc)"
     fi
+}
+
+get_monitor_brightness() {
+    monitor_to_get="$1"
+    brightness="$(echo $(cat /tmp/brightness_$monitor_to_get)/ 10*100 | bc -l)"
+    brightness_truncated=${brightness%%.*} # only keep numbers before decimal
+    echo "$brightness_truncated"
 }
 
 # main stuff
 
-monitor_specific_brightness() {
+set_focused_monitor_brightness() {
     case "$1" in
         inc) inc_or_dec="inc" ;;
         dec) inc_or_dec="dec" ;;
     esac
-    primary_monitor="$MONITOR_PRIMARY"
-    focused_monitor=$(bspc query -M -m --names)
-    if [ "$focused_monitor" == "$primary_monitor" ]; then
-        laptop_backlight_brightness "$inc_or_dec"
+    focused_monitor="$(bspc query -M -m --names)"
+    if [ "$focused_monitor" == "$MONITOR_PRIMARY" ]; then
+        set_laptop_brightness "$inc_or_dec"
     else 
-        focused_monitor_brightness "$inc_or_dec"
+        set_monitor_brightness "$focused_monitor" "$inc_or_dec"
     fi
 }
 
-case $1 in 
-    msb) monitor_specific_brightness "$2" ;;
-    keyboard) keyboard_brightness "$2" ;;
-    laptop) laptop_backlight_brightness "$2" ;;
+get_focused_monitor_brightness() {
+    focused_monitor="$(bspc query -M -m --names)"
+    if [ "$focused_monitor" == "$MONITOR_PRIMARY" ]; then
+        get_laptop_brightness
+    else
+        get_monitor_brightness "$focused_monitor"
+    fi
+}
+
+case "$1" in 
+    msb) set_focused_monitor_brightness "$2" ;;
+    keyboard) set_keyboard_brightness "$2" ;;
+    --set-monitor-brightness) set_monitor_brightness "$2" "$3" ;;
+    --get-monitor-specific-brightness) get_focused_monitor_brightness "$2" ;;
+    --get-laptop-brightness) get_laptop_brightness ;;
+    --get-monitor-brightness) get_monitor_brightness "$2" ;;
+    #laptop) set_laptop_backlight_brightness "$2" ;;
 esac
