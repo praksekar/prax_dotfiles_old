@@ -16,7 +16,6 @@ set_laptop_brightness () {
     case "$1" in 
         inc) brightnessctl set +1% ;;
         dec) brightnessctl set 1%- ;;
-        #get) echo $(echo brightnessctl get/$B
     esac
 }
 
@@ -54,8 +53,6 @@ get_monitor_brightness() {
     brightness_truncated=${brightness%%.*} # only keep numbers before decimal
     echo "$brightness_truncated"
 }
-
-# main stuff
 
 set_focused_monitor_brightness() {
     case "$1" in

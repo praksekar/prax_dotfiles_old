@@ -193,7 +193,7 @@ _keyboard() {
     if [ "$(setxkbmap -query | sed '/^l/!d ; s,.*:[\ ]*,,g')" = 'gr' ]; then
         kb_layout="%{B$bg_alt}%{U$fg_main}%{+u} EL %{-u}%{U-}%{B-}"
     fi
-
+:
     # Show an indicator if Caps Lock is on.
     if [ "$(xset -q | awk '/Caps/ { print $4 }')" = 'on' ]; then
         kb_caps="%{B$bg_alt}%{U$fg_main}%{+u} CAPS %{-u}%{U-}%{B-}"

@@ -6,7 +6,7 @@ notify-send "wm_init executed"
 sxhkd &
 setxkbmap -option caps:swapescape
 xcompmgr &
-feh --bg-fill ~/Pictures/wallpapers/canyon.jpg #--randomize 
+feh --bg-fill ~/Pictures/wallpapers/bee_on_flower.jpg #--randomize 
 bspwm_lemonbar &
 #emacs --daemon
 

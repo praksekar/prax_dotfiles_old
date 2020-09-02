@@ -24,7 +24,7 @@ export ANDROID_HOME=$ANDROID_SDK_ROOT
 #export SPACEMACSDOTDIR="$HOME/.config/spacemacs"
 
 # default applications
-export LOCKER="slock"
+export LOCKER="i3lock"
 export BROWSER="chromium"
 export TERMINAL="alacritty"
 export BAR="bspwm_lemonbar"

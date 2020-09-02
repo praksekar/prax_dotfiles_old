@@ -76,6 +76,8 @@ connect_monitors () {
     choose_starting_monitor
     get_number_of_remaining_monitors
     make_xrandr_commands
+    swapcaps
+    bspwm_init
 }
 
 #disconnect_monitors () {
@@ -89,15 +91,16 @@ connect_monitors () {
 
 disconnect_monitors () {
     notify-send alsdkfjklj
-    bspc query -M --names | while read monitor; do
+     while read monitor; do
         [ "$monitor" == "$primary_monitor" ] && continue
         bspc monitor -a placeholder
-        bspc query -D -m $monitor | while read desktop; do
+        while read desktop; do
             bspc desktop $desktop -d $primary_monitor
-        done
+        done < <(bspc query -D -m $monitor) 
         bspc desktop placeholder -r 
-    done
+    done < <(bspc query -M --names) 
 }
+
 
 case "$1" in
     --connect-monitors) connect_monitors ;;
