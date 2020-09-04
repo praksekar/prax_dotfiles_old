@@ -17,6 +17,7 @@ languages=(
 )
 
 programs=(
+    xtitle
     speedtest-cli
     texlive-latex-extra
     pandoc

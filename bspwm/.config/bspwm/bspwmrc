@@ -19,7 +19,8 @@ bspc config ignore_ewmh_focus true
 #bspc config pointer_follows_focus true
 bspc config focus_follows_pointer true
 bspc config ignore_ewmh_fullscreen true
-
+bspc config swallow_first_click true
+bspc config pointer_follows_monitor true
 
 #bspc rule -a Gimp desktop='^8' state=floating follow=on
 bspc rule -a mplayer2 state=floating

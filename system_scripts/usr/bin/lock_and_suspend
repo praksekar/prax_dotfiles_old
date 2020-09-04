@@ -2,7 +2,7 @@
 
 #$LOCKER systemctl suspend
 
-$LOCKER -i ~/Pictures/wallpapers/canyon.png && systemctl suspend
+$LOCKER -i ~/Pictures/wallpapers/bee_on_flower.png && systemctl suspend
 #systemctl suspend && $LOCKER -i ~/Pictures/wallpapers/canyon.png 
 
 

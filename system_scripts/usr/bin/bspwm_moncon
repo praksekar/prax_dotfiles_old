@@ -1,110 +1,70 @@
 #!/bin/bash
 
-monitors_remaining=()
-num_connected_monitors=0
-primary_monitor=$MONITOR_PRIMARY
-
-choose_starting_monitor() {
-    construct_remaining_monitor_string
-    echo $monitors_remaining
-    starting_monitor=$(echo -e "$dmenu_list_monitors_string" | dmenu -i -p "choose starting point (default: primary)")
-    monitors_remaining="$(remove_element_from_array "$monitors_remaining" "$primary_monitor")"
-    echo "monitors_remaining:$monitors_remaining"
-    last_selected_monitor=$starting_monitor
-}
-
-get_connected_monitors() {
-    while read monitor; do
-        monitors_remaining+=( "$monitor" )
+get_total_connected_monitors_arr() {
+    local monitors_remaining=""
+    while read monitor_name; do
+        monitors_remaining+="$monitor_name "
     done < <(xrandr | grep -w connected | awk '{print $1}') 
+    echo "$monitors_remaining"
 }
 
-get_number_of_remaining_monitors() {
-    for count in "${monitors_remaining[@]}"; do
-        ((num_connected_monitors++))
-    done
-    notify-send "available external monitors: $num_connected_monitors"
-    if [ $num_connected_monitors == 0 ]; then 
-        notify-send "No connected monitors detected." 
-        exit 1
-    fi
+convert_arr_to_dmenu_string() {
+    local monitors_remaining="$1"
+    echo "$(echo "$monitors_remaining" | tr " " "\n" )"
 }
 
-remove_element_from_array() {
-    array="$1"
-    element_to_remove="$2"
-    new_array=()
-    for element in "${array[@]}"; do
-        if [ "$element" != "$element_to_remove" ]; then
-            new_array+=( "$element" )
-        fi
-    done
-    echo "$new_array"
+choose_starting_monitor() { 
+    local dmenu_monitors_remaining_string="$1"
+    starting_monitor=$(echo -e "$dmenu_monitors_remaining_string" | dmenu -i -p "choose starting point (default: primary)")
+    echo $starting_monitor
 }
 
-construct_remaining_monitor_string() {
-    dmenu_list_monitors_string=""
-    for monitor in "${monitors_remaining[@]}"; do
-            dmenu_list_monitors_string="$dmenu_list_monitors_string$monitor\n"
-    done
-}
 
-dmenu_prompt() {                    
-    #monitors_remaining=("${(@)monitors_remaining:$last_selected_monitor}")
-    construct_remaining_monitor_string
-    monitors_remaining=$(remove_element_from_array "$monitors" "$last_selected_monitor")
-    selected_dir=$(echo -e "--right-of\n--left-of\n--above\n--below\n--same-as" | dmenu -i -p "which direction is this monitor relative to the last monitor connected?" -i)
-    selected_monitor=$(echo -e "$dmenu_list_monitors_string" | dmenu -i -p "now, which monitor to connect in this direction?" -i)
-}
+connect_monitors() {
+    # initialize variables
+    total_connected_monitors_arr="$(get_total_connected_monitors_arr)"
+    monitors_remaining_arr="$total_connected_monitors_arr"
+    num_monitors=$(echo "$total_connected_monitors_arr" | wc -w)
+    num_external_monitors="$(echo $num_monitors-1 | bc)"
+    dmenu_monitors_remaining_string=$(convert_arr_to_dmenu_string "$total_connected_monitors_arr")
+    last_connected_monitor="$(choose_starting_monitor "$dmenu_monitors_remaining_string")" # set last_connected_monitor to the choice of starting monitor so this disappears on the monitor selection
 
-make_xrandr_commands() {
-    i=0
-    while [ $i -lt $num_connected_monitors ]; do
-        dmenu_prompt
-        notify-send "xrandr --output $selected_monitor $selected_dir $last_selected_monitor"
+    count=0
+
+    while [ "$count" -lt "$num_external_monitors" ]; do
+        monitors_remaining_arr="${monitors_remaining_arr//$last_connected_monitor/}"
+        dmenu_monitors_remaining_string="$(convert_arr_to_dmenu_string "$monitors_remaining_arr")"
+
+        selected_dir=$(echo -e "--right-of\n--left-of\n--above\n--below\n--same-as" | dmenu -i -p "which direction is this monitor relative to the last monitor connected?" -i)
+        selected_monitor=$(echo -e "$dmenu_monitors_remaining_string" | dmenu -i -p "now, which monitor to connect in this direction?" -i)
+
+        notify-send "xrandr --output $selected_monitor $selected_dir $last_connected_monitor"
         xrandr --auto
-        xrandr --output $selected_monitor $selected_dir $last_selected_monitor
-        last_selected_monitor=$selected_monitor
-        ((i++))
+        xrandr --output $selected_monitor $selected_dir $last_connected_monitor || notify-send "command failed!"
+        last_connected_monitor=$selected_monitor
+
+        ((count++))
     done
 }
 
-#-----------------------------------------
-
-connect_monitors () {
-    get_connected_monitors
-    choose_starting_monitor
-    get_number_of_remaining_monitors
-    make_xrandr_commands
-    swapcaps
-    bspwm_init
-}
-
-#disconnect_monitors () {
-    #bspc monitor "$MONITOR_SECONDARY" -a placeholder
-    #bspc query -D --names | while read line 
-        #do [ "$line" != "placeholder" ] && bspc desktop "$line" -m "$MONITOR_PRIMARY" 
-    #done 
-    #xrandr --output "$MONITOR_SECONDARY" --off
-    #bspc desktop placeholder --remove
-#}
-
-disconnect_monitors () {
-    notify-send alsdkfjklj
+disconnect_monitors() {
+    notify-send "disconnecting monitors..."
      while read monitor; do
         [ "$monitor" == "$primary_monitor" ] && continue
         bspc monitor -a placeholder
         while read desktop; do
-            bspc desktop $desktop -d $primary_monitor
+            bspc desktop $desktop -m $primary_monitor
         done < <(bspc query -D -m $monitor) 
         bspc desktop placeholder -r 
     done < <(bspc query -M --names) 
 }
 
-
 case "$1" in
     --connect-monitors) connect_monitors ;;
-    --primary-only) disconnect_monitors ;;
+    --disconnect-monitors) disconnect_monitors ;;
     *) echo "invalid argument"; exit 1 ;;
 esac
+~/.config/bspwm/bspwm_init
+setxkbmap -option caps:swapescape
+
 
