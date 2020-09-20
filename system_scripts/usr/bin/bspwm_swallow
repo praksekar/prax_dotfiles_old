@@ -6,18 +6,18 @@ then
    exit 1
 fi
 
-swallower_node=$(bspc query -N -n focused)
+swallower_node="$(bspc query -N -n focused)"
 get_next_created_node_id "$@" 
-swallowed_node=$(cat /tmp/last_node)
+swallowed_node="$(cat /tmp/last_node)"
 #echo $swallowed_node
-bspc node -s $swallower_node
-bspc node $swallower_node --flag hidden=on
+bspc node -s "$swallower_node"
+bspc node "$swallower_node" --flag hidden=on
 while read EVENT
 do
   [ "${EVENT##* }" = "$swallowed_node" ] && break
 done < <(bspc subscribe node_remove)
-bspc node $swallower_node --flag hidden=off
-bspc node $swallower_node --focus
+bspc node "$swallower_node" --flag hidden=off
+bspc node "$swallower_node" --focus
 
 
 #"$@" &

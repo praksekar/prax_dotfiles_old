@@ -1,0 +1,14 @@
+\documentclass[letterpaper,12pt]{article}
+\usepackage{enumitem}
+
+
+\begin{document}
+
+\subsection*{Problem 1}
+\begin{enumerate}[label=(\alph*)]
+    \item The mean is. When we do $\frac{40+61+71+79+84+83+75+64+54}{12}$, we get. The median is 
+    \item 
+    \item 
+\end{enumerate}
+
+\end{document}

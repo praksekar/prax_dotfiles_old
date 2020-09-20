@@ -1,0 +1,34 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+
+\title{Academic Honesty}
+\author{Prakash Sekar}
+\date{September 8, 2020}
+
+\begin{document}
+\maketitle
+
+\begin{enumerate}
+\item Students should work together because being in the presence of other students motivates us to think harder and contribute to ongoing discussion. Exchanging ideas with others additionally allows students to bounce ideas off each other and further streamline their thinking process. Working together is not academically dishonest (as long as all collaborators are cited) because each student puts effort into solving the problem.
+
+\item It is important to struggle with problems that cannot be solved quickly because attempting to solve difficult problems forces us to think of problems in new ways. Homework that takes weeks to solve grants students time to ensure they are caught up with material and allows them to adapt their approaches to problem solving. I hope to further develop my thinking strategies and intuition that will help me solve even more difficult problems that I encounter in the future.
+
+\item It is academically dishonest to copy someone else’s problem-set solutions because you did not solve those problems. Instead, you are passing off another person’s work as your own. An honest collaboration is one in which each student puts their share of effort into solving the problem. They each additionally must compose their own write-up that cites all collaborators and demonstrates their personal understanding of the problem. A dishonest collaboration would have a student that did not put their share of effort into solving the problem. That student would also put solutions in their write up that are either copied or not understood by the student.
+
+\item It is academically dishonest to share your solution set with another student because you are giving the answers of an assignment to a student who did not put effort into those problems. Even if you do not copy yourself, you could easily get burned in doing this if that student plagiarizes your work (which is likely) and turns it in.
+
+\item It is academically dishonest to publish course materials from this class because they are the property of an individual who has not given you permission to do so. The act of publishing someone else's work without their consent is not only unfair, but in doing this, you are assuming their work as your own.
+
+\item It is still plagiarism to copy or approximate solutions from the web even when you cite your source because you are still passing off someone else’s work and ideas as your own. Solving a problem requires careful thought and effort, and by using another person’s solution, you are claiming their thought process as your own. It is also academically dishonest to use a solution in your problem set that you do not understand.
+
+\item When you search for solutions on the web, it means that you have not learned the course material thoroughly enough to solve that problem. Attempting to cut corners by using an online solution will not fix your poor understanding of the material. Leaving a solution blank is also unlikely to impact your grade. If there are 5 problem sets with 10 problems each given throughout the semester, and homework is worth 15\% of your grade, then a single problem is about 0.3\% of your final grade. This is clearly better to leave a question blank than get caught and receive an F in the course.
+
+\item If discovered, copying code would place plagiarism on your professional record. The company would likely be sued by the authors of the code for the use of their code in a company product. The company would also be very likely to fire you following such an incident.
+
+\item Students in many cases are unaware that their actions qualify as academic dishonesty, and this problem set helps clarify their potential doubts. Additionally, this problem set reinforces the seriousness of dishonesty and plagiarism, as well as the fact that it is simply not worth to be dishonest and get caught. 
+
+\item This assignment took around 3.5 hours for me to complete.
+\end{enumerate}
+
+\end{document}

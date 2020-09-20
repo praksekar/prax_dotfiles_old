@@ -1,0 +1,7 @@
+partial modifier_keys
+xkb_symbols "tab_backslash_to_ctrl" {
+    replace key <TAB>  { [ Control_L ] };
+    replace key <BKSL>  { [ Control_R ] };
+    replace key <LCTL>  { [ Control_L ] };
+    replace key <RCTL>  { [ Control_R ] };
+};

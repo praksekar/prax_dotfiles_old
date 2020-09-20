@@ -15,9 +15,10 @@ alias swallow="bspwm_swallow"
 # shortcut to config files/load configs
 alias dots="cd ~/Dotfiles"
 alias i3conf="$EDITOR ~/.config/i3/config"
-alias zshrc="$EDITOR ~/.config/zsh/.zshrc"
-alias zshaliases="$EDITOR ~/.config/zsh/.zsh_aliases"
+alias zshrc="$EDITOR $ZDOTDIR/.zshrc"
+alias zshaliases="$EDITOR $ZDOTDIR/.zsh_aliases"
 alias zshenv="$EDITOR ~/.zshenv"
+alias zprofile="$EDITOR $ZDOTDIR/.zprofile"
 alias zshload="source ~/.zshenv; source $ZDOTDIR/.zshrc" 
 alias polyconf="$EDITOR ~/.config/polybar/config"
 alias nvimconf="$EDITOR ~/.config/nvim/init.vim"
@@ -33,6 +34,7 @@ alias alacrittyconf="$EDITOR ~/.config/alacritty/alacritty.yml"
 # shortcuts to applications
 alias wifi="nmtui"
 alias weather="curl wttr.in"
+alias image_to_text_reader="gimagereader-gtk"
 
 # shortcuts to folders
 alias trashdir="cd ~/.local/share/Trash"

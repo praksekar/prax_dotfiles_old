@@ -4,7 +4,7 @@
     "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
     "keyboard.dispatch": "keyCode",
     "vim.hlsearch": true,
-    "vim.neovimPath": "/usr/bin/nvim",
+    "vim.neovimPath": "/snap/bin/nvim",
     "vim.enableNeovim": true,
     "workbench.colorCustomizations": {
         "statusBar.background": "#005f5f",
@@ -36,5 +36,7 @@
     "explorer.confirmDragAndDrop": false,
     "java.refactor.renameFromFileExplorer": "autoApply",
     "java.configuration.checkProjectSettingsExclusions": false,
-    "window.zoomLevel": 0
+    "window.zoomLevel": 0,
+    "vscode-neovim.neovimExecutablePaths.linux": "/snap/bin/nvim",
+    "vscode-neovim.neovimInitVimPaths.linux": "/home/prakash/.config/nvim/init.vim"
 }

@@ -1,0 +1,6 @@
+#!/bin/bash
+
+xkbcomp -I$HOME/.xkb ~/.xkb/keymap/mykbd :0
+#xcape -d -e "Control_L=Tab;Control_R=backslash"
+xcape -t 125 -d -e "Control_L=Tab;Control_R=backslash"
+

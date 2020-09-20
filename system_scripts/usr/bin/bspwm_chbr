@@ -20,7 +20,7 @@ set_laptop_brightness () {
 }
 
 get_laptop_brightness() {
-    brightness="$(echo $(cat /sys/class/backlight/intel_backlight/brightness) / $(cat /sys/class/backlight/intel_backlight/max_brightness)*100 | bc -l)"
+    brightness="$(echo $LAPTOP_BRIGHTNESS_FILE / $MAX_LAPTOP_BRIGHTNESS_FILE*100 | bc -l)"
     brightness_truncated=${brightness%%.*} # only keep numbers before decimal
     echo "$brightness_truncated"
 }

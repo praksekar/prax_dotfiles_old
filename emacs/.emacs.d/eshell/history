@@ -11,3 +11,5 @@ ls -a
 cd .emacs.d
 ls
 semacs config.el
+ls
+semacs .zshenv

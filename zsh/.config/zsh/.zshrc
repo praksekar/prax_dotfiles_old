@@ -62,7 +62,7 @@ compinit
 _comp_options+=(globdots)		# Include hidden files.
 
 # vi mode
-bindkey -v
+#bindkey -v
 export KEYTIMEOUT=1
 
 # Use vim keys in tab complete menu:
@@ -95,17 +95,22 @@ echo -ne '\e[5 q' # Use beam shape cursor on startup.
 preexec() { echo -ne '\e[5 q' ;} # Use beam shape cursor for each new prompt.
 
 
-# keybindigngs
+# keybindings
 bindkey -s '^a' 'bc -l\n'
-#bindkey -s '^f' 'cd "$(dirname "$(fzf)")"\n'
+bindkey -s '^t' 'cd "$(dirname "$(fzf)")"\n'
+bindkey -s '^r' 'cat $HISTFILE | fzf \n'
 bindkey '^[[P' delete-char
+
+zle -N fzf_history_search_widget
+fzf_history_search_widget() fzf_history_search
+bindkey '^R' fzf_history_search_widget
 
 # Edit line in desired text edt=itor with ctrl-e:
 autoload edit-command-line; zle -N edit-command-line
 bindkey '^e' edit-command-line
 
 # run bspwm_swallow on current text
-run_replace () {
+window_swallow_command () {
     echo
     eval bspwm_swallow $BUFFER
     echo $BUFFER >> $HISTFILE
@@ -113,11 +118,11 @@ run_replace () {
     zle reset-prompt
 }
 
-zle -N run_replace
-bindkey '^ ' run_replace
+zle -N window_swallow_command
+bindkey '^ ' window_swallow_command
 
 # source fzf 
-[ -f ~/.src/fzf/.fzf.zsh ] && source ~/.src/fzf/.fzf.zsh 
+#[ -f ~/.src/fzf/.fzf.zsh ] && source ~/.src/fzf/.fzf.zsh 
 
 # Load syntax highlighting; should be last.
 [ -f ~/.src/zsh-plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh ] && source ~/.src/zsh-plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh 

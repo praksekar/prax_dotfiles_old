@@ -1,0 +1,46 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\title{Homework 1B}
+\author{Prakash Sekar}
+\date{September 20, 2020}
+
+\begin{document}
+\maketitle
+
+
+\subsection*{Problem 5}
+\begin{enumerate}
+    \item 
+    \item
+    \item
+\end{enumerate}
+
+\subsection*{Problem 6}
+\begin{enumerate}
+    \item Finite, countably infinite
+    \item Uncountable
+    \item Finite, countably infinite, uncountable
+    \item Finite, countably infinite, uncountable
+    \item Countably infinite, uncountable
+\end{enumerate}
+
+\subsection*{Problem 7}
+\begin{enumerate}
+    \item 
+    \item Possible. The difference between two identical uncountable set will be the empty set, which is finite. $e.g. R - R = \emptyset$.
+    \item Possible. The difference between the set of negative reals union the natural numbers minus the reals is the set of natural numbers, which is a countably infinite set. $e.g. R^- \cap N - R^- = N$ 
+\end{enumerate}
+
+\subsection*{Problem 8}
+\begin{enumerate}
+    \item 
+\end{enumerate}
+
+\subsection*{Collaborators}
+\begin{itemize}
+    \item I worked on this assignment with Srdjan Bozin, Chowdhury An-Noor, and Matthew Broadbent. 
+\end{itemize}
+
+
+\end{document}

@@ -39,7 +39,7 @@ alt + b
 
 # connect/disconnect monitor from laptop
 alt + shift + {m,n}
-    bspwm_moncon {--connect-monitors,--primary-only}
+    bspwm_moncon {--connect-monitors,--disconnect-monitors}
 
 # lock and suspend
 alt + shift + s
@@ -61,7 +61,7 @@ alt + Return
     $TERMINAL
 
 # program launcher
-alt + space
+alt + {space,Super_L}
     dmenu_run
 
 # make sxhkd reload its configuration files:

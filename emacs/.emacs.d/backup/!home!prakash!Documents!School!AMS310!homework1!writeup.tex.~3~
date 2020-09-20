@@ -1,0 +1,30 @@
+\documentclass[letterpaper,12pt]{article}
+\usepackage{enumitem}
+
+
+\begin{document}
+
+\subsection*{Problem 1}
+\begin{enumerate}[label=(\alph*)]
+    \item The mean is. When we do $\frac{40+61+71+79+84+83+75+64+54}{12}$, we get. When ordering these numbers, we get 40, 54, 61, 64, 71, 75, 79, 83, 84. The middle index here is 5, and the number at this index in the sorted list is 71.
+    \item 
+    \item 
+\end{enumerate}
+
+\subsection*{Problem 2}
+\begin{enumerate}[label=(\alph*)]
+    \item First quartile is 
+    \item 
+    \item 
+\end{enumerate}
+\subsection*{Problem 3}
+\subsection*{Problem 4}
+\subsection*{Problem 5}
+\subsection*{Problem 6}
+\subsection*{Problem 7}
+\subsection*{Problem 8}
+\subsection*{Problem 9}
+
+
+
+\end{document}

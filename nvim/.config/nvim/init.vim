@@ -18,7 +18,7 @@ Plug 'junegunn/fzf.vim'
 
 "Basic settings
 filetype plugin indent on
-set nowrap
+"set nowrap
 set relativenumber
 set background=dark
 set modeline

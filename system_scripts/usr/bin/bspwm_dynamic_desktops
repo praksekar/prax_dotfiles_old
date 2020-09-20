@@ -29,6 +29,22 @@ add_or_focus_desktop() {
     esac
 }
 
+monitor_scroll() {
+    case "$1" in 
+        inc) iterator=-1 ;; 
+        dec) iterator=1 ;;
+    esac
+
+    current_desktop="$(bspc query -D focused)"
+    while true; do
+        if desktop_exists; then
+            desktop_to_focus=
+        fi
+    done
+    bspc query -M -
+    add_or_focus_desktop
+}
+
 add_or_focus_desktop "$1" "$2"
 remove_empty_desktops
 

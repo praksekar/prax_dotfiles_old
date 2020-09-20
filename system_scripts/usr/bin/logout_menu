@@ -1,10 +1,11 @@
 #!/bin/bash
 
-option="$(echo -e "suspend\nshutdown\nreboot\nexit" | dmenu -p "What do you want to do?" -i)"
+option="$(echo -e "xfce-exit\nbspwm-exit\nsuspend\nshutdown\nreboot\nexit" | dmenu -p "What do you want to do?" -i)"
 
 case $option in
     suspend) lock_and_suspend ;;
     shutdown) echo xx ;;
-    exit) bspc quit ;;
+    bspwm-exit) bspc quit ;;
+    xfce-exit) xfce4-session-logout ;;
 esac
         

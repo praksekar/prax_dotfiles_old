@@ -1,0 +1,9 @@
+xkb_keymap {
+	xkb_keycodes  { include "evdev+aliases(qwerty)+local(add_ctls)"	};
+	xkb_types     { include "complete"	};
+	xkb_compat    { include "complete"	};
+	xkb_symbols   { include "pc+us+inet(evdev)+capslock(swapescape)+changemap(tab_backslash_to_ctrl)"	};
+	xkb_geometry  { include "pc(pc105)"	};
+};
+
+

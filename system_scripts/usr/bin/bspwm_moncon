@@ -48,14 +48,19 @@ connect_monitors() {
 }
 
 disconnect_monitors() {
-    notify-send "disconnecting monitors..."
+     notify-send "disconnecting monitors..."
      while read monitor; do
-        [ "$monitor" == "$primary_monitor" ] && continue
-        bspc monitor -a placeholder
+        #[ "$monitor" == "$MONITOR_PRIMARY" ] && continue
+        bspc desktop -a placeholder
         while read desktop; do
-            bspc desktop $desktop -m $primary_monitor
+            [ "$desktop" != "placeholder" ] && bspc desktop "$desktop" -m "$MONITOR_PRIMARY"
         done < <(bspc query -D -m $monitor) 
         bspc desktop placeholder -r 
+        if [ -z "$(bspc query -D -m $monitor --names)" ]; then 
+            bspc monitor "$monitor" -r
+        fi
+        sleep 0.5
+        xrandr --output "$monitor" --off
     done < <(bspc query -M --names) 
 }
 
@@ -64,7 +69,8 @@ case "$1" in
     --disconnect-monitors) disconnect_monitors ;;
     *) echo "invalid argument"; exit 1 ;;
 esac
-~/.config/bspwm/bspwm_init
+
+bspc wm -r
 setxkbmap -option caps:swapescape
 
 

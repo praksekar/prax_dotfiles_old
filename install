@@ -1,6 +1,6 @@
 #!/bin/bash
 
-sudo apt update && sudo apt upggrade
+sudo apt update && sudo apt upgrade
 
 sudo apt install python3-pip
 pip3 install youtube-dl
@@ -17,6 +17,9 @@ languages=(
 )
 
 programs=(
+    xcape
+    xterm
+    #r-base
     xtitle
     speedtest-cli
     texlive-latex-extra
@@ -80,6 +83,7 @@ install_apt_snap_programs() {
     sudo snap install code --classic
     sudo snap install spotify
     sudo snap install telegram-desktop
+    sudo snap install --edge nvim --classic
     #sudo snap install android-studio
 }
 
@@ -132,10 +136,10 @@ ncurses_stuff() {
 install_languages
 install_apt_snap_programs
 stow_directories
-install_st
+#install_st
 install_fzf
 install_lemonbar_xft
-install_fonts
+#install_fonts
 remove_sudo_for_brightness
 
 chsh -s "$(which zsh)"

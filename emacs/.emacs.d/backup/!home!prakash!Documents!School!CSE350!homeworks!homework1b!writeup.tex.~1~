@@ -1,0 +1,40 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\title{Homework 1A}
+\author{Prakash Sekar}
+\date{September 11, 2020}
+
+\begin{document}
+\maketitle
+
+
+\subsection*{Problem 1}
+\begin{enumerate}
+    \item False. Counterexample: the relation ${(A,B)}$ is transitive. The symmetric closure of this relation would form the set $\{(A,B), (B,A)\}$, which is not transitive because $(A,A)$ is not in the set.
+    \item True. Let's look at any individual directed arrow between two nodes, say, $(A, B)$(which is a transitive relation in itself), and make it reflexive, adding $(A, A)$ and $(B, B)$. This remains transitive because if $(A,B) \wedge (B,B) \rightarrow (B,B)$, and $(A, B)$ is in the set already. In addition, if $(A, A) \wedge (A, B) \rightarrow (A,B)$, and $(A,B)$ again is already in the set. This similarly applies to any directed arrow on any graph. Since every relation consists of a set of directed arrows, adding a self loop to any node on this graph will never make it not transitive.
+    \item True. The transitive closure of a relation that is already transitive is that same relation. So, the transitive relation will remain transitive.
+\end{enumerate}
+
+\subsection*{Problem 2}
+\begin{enumerate}
+    \item Proof by contradiction. Let's assume a best case scenario: that everyone knows a unique amount of people, meaning no two people know the same amount of people. Since there are $n$ people, in this case, there must be one person who knows one person(just themselves) and another person that knows 2 people, 3 people, etc. all the way to $n$ people. However, this cannot be the case, because knowing is symmetric. There cannot be a person that knows everyone while one person just knows themself, because those two people must know each other. Because of this impossibility, we have shown our original assumption to be false. Now, we have a case where there are $n$ people, but less than $n$ amount of unique numbers of people that each person knows. So, by pigeonholing, there must be two people who know the same amount of people. 
+\end{enumerate}
+
+\subsection*{Problem 3}
+\begin{enumerate}
+    \item Let's prove that maximum number of elements that can be picked is $N$ using the pigeonhole principle. In order to satisfy the rule that no two neighbors can have a difference of only one, we must choose elements that are more than one apart. For the most "compact" and maximal arrangement we should choose every other element in the array, because it is the minimum spacing that satisfies this condition. Each "pigeonhole" in this example will be a grouping of two adjacent elements, as we cannot select more than one element among the two in an adjacent group. In an array of $2N$ elements, there is a maximum of $N$ such groupings. In order to satisfy the pigeonhole rule, we cannot have more than one pigeon in each hole, meaning the maximum number of pigeons is equal to the maximum number of holes; $N$ in this case.
+\end{enumerate}
+
+\subsection*{Problem 4}
+\begin{enumerate}
+    \item No. A language can consist only of finite length strings. Because every finite length string can be converted to an ASCII number, every finite length string can be mapped to a real number. Therefore, a bijection can be formed between the set of finite length strings and the natural numbers. This means that any language can have a cardinality at most of the set of real numbers, which is a set that is countably infinite.
+\end{enumerate}
+
+\subsection*{Collaborators}
+\begin{itemize}
+    \item I worked on this assignment with Srdjan Bozin, Chowdhury An-Noor, and Matthew Broadbent. 
+\end{itemize}
+
+
+\end{document}

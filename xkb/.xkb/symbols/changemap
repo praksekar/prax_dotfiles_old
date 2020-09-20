@@ -1,0 +1,7 @@
+partial modifier_keys
+xkb_symbols "tab_backslash_to_ctrl" {
+    key <ABCD> { [ Control_L ] };
+    key <EFGH> { [ Control_R ] };
+    key <JKLM> { [ Tab ] };
+    key <NOPQ> { [ backslash, bar ] };
+};

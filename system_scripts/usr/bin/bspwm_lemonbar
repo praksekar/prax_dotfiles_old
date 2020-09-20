@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#notify-send "monitor:$MONITOR_PRIMARY"
+
 # kill running instance of lemonbar and bspwm_lemonbar, launch lemonbar with modules
 kill_running_instance() {
     pgrep -x lemonbar > /dev/null && pkill -x lemonbar
@@ -25,10 +27,10 @@ brightnesses() {
     local label="S"
     local brightnesses=""
     while read monitor_name; do
-        if [ $monitor_name == $primary_monitor ]; then
-            brightnesses="$brightnesses $(bspwm_chbr --get-laptop-brightness)"
+        if [ "$monitor_name" == "$primary_monitor" ]; then
+            brightnesses+=" $(bspwm_chbr --get-laptop-brightness)"
         else
-            brightnesses="$brightnesses $(bspwm_chbr --get-monitor-brightness $monitor_name)"
+            brightnesses+=" $(bspwm_chbr --get-monitor-brightness $monitor_name)"
         fi
     done < <(bspc query -M --names)
     echo "$label$brightnesses"
@@ -70,10 +72,6 @@ workspace() {
     echo -e "$label$workspaces_string"
 }
 
-#grep -x '[0-9][0-9]*' |
-#workspace2
-#notify-send workspaces_string:$workspaces_string
-
 memory() {
     local label="M"
     local memory="$(free | grep Mem | awk '{print $3/$2 * 100.0}')"
@@ -94,7 +92,7 @@ battery() {
     #state=$(acpi | awk -v N=3 '{print $N}')
     #remaining=$(acpi | awk -v N=5 '{print $N}')
     #output=$(cat "$BATTERY_LEVEL_FILE")
-    echo "$label$battery" #($state $remaining remaining)
+    echo "$label$battery$state" #$remaining remaining)
 }
 
 # alternative to bspc subscribe is: xprop -spy -root _NET_ACTIVE_WINDOW
@@ -116,6 +114,9 @@ activewindow() {
     while read monitor_name; do
         activewindow_name="$(bspc query -N -m $monitor_name -n '.active')"
         activewindow_name="$(xdotool getwindowname "$activewindow_name" | tr " " "." )"
+        if [ "$(echo "$activewindow_name" | wc -m)" -gt 80 ]; then 
+            activewindow_name="$(echo $activewindow_name | cut -c 1-80)--"
+        fi
         activewindow_string+="$activewindow_name "
     done < <(bspc query -M --names)
     echo "$label$activewindow_string"
@@ -228,10 +229,10 @@ start_output_stream | while read line; do
     formatted_string=""
     display_counter=0
     while [ $display_counter -lt $num_monitors ]; do
-        formatted_string+="%{lS$display_counter} "$(get_element_by_index "$workspace_string" "$display_counter")" %{-lc+uU#bdbcb1}"$(get_element_by_index "$activewindow_bar" "$display_counter")"%{-u} %{r+uU#000000}Brightness: $(get_element_by_index "$brightnesses_string" $display_counter)%{-u} %{+uU#03851d}Memory: $memory_bar%{-u} %{+uU#f90000}CPU: $cpu_bar%{-u} %{+uU#9f78e1}$wifi_bar%{-u} %{+uU#0aeaf2}Volume: $volume_bar%{-u} %{+uU#0a6cf5}$date_bar%{-u} %{+uU#fc8d05}$clock_bar%{-u} %{+uU#ffb52a}Battery: $battery_bar%{-uU}"
+        formatted_string+="%{lS$display_counter} "$(get_element_by_index "$workspace_string" "$display_counter")" %{-lc+uU#bdbcb1}"$(get_element_by_index "$activewindow_bar" "$display_counter")"%{-u} %{r+uU#000000}Brightness: $(get_element_by_index "$brightnesses_string" $display_counter)%{-u} %{+uU#03851d}Memory: $memory_bar%{-u} %{+uU#f90000}CPU: $cpu_bar%{-u}%{+uU#9f78e1}$wifi_bar%{-u} %{+uU#0aeaf2}Volume: $volume_bar%{-u} %{+uU#0a6cf5}$date_bar%{-u} %{+uU#fc8d05}$clock_bar%{-u} %{+uU#ffb52a}Battery: $battery_bar%{-uU}"
         ((display_counter++))
     done
-    echo -e "$formatted_string"
+    echo -e "$formatted_string" # final echo to lemonbar
 done | lemonbar -p -f  "Ubuntu Mono:size=12" -u 2 #-B "#000000" -g x30 #-o -3 #-u -3 # finally, display the string
 
 
