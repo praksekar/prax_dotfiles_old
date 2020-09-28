@@ -1,8 +1,7 @@
 xkb_keycodes "add_ctls" {
-    <ABCD> = 23;
-    <EFGH> = 51; 
     <JKLM> = 200;
     <NOPQ> = 201;
     <RSTU> = 202;
     <VWXY> = 203;
+    <ABCD> = 204;
 };

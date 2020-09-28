@@ -3,50 +3,50 @@
 #
 
 # open spotify, spotify commands
-alt + v 
+mod3 + v 
     spotify
 
-alt + {bracketleft, bracketright, backslash}
+mod3 + {F9, F12, F11}
     {dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous, \
     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next, \
     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause}
 
 
 # open email/messaging apps
-alt + m; {1-2}
+mod3 + m; {1-2}
     {browserapp gmail_personal, browserapp gmail_school}
 
-alt + n; {1-5}
+mod3 + n; {1-5}
     {browserapp hangouts, browserapp messages, telegram-desktop, browserapp telegram, browserapp news}
 
 # toggle floating ranger
-alt + r
+mod3 + r
     bspwm_toggle_ranger
 
 # volume controls
-alt + {minus,equal}
+mod3 + {minus,equal}
     {amixer sset 'Master' 5%-,amixer sset 'Master' 5%+}
 {XF86AudioLowerVolume,XF86AudioRaiseVolume}
     {amixer sset 'Master' 5%-,amixer sset 'Master' 5%+}
 
 # screenshot
-alt + p
+mod3 + p
     flameshot gui
 
 # open browser
-alt + b
+mod3 + b
     $BROWSER
 
 # connect/disconnect monitor from laptop
-alt + shift + {m,n}
+mod3 + alt + {m,n}
     bspwm_moncon {--connect-monitors,--disconnect-monitors}
 
 # lock and suspend
-alt + shift + s
+mod3 + alt + s
     lock_and_suspend #$LOCKER
 
 # increase laptop/monitor brightness
-alt + shift + {minus,equal}
+mod3 + alt + {minus,equal}
     bspwm_chbr msb {dec,inc}
 
 {XF86MonBrightnessUp,XF86MonBrightnessDown}
@@ -57,15 +57,15 @@ Fn + F8 #is there an xf86 key for this??
    bspwm_chbr keyboard toggle
 
 # terminal emulator
-alt + Return
+mod3 + Return
     $TERMINAL
 
 # program launcher
-alt + {space,Super_L}
+mod3 + {space,Super_L}
     dmenu_run
 
 # make sxhkd reload its configuration files:
-alt + Escape
+mod3 + Escape
     pkill -USR1 -x sxhkd
 
 #
@@ -74,28 +74,28 @@ alt + Escape
 
 
 # quit/restart bspwm
-alt + shift + r
+mod3 + alt + r
 	bspc wm -r
 
 # logout_menu
-alt + shift + e
+mod3 + alt + e
     logout_menu
 
 # close 
-alt + BackSpace
+mod3 + BackSpace
     bspc node -c
     #bspwm_smart_delete
 
-# alternate between the tiled and monocle layout
-# alt + m
+# mod3ernate between the tiled and monocle layout
+# mod3 + m
 #	bspc desktop -l next
 
 # send the newest marked node to the newest preselected node
-# alt + y
+# mod3 + y
 #	bspc node newest.marked.local -n newest.!automatic.local
 
 # swap the current node and the biggest node
-# alt + g
+# mod3 + g
 #	bspc node -s biggest
 
 
@@ -103,11 +103,11 @@ alt + BackSpace
 #
 
 # set the window state
-alt + {t,shift + t,s,f}
+mod3 + {t,alt + t,s,f}
     bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
 
 # set the node flags
-# alt + ctrl + {m,x,y,z}
+# mod3 + ctrl + {m,x,y,z}
 #	bspc node -g {marked,locked,sticky,private}
 
 #
@@ -115,92 +115,96 @@ alt + {t,shift + t,s,f}
 #
 
 # focus the node in the given direction
-alt + {h,j,k,l}
+mod3 + {h,j,k,l}
 	bspc node -f {west,south,north,east}
 
-#alt + shift + {h,j,k,l}
+#mod3 + alt + {h,j,k,l}
 	#bspc node -s {west,south,north,east}
 
-alt + shift + {h,j,k,l}
+mod3 + alt + {h,j,k,l}
 	bspwm_smart_move {west,south,north,east}
 
 # focus the node for the given path jump
-# alt + {p,b,comma,period}
+# mod3 + {p,b,comma,period}
 #	bspc node -f @{parent,brother,first,second}
 
 # focus the next/previous node in the current desktop
-alt + {_,shift + }c
+mod3 + {_,alt + }c
     bspc node -f {next,prev}.local
 
 # focus the next/previous desktop in the current monitor
-# alt + bracket{left,right}
+# mod3 + bracket{left,right}
 #	bspc desktop -f {prev,next}.local
 
 # focus the last node/desktop
-# alt + {grave,Tab}
+# mod3 + {grave,Tab}
 #	bspc {node,desktop} -f last
 
 # focus the older or newer node in the focus history
-#alt + {o,i}
+#mod3 + {o,i}
 #	bspc wm -h off; \
 #	bspc node {older,newer} -f; \
 #	bspc wm -h on
 
-alt + shift + {y,u,i,o}
+mod3 + alt + {y,u,i,o}
     bspc node -n {west,south,north,east} --follow
 
 # send desktop to other monitor
-alt + shift + {comma,period}
+mod3 + alt + {comma,period}
     bspc desktop -m {west,east} --follow
 
 # send node to other monitor
-alt  + {comma,period}
+mod3  + {comma,period}
     bspc node -m {west,east} --follow
 
 # focus or send to the given desktop
-#alt + {_,shift + }{1-9,0}
+#mod3 + {_,alt + }{1-9,0}
 	#bspc {desktop -f,node -d} '^{1-9,10}'
 
-#alt + {_,shift + }{1-9,0}
+#mod3 + {_,alt + }{1-9,0}
 	#bspc {desktop -f,node -d} '^{1-9,10}'
 
 # dynamic desktops
-alt + {_,shift +}{1,2,3,4,5,6,7,8,9,0}
-	{bspwm_dynamic_desktops focus,bspwm_dynamic_desktops move_window_to} {1,2,3,4,5,6,7,8,9,10}
+mod3 + {_,alt +}{1,2,3,4,5,6,7,8,9,0}
+	{bspwm_dynamic_desktops --add-or-focus-desktop focus,bspwm_dynamic_desktops --add-or-focus-desktop move_window_to} {1,2,3,4,5,6,7,8,9,10}
 
-#alt + shift + {1,2,3,4,5,6,7,8,9,0}
+# monitor_scroll
+mod3 + {bracketleft, bracketright}
+    bspwm_dynamic_desktops --monitor-scroll {dec, inc}
+
+#mod3 + alt + {1,2,3,4,5,6,7,8,9,0}
 	#~/.config/bspwm/bspwm_dynamic_desktops move_window_to {1,2,3,4,5,6,7,8,9,10}
 #
 # preselect
 #
 
 # preselect the direction
-#alt + ctrl + {h,j,k,l}
+#mod3 + ctrl + {h,j,k,l}
 #	bspc node -p {west,south,north,east}
 
 # preselect the ratio
-#alt + ctrl + {1-9}
+#mod3 + ctrl + {1-9}
 #	bspc node -o 0.{1-9}
 
 # cancel the preselection for the focused node
-#alt + ctrl + space
+#mod3 + ctrl + space
 #	bspc node -p cancel
 
 # cancel the preselection for the focused desktop
-#alt + ctrl + shift + space
+#mod3 + ctrl + alt + space
 #	bspc query -N -d | xargs -I id -n 1 bspc node id -p cancel
 
 #
 # move/resize 
 
 # expand a window by moving one of its side outward
-alt + {y,u,i,o}
+mod3 + {y,u,i,o}
 	bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
 
 # contract a window by moving one of its side inward
-alt + shift + {y,u,i,o}
+mod3 + alt + {y,u,i,o}
 	bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}
 
 # move a floating window
-alt + {Left,Down,Up,Right}
+mod3 + {Left,Down,Up,Right}
 	bspc node -v {-20 0,0 20,0 -20,20 0}

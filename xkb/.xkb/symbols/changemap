@@ -1,7 +1,10 @@
 partial modifier_keys
-xkb_symbols "tab_backslash_to_ctrl" {
-    key <ABCD> { [ Control_L ] };
-    key <EFGH> { [ Control_R ] };
+xkb_symbols "tab_backslash_to_hyper" {
+    key <TAB> { [ Hyper_L ] };
+    key <BKSL> { [ Hyper_R ] };
     key <JKLM> { [ Tab ] };
-    key <NOPQ> { [ backslash, bar ] };
+    key <NOPQ> { [ backslash ] };
+    key <RSTU> { [ Return ] };
+    key <RTRN> { [ Control_R ] };
+    modifier_map Mod3 { Hyper_L, Hyper_R };
 };

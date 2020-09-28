@@ -3,7 +3,8 @@
 # wm_init
 notify-send "bspwmrc executed"
 sxhkd &
-setxkbmap -option caps:swapescape
+#setxkbmap -option caps:swapescape
+remaps &
 compton &
 feh --bg-fill ~/Pictures/wallpapers/bee_on_flower.jpg #--randomize 
 bspwm_lemonbar &

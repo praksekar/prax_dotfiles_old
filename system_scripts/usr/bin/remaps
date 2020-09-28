@@ -1,6 +1,18 @@
 #!/bin/bash
 
+kill_running_instance() {
+    pgrep -x xcape > /dev/null && pkill -x xcape 
+    script_name=${BASH_SOURCE[0]}
+    for pid in $(pidof -x $script_name); do
+        if [ $pid != $$ ]; then
+            kill -9 $pid
+        fi 
+    done
+}
+
+kill_running_instance
+
 xkbcomp -I$HOME/.xkb ~/.xkb/keymap/mykbd :0
 #xcape -d -e "Control_L=Tab;Control_R=backslash"
-xcape -t 125 -d -e "Control_L=Tab;Control_R=backslash"
+xcape -t 120 -d -e "Hyper_L=Tab;Hyper_R=backslash;Control_L=Escape;Control_R=Return"
 

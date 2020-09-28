@@ -2,6 +2,9 @@
 
 #last_focused="$(bspc query -D -d --names)"
 
+desktop_names=(1 2 3 4 5 6 7 8 9 10)
+max_desktops=10
+
 remove_empty_desktops() {
     bspc query -D -d '.!occupied.!active' | while read desktop_name; do
         bspc desktop $desktop_name -r
@@ -29,23 +32,49 @@ add_or_focus_desktop() {
     esac
 }
 
-monitor_scroll() {
-    case "$1" in 
-        inc) iterator=-1 ;; 
-        dec) iterator=1 ;;
-    esac
-
-    current_desktop="$(bspc query -D focused)"
-    while true; do
-        if desktop_exists; then
-            desktop_to_focus=
-        fi
+get_index_of_element() {
+    array="$1"
+    value=$2
+    notify-send "value:$value"
+    for i in "${!array[@]}"; do
+       if [[ "${array[$i]}" = "${value}" ]]; then
+           echo "${i}";
+       fi
     done
-    bspc query -M -
-    add_or_focus_desktop
 }
 
-add_or_focus_desktop "$1" "$2"
+#notify-send $(get_index_of_element "$desktop_names" "6")
+    
+    
+
+monitor_scroll() {
+    current_desktop="$(bspc query -D -d --names)"
+    focused_monitor_desktops="$(bspc query -D -m --names)" 
+    count="$current_desktop"
+    notify-send "startingcount:$count"
+
+    case "$1" in 
+        inc) iterator=1 ;; 
+        dec) iterator=-1 ;;
+    esac
+
+    while [ "$count" -le "$max_desktops" ] && [ "$count" -ge 1 ]; do
+        count=$(($count+iterator))
+        notify-send count:$count
+        if [[ ! -z $(echo $focused_monitor_desktops | grep $count) ]]; then
+            bspc desktop "$count" -f
+            break
+        else
+            notify-send "no desktops left to scroll"
+        fi
+    done
+}
+
+case "$1" in 
+    --add-or-focus-desktop) add_or_focus_desktop "$2" "$3" ;;
+    --monitor-scroll) monitor_scroll "$2" ;;
+esac
+#add_or_focus_desktop "$1" "$2"
 remove_empty_desktops
 
 # finally, if the last focused desktop we just left is empty AND we explicitly are leaving this desktop, delete it.
