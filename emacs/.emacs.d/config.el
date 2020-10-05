@@ -12,19 +12,19 @@ delete-old-versions    t  ; Automatically delete excess backups:
 kept-new-versions      20 ; how many of the newest versions to keep
 kept-old-versions      5) ; and how many of the old
 
-;;(use-package evil
-    ;;:config
-    ;;(evil-mode 1)
-    ;;;; evil to work with list-packages
-    ;;(with-eval-after-load 'evil
-    ;;;; use evil mode in the buffer created from calling `list-packages'.
-    ;;(add-to-list 'evil-buffer-regexps '("*Packages*" . normal))
-    ;;(with-eval-after-load 'package
-    ;;;; movement keys j,k,l,h set up for free by defaulting to normal mode.
-    ;;;; mark, unmark, install
-    ;;(evil-define-key 'normal package-menu-mode-map (kbd "m") #'package-menu-mark-install)
-    ;;(evil-define-key 'normal package-menu-mode-map (kbd "u") #'package-menu-mark-unmark)
-    ;;(evil-define-key 'normal package-menu-mode-map (kbd "x") #'package-menu-execute))))
+(use-package evil
+    :config
+    (evil-mode 1)
+    ;; evil to work with list-packages
+    (with-eval-after-load 'evil
+    ;; use evil mode in the buffer created from calling `list-packages'.
+    (add-to-list 'evil-buffer-regexps '("*Packages*" . normal))
+    (with-eval-after-load 'package
+    ;; movement keys j,k,l,h set up for free by defaulting to normal mode.
+    ;; mark, unmark, install
+    (evil-define-key 'normal package-menu-mode-map (kbd "m") #'package-menu-mark-install)
+    (evil-define-key 'normal package-menu-mode-map (kbd "u") #'package-menu-mark-unmark)
+    (evil-define-key 'normal package-menu-mode-map (kbd "x") #'package-menu-execute))))
 
 (use-package ace-window
     :bind ("M-o" . ace-window))

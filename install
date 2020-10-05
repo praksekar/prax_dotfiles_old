@@ -17,6 +17,7 @@ languages=(
 )
 
 programs=(
+    compton
     xcape
     xterm
     #r-base

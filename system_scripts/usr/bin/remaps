@@ -14,5 +14,5 @@ kill_running_instance
 
 xkbcomp -I$HOME/.xkb ~/.xkb/keymap/mykbd :0
 #xcape -d -e "Control_L=Tab;Control_R=backslash"
-xcape -t 120 -d -e "Hyper_L=Tab;Hyper_R=backslash;Control_L=Escape;Control_R=Return"
+xcape -t 105 -d -e "Hyper_L=Tab;Hyper_R=backslash;Control_L=Escape;Control_R=Return"
 

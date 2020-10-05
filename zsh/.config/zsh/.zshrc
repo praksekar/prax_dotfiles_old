@@ -97,13 +97,13 @@ preexec() { echo -ne '\e[5 q' ;} # Use beam shape cursor for each new prompt.
 
 # keybindings
 bindkey -s '^a' 'bc -l\n'
-bindkey -s '^t' 'cd "$(dirname "$(fzf)")"\n'
-bindkey -s '^r' 'cat $HISTFILE | fzf \n'
+#bindkey -s '^t' 'cd "$(dirname "$(fzf)")"\n'
+#bindkey -s '^r' 'cat $HISTFILE | fzf \n'
 bindkey '^[[P' delete-char
 
-zle -N fzf_history_search_widget
-fzf_history_search_widget() fzf_history_search
-bindkey '^R' fzf_history_search_widget
+#zle -N fzf_history_search_widget
+#fzf_history_search_widget() fzf_history_search
+#bindkey '^R' fzf_history_search_widget
 
 # Edit line in desired text edt=itor with ctrl-e:
 autoload edit-command-line; zle -N edit-command-line
@@ -123,6 +123,7 @@ bindkey '^ ' window_swallow_command
 
 # source fzf 
 #[ -f ~/.src/fzf/.fzf.zsh ] && source ~/.src/fzf/.fzf.zsh 
+source key-bindings.zsh
 
 # Load syntax highlighting; should be last.
 [ -f ~/.src/zsh-plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh ] && source ~/.src/zsh-plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh 

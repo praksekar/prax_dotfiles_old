@@ -1,0 +1,14 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{graphics}
+
+\title{Homework 1B}
+\author{Prakash Sekar}
+\date{September 20, 2020}
+
+\begin{document}
+\maketitle
+
+
+\subsection*{Problem 5}
+\begin{enumerate}
