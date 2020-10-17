@@ -1,11 +1,13 @@
 #!/bin/bash
 
+sudo apt update && sudo apt upgrade -y
 
 languages=(
     openjdk-8-jre-headless
 )
 
 programs=(
+    speedtest-cli
     tree
     neovim
     git
@@ -16,6 +18,7 @@ programs=(
 
 dont_stow=(
     install
+    README.md
     )
 
 install_languages() {
