@@ -1,0 +1,96 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{graphics}
+\usepackage{tikz}
+
+\title{Homework 2A}
+\author{Prakash Sekar}
+\date{October 5, 2020}
+
+\begin{document}
+\maketitle
+
+
+\subsection*{Problem 1}
+\begin{enumerate}
+  \item $(a((a \cup b )(a \cup b))^*) \cup (b(a \cup b) ((a \cup b )(a \cup b)^*))$
+\end{enumerate}
+
+
+\subsection*{Problem 2}
+    \begin{center}
+        \begin{tikzpicture}[scale=0.2]
+        \tikzstyle{every node}+=[inner sep=0pt]
+        \draw [black] (15.1,-10.2) circle (3);
+        \draw [black] (15.1,-10.2) circle (2.4);
+        \draw [black] (35.7,-39.8) circle (3);
+        \draw [black] (53,-10.2) circle (3);
+        \draw [black] (12.484,-8.755) arc (268.81904:-19.18096:2.25);
+        \draw (7.24,-4.16) node [above] {$0,\mbox{ }3,\mbox{ }6,\mbox{ }9$};
+        \fill [black] (14.66,-7.24) -- (15.17,-6.46) -- (14.17,-6.43);
+        \draw [black] (18.031,-9.56) arc (101.27152:78.72848:81.957);
+        \fill [black] (50.07,-9.56) -- (49.38,-8.91) -- (49.19,-9.89);
+        \draw (34.05,-7.48) node [above] {$1,\mbox{ }4,\mbox{ }7$};
+        \draw [black] (50.024,-10.579) arc (-83.36112:-96.63888:138.171);
+        \fill [black] (18.08,-10.58) -- (18.81,-11.17) -- (18.93,-10.17);
+        \draw (34.05,-12.01) node [below] {$2,\mbox{ }5,\mbox{ }8$};
+        \draw [black] (36.74,-36.986) arc (158.76462:140.62627:90.012);
+        \fill [black] (36.74,-36.99) -- (37.5,-36.42) -- (36.56,-36.06);
+        \draw (42.28,-22.93) node [left] {$1,\mbox{ }4,\mbox{ }7$};
+        \draw [black] (52.021,-13.035) arc (-20.12625:-40.48286:80.358);
+        \fill [black] (52.02,-13.04) -- (51.28,-13.61) -- (52.21,-13.96);
+        \draw (46.6,-27.18) node [right] {$2,\mbox{ }5,\mbox{ }8$};
+        \draw [black] (33.457,-37.808) arc (-132.82225:-157.50609:70.716);
+        \fill [black] (16.19,-13) -- (16.03,-13.93) -- (16.96,-13.54);
+        \draw (22.88,-27.69) node [left] {$1,\mbox{ }4,\mbox{ }7$};
+        \draw [black] (17.121,-12.417) arc (41.67786:27.9938:126.391);
+        \fill [black] (34.32,-37.13) -- (34.39,-36.19) -- (33.51,-36.66);
+        \draw (27.06,-22.9) node [right] {$2,\mbox{ }5,\mbox{ }8$};
+        \draw [black] (54.134,-7.435) arc (185.42367:-102.57633:2.25);
+        \draw (58.6,-4.28) node [right] {$0,\mbox{ }3,\mbox{ }6,\mbox{ }9$};
+        \fill [black] (55.88,-9.42) -- (56.73,-9.84) -- (56.63,-8.85);
+        \draw [black] (37.023,-42.48) arc (54:-234:2.25);
+        \draw (35.7,-47.05) node [below] {$0,\mbox{ }3,\mbox{ }6,\mbox{ }9$};
+        \fill [black] (34.38,-42.48) -- (33.5,-42.83) -- (34.31,-43.42);
+        \end{tikzpicture}
+    \end{center}
+
+
+\subsection*{Problem 3}
+\begin{enumerate}
+  \item False. If $L_1 = L_2 = a^* = \{e, a, aa, aaa... \}$, concatenating any two elements in this set will yield another element in the set.
+  \item False. If $L = \{e\}$, then $L^* = \{e\}$ and $L = \{e\}$. Both are the empty string and the same size.
+  \item False. If $L_1 = \{e, ab, aabb, aaabbb, ...\}$, and $L_2 = \{a, aab, aaabb, aaaabbb, ...\}$, then $L_1 \cap L_2 = \emptyset$, which is a regular language.
+\end{enumerate}
+
+
+\subsection*{Problem 4}
+        \begin{tabular}{ |c|c|c| }
+            \hline
+            Start state & Symbol & End state \\ \hline
+            $\{q_0\}$ & $a$ & $\{q_1\}$ \\ \hline
+            $\{q_0\}$ & $b$ & $\{\emptyset\}$ \\ \hline
+            $\{q_1\}$ & $a$ & $\{q_3\}$ \\ \hline
+            $\{q_1\}$ & $b$ & $\{q_3\}$ \\ \hline
+            $\{q_2\}$ & $a$ & $\{q_0, q_1\}$ \\ \hline
+            $\{q_1\}$ & $a$ & $\{q_3\}$ \\ \hline
+            $\{q_3\}$ & $a$ & $\{q_3\}$ \\ \hline
+            $\{q_3\}$ & $b$ & $\{q_1\}$ \\ \hline
+            $\emptyset$ & $a$ & $\emptyset$ \\ \hline
+            $\{q_0, q_1\}$ & $a$ & $\{q_1, q_3\}$ \\ \hline
+            $\{q_0, q_1\}$ & $b$ & $\{q_2\}$ \\ \hline
+            $\{q_1, q_3\}$ & $a$ & $\{q_3\}$ \\ \hline
+            $\{q_1, q_3\}$ & $b$ & $\{q_1, q_2\}$ \\ \hline
+            $\{q_1, q_2\}$ & $a$ & $\{q_0, q_1, q_3\}$ \\ \hline
+            $\{q_1, q_2\}$ & $b$ & $\{q_2\}$ \\ \hline
+            $\{q_0, q_1, q_3\}$ & $a$ & $\{q_1, q_3\}$ \\ \hline
+            $\{q_0, q_1, q_3\}$ & $b$ & $\{q_1, q_2\}$ \\ \hline
+        \end{tabular}
+
+\subsection*{Collaborators}
+\begin{itemize}
+  \item I worked with Chowdhury An-Noor, Srdjan Bozin, and Matthew Broadbent during this problem set.
+\end{itemize}
+
+
+ \end{document}

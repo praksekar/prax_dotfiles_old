@@ -1,0 +1,50 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{graphics}
+
+\title{Homework 2A}
+\author{Prakash Sekar}
+\date{October 5, 2020}
+
+\begin{document}
+\maketitle
+
+
+\subsection*{Problem 1}
+\begin{enumerate}
+  \item $a((a \cup b )(a \cup b))^* cup b(a \cup b) ((a \cup b )(a \cup b))^*$
+\end{enumerate}
+
+
+\subsection*{Problem 2}
+\begin{enumerate}
+    \item \includegraphics{
+\end{enumerate}
+
+
+\subsection*{Problem 3}
+\begin{enumerate}
+  \item False. If $L_1 = L_2 = a^* = {e, a, aa, aaa... }$, concatenating any two elements in this set will yield another element in the set.
+  \item False. If $L = {e}$, then $L^* = {e}$ and $L = {e}$, both of which are empty and the same size.
+  \item False. If $L_1 = {e, ab, aabb, aaabbb, ...}$, and $L_2 = {a, aab, aaabb, aaaabbb, ...}$, then $L_1 \cap L_2 = \emptyset$, which is a regular language.
+\end{enumerate}
+
+
+\subsection*{Problem 4}
+        \begin{tabular}{ |c|c|c| }
+            \hline
+            Start state & Symbol & End state \\ \hline
+            ${q_0}$ & $a$ & ${q_1}$ \\ \hline
+            ${q_0}$ & $b$ & ${\emptyset}$ \\ \hline
+            ${q_1}$ & $a$ & ${q_3}$ \\ \hline
+            ${q_1}$ & $b$ & ${q_3}$ \\ \hline
+            ${q_2}$ & $a$ & ${q_0, q_1}$ \\ \hline
+            ${q_1}$ & $a$ & ${q_3}$ \\ \hline
+            \\ \hline
+            \\ \hline
+            \\ \hline
+            \\ \hline
+            \\ 
+            \hline
+
+\begin{enumerate}

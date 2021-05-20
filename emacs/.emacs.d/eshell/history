@@ -13,3 +13,7 @@ ls
 semacs config.el
 ls
 semacs .zshenv
+pdflatex writeup.tex 
+quit
+exit
+exit

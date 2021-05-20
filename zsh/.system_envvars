@@ -1,5 +1,29 @@
 #!/bin/bash
 notify-send "system_envvars sourced"
 
+# system specific config
+# touchpad
+export TOUCHPAD="04CA00B1:00 04CA:00B1 Touchpad"
+#export TOUCHPAD=$(xinput --list --short|grep -i mouse|cut -f 1 | cut -d  -f 5-|sed 's/\s\+$//g')
+
+#export MOUSE=$(xinput --list --short|grep -i mouse|cut -f 1 | cut -d  -f 5-|sed 's/\s\+$//g' | head -n 1)
+
+# brightness
+export KEYBRD_BRIGHTNESS_FILE="/sys/class/leds/kbd_backlight/brightness"
+export LAPTOP_BRIGHTNESS_FILE="/sys/class/backlight/intel_backlight/brightness"
+export MAX_LAPTOP_BRIGHTNESS_FILE="/sys/class/backlight/intel_backlight/max_brightness"
+export KEYBRD_DEV="kbd_backlight"
+
+# battery
+export BATTERY_LEVEL_FILE="/sys/class/power_supply/CMB0/capacity"
+export BATTERY_STATE_FILE="/sys/class/power_supply/CMB0/status"
+
+#wifi
+export WIFI_CARD="wlp0s20f3"
+
+# monitor
+#[ -z "$MONITOR_PRIMARY" ] && export MONITOR_PRIMARY="$(xrandr | grep primary | awk '{print $1}')"
+export MONITOR_PRIMARY="eDP-1"
+export MONITOR_SECONDARY="HDMI-1"
 
 

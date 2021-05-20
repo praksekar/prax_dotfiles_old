@@ -1,0 +1,23 @@
+#!/bin/bash
+
+kill_running_instance() {
+    pgrep -x lemonbar > /dev/null && pkill -x lemonbar
+    script_name=${BASH_SOURCE[0]}
+    for pid in $(pidof -x $script_name); do
+        if [ $pid != $$ ]; then
+            kill -9 $pid
+        fi 
+    done
+}
+
+kill_running_instance
+
+inotifywait -q -m -e modify $BATTERY_LEVEL_FILE | while read -r filename event; do
+    battery_level="$(cat $BATTERY_LEVEL_FILE)"
+    if [ "$battery_level" -lt 10 ]; then
+        notify-send --urgency=critical "battery 10%. suspending at 5% plug in or save work now."
+    else if [ "$battery_level" -lt 5 ]; then
+        notify-send --urgency=critical "battery critical. suspending in 60 seconds. save work now."
+        sleep 60
+        systemctl suspend
+done 

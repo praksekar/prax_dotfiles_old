@@ -35,6 +35,7 @@ set number
 set showcmd
 set incsearch
 set hlsearch
+set scrolloff=5
 "set iskeyword-=_
 
 "colorscheme

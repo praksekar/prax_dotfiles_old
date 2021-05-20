@@ -121,9 +121,15 @@ window_swallow_command () {
 zle -N window_swallow_command
 bindkey '^ ' window_swallow_command
 
+# test escape
+#bindkey '\e' accept-search
+
 # source fzf 
 #[ -f ~/.src/fzf/.fzf.zsh ] && source ~/.src/fzf/.fzf.zsh 
 source key-bindings.zsh
+
+# package suggestions
+source /etc/zsh_command_not_found
 
 # Load syntax highlighting; should be last.
 [ -f ~/.src/zsh-plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh ] && source ~/.src/zsh-plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh 

@@ -1,0 +1,165 @@
+\documentclass[letterpaper,12pt]{article}
+\usepackage{enumitem}
+\usepackage{graphicx}
+
+\title{Homework 1}
+\author{Prakash Sekar}
+\date{September 11, 2020}
+
+\begin{document}
+\maketitle
+
+\subsection*{Problem 1}
+\begin{enumerate}[label=(\alph*)]
+    \item When we do $\frac{38+42+50+61+71+79+84+83+75+54+43}{12}$, we get the mean to be 56.67. When ordering these numbers, we get 38, 42, 43, 50, 54, 61, 71, 75, 79, 83, 84. The median will be the average of the 6th and 7th number in this set. $\frac{61+71}{2} = 66$.
+    \item 
+        \begin{center}
+            \includegraphics[scale=0.6]{1b_timeseries_sheets.png}
+        \end{center}
+    \item Sample variance: $s^2 = \frac{\sum_{i=1}^{n}x_i^2-(\sum_{i=1}^{n}x_i)^2)/n}{n-1} = \sqrt{\frac{462400-45046/12}{12-1}} = 204.193$
+    \item 
+        \begin{center}
+            \includegraphics[scale=0.9]{1d_boxplot_r.png}
+        \end{center}
+\end{enumerate}
+
+\subsection*{Problem 2}
+\begin{enumerate}[label=(\alph*)]
+    \item Adding up the frequencies, we get $1+2+11+9+13+15+13+12+10+2+2=90$. The 1st quartile and 3rd quartile would be the 25th percentile and 75th percentile of the data set, which is the average of the 22nd and 23rd element, and the average of the 67th and 68th element, respectively: $\frac{22+22}{2} = 22; \frac{26+26}{2}=26;$. The median is the average of the 45th and 46th element in the data set: $\frac{24+24}{2}=24$.
+    \item $\frac{19\times2+20\times2+21\times11+22\times9+23\times13+24\times25+26\times12+27\times10+28\times2}{90} = 22.711$
+    \item 
+        \begin{tabular}{ |c|c|c| }
+            \hline
+            Length & Frequency \\ \hline
+            19 & 1 \\ \hline
+            20 & 2 \\ \hline
+            21 & 11 \\ \hline
+            22 & 9 \\ \hline
+            23 & 13 \\ \hline
+            24 & 15 \\ \hline
+            25 & 13 \\ \hline
+            26 & 12 \\ \hline
+            27 & 10 \\ \hline
+            28 & 2 \\ \hline
+            29 & 2 \\ 
+            \hline
+        \end{tabular}
+\end{enumerate}
+\subsection*{Problem 3}
+    \begin{enumerate}[label=(\alph*)]
+        \item Counting the number of digits on the right, there are $1+2+4+3+5+4+9+6+1=35$ numbers in this set. The median will be the average of the 17th and 18th number in the ordered set: $\frac{78+78}{2} = 78$.
+        \item stemandleafplot=c(29, 33, 38, 43, 46, 48, 48, 51, 51, 56, 61, 64, 66, 67, 68, 77, 78, 78, 79, 82, 83, 84, 85, 85, 86, 86, 89, 89, 90, 90, 91, 93, 94, 97, 100) \\
+              quantile(stemandleafplot, .70) = 85.8
+        \item quantile(stemandleafplot, c(.25, .75)) = 53.5, 87.5, $IQR = 34$
+        \item There are no outliers. $Q_1-1.5(IQR) = 2.5$, and $Q_3+1.5(IQR) = 138.5$.
+    \end{enumerate}
+\subsection*{Problem 4}
+    \begin{enumerate}[label=(\alph*)]
+        \item
+            \begin{center}
+                \includegraphics[scale=0.6]{pareto_graph.png}
+            \end{center}
+        \item Excess Count, Wrong Supplier, Wrong Size, and Too Few Count account for 80\% of the errors.
+    \end{enumerate}
+
+\subsection*{Problem 5}
+    \begin{enumerate}[label=(\alph*)]
+        \item 
+            \begin{tabular}{ |c|c|c| }
+                \hline
+                Set 1 & Set 2 & Set 3 \\ \hline
+                7 & 40 & 44 \\ \hline
+                26 & 80 & 58 \\ \hline
+                83 & 67 & 62 \\ \hline
+                67 & 71 & 70 \\ \hline
+                77 & 49 & 80 \\ \hline
+                32 & 66 & 69 \\ \hline
+                57 & 71 & 62 \\ \hline
+                88 & 55 & 91 \\ \hline
+                90 & 37 & 93 \\ \hline
+                93 & 49 & 60 \\ \hline
+                22 & 27 & 76 \\ \hline
+                41 & 43 & 47 \\ \hline
+                80 & 26 & 63 \\ \hline
+                66 & 22 & 48 \\ \hline
+                99 & 50 & 76 \\ \hline
+                56 & 60 & 76 \\ \hline
+                87 & 71 & (none) \\ \hline
+                80 & 34 & (none) \\ \hline
+                14 & 37 & (none) \\ \hline
+                49 & 47 & (none) \\ \hline
+                (none) & 72 & (none) \\ \hline
+                (none) & 45 & (none) \\ \hline
+                (none) & 68 & (none) \\ \hline
+                (none) & 28 & (none) \\ \hline
+                (none) & 28 & (none) \\ \hline
+            \end{tabular}
+        \item 
+            \begin{center}
+                \includegraphics[scale=0.9]{5b_boxplot_r.png}
+            \end{center}
+        \end{enumerate}
+
+\subsection*{Problem 6}
+    \begin{enumerate}[label=(\alph*)]
+        \item 
+            somedata=c(55, 61, 94, 94, 69, 77, 68, 54, 85, 77, 92, 92, 81, 73, 69, 81, 75, 84, 70, 81, 81, 89, 59, 72, 82, 62) \\
+            hist(somedata)
+              \begin{center}
+                \includegraphics[scale=0.4]{6a_histogram_r.png}
+              \end{center}
+        \item mean(somedata) = 76.03846, var(somedata) = 138.8385
+        \item summary(somedata) =
+            \begin{tabular}{ |c|c|c|c|c|c| }
+                \hline
+                 Min. & 1st Qu. & Median & Mean & 3rd Qu. & Max. \\\hline
+                 54.00 & 69.00 & 77.00 & 76.04 & 83.50 & 94.00  \\\hline
+            \end{tabular}
+        \item boxplot(somedata, horizontal = TRUE)
+            \begin{center}
+                \includegraphics[scale=0.4]{6d_boxplot_r.png}
+            \end{center}
+        \item stem(somedata) \\
+            The decimal point is 1 digit(s) to the right of the \| \\
+            \begin{tabular}{ l|l }
+            5 & 4 \\
+            5 & 59 \\
+            6 & 12 \\
+            6 & 899 \\
+            7 & 023 \\
+            7 & 577 \\
+            8 & 111124 \\
+            8 & 59 \\
+            9 & 2244 \\
+            \end{tabular}
+    \end{enumerate}
+
+\subsection*{Problem 7}
+    \begin{enumerate}[label=(\alph*)]
+        \item Probability of picking up a blue pen times the probability that he recognizes it as blue: $0.75 \times 0.8 = 0.6$
+        \item Sum up the probabilities given that he chooses a blue pen and a green pen: $0.75 \times 0.8 + 0.25 \times 0.1 = 0.625$
+        \item This is the probability that he actually chose a blue pen divided by the probability that he chooses a blue pen, which we got in the previous answer: $\frac{0.75 \times 0.8}{0.75 \times 0.8 + 0.25 \times 0.1} = 0.96$
+    \end{enumerate}
+
+\subsection*{Problem 8}
+    \begin{enumerate}[label=(\alph*)]
+        \item If disjoint, $P(A \cup B)=P(A)+P(B);$ substituting our values in, we get equation $0.5 = 0.4 + P(B)$; $P(B) = 0.1$.
+        \item $P(A \cup B) = P(A)+P(B)−(P(A) \times P(B))$; $0.5 = 0.4 + P(B) - 0.4 \times P(B); P(B) = 0.167$ 
+        \item $P(A|B) = \frac{P(A \cap B)}{1 - P(A) + P(A \cap B)} = \frac{P(A) \times P(B)}{1-P(A)+P(A) \times P(B)}$; $P(B) = 0.25$
+        \item $P(A \cap B) = P(A) \times P(B);$ substituting our values in, we get the equation $0.15 = 0.4 \times P(B)$, so $P(B)$ must be 0.375 in this case.
+    \end{enumerate}
+
+\subsection*{Problem 9}
+    \begin{enumerate}[label=(\alph*)]
+        \item Just multiply the number of choices in each subject: $5\times6\times3\times4 = 360$ possible ways.
+        \item We must select 4 members from 24. When selecting these 4, permutation matters because we can switch the roles of these 4 people and we would get a unique outcome. $24P_4 = \frac{24!}{(24-4)!} = 255024$ ways.
+        \item For each question, there are 4 possible choices the student has. For each question, we multiply by 4: $4^5 = 1024$.
+        \item ${52 \choose 7} = \frac{52!}{45!(52-7)!} = 133784560$
+        \item Add the number of ways to choose (combination, because the order of the ones doesn't matter) exactly 4 ones and 5 ones: ${10 \choose 4} + {10 \choose 5} = \frac{10!}{6!(10-6)!} + \frac{10!}{6!(10-6)!} = 462$. To get the probability, divide by the total number of possible binary sequences of length 10, which is $2^{10}$. $\frac{462}{2^{10}} = 0.451$.
+    \end{enumerate}
+
+\subsection*{Problem 10} 
+    \begin{enumerate}[label=(\alph*)]
+        \item Find the probability of $A_1$ or $A_2$ times $B_1$ or $B_2$ times $P(C_1)$: $P(A_1 \cup A_2) = P(A_1) + P(A_2) - (P(A_1) \times P(A_2)) = P(B_1\cupB_2) = 0.95 + 0.95 -(0.95 \times 0.95) = 0.9975$. Multiply these together: $0.9975 \times 0.9975 \times 0.95 = 0.945$
+    \end{enumerate}
+\end{document}

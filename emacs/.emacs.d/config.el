@@ -93,3 +93,12 @@ kept-old-versions      5) ; and how many of the old
 (use-package org-bullets
   :config
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+
+(require 'ox-latex)
+(add-to-list 'org-latex-classes
+	'(("bulleted" "\\documentclass[11pt,a4paper]{article}"
+	    ("\\section{%s}" . "\\section*{%s}")
+	    ("\\begin{enumerate} \item %s" . "\\subsection*{%s}")
+	    ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+	    ("\\paragraph{%s}" . "\\paragraph*{%s}")
+	    ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))

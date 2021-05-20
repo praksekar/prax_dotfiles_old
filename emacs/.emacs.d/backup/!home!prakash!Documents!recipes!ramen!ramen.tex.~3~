@@ -1,0 +1,110 @@
+% Created 2020-11-09 Mon 18:34
+% Intended LaTeX compiler: pdflatex
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{grffile}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\author{prakash}
+\date{\today}
+\title{}
+\hypersetup{
+ pdfauthor={prakash},
+ pdftitle={},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 26.3 (Org mode 9.1.9)}, 
+ pdflang={English}}
+\begin{document}
+
+\tableofcontents
+
+\#+LATEX\(_{\text{CLASS}}\) bulleted 
+\section{Toppings}
+\label{sec:org6e4646f}
+\subsection{Marinated egg (Shoyu tamago)}
+\label{sec:org9fb14b9}
+\subsubsection{1 ½ cups of water}
+\label{sec:org77711a3}
+\subsubsection{½ cup of soy sauce}
+\label{sec:org3d7f291}
+\subsubsection{½ cup of mirin}
+\label{sec:orgcf05662}
+\subsubsection{2 minced garlic cloves}
+\label{sec:org4a8adaa}
+\subsubsection{2 rough chopped scallions}
+\label{sec:orgd5e2e56}
+\subsubsection{1 tbsp of grated ginger}
+\label{sec:org077dc73}
+\subsubsection{bring ingredients to boil}
+\label{sec:org22685fc}
+\subsubsection{Marinate in container for 12 hours}
+\label{sec:org465e9f4}
+\subsection{Fried tofu}
+\label{sec:org4d25557}
+\subsubsection{Low-moisture firm tofu}
+\label{sec:orgb0d0fc4}
+\subsubsection{Squeeze water out}
+\label{sec:orgaafc547}
+\subsubsection{Cut into small pieces}
+\label{sec:org3ddc309}
+\subsubsection{Marinate in bag with same marinade as shoyu tamago}
+\label{sec:org6199fcf}
+\subsubsection{Fry with shallow pool of oil on frying pan until brown}
+\label{sec:org34e2fc5}
+\subsection{Corn}
+\label{sec:org05ce105}
+\subsubsection{Drain sweet corn from can}
+\label{sec:orgd6af4ae}
+\subsection{Scallions}
+\label{sec:orgdf75dca}
+\subsubsection{Chop scallions}
+\label{sec:org2d731c6}
+\section{Broth}
+\label{sec:org20a7cfd}
+\subsection{Chop up onions (keep skins), carrots, garlic head, shitake mushrooms, kombu, green onions into thin slices}
+\label{sec:orgb2bdf2f}
+\subsection{Coat veggies with sesame oil, miso, salt, sugar mixture}
+\label{sec:orgc46c46b}
+\subsection{Bake at 300F for one hour}
+\label{sec:org6ac44ab}
+\subsection{Scrape contents into pot, deglaze surface of baking tray, boil for a few hours}
+\label{sec:org1f887a0}
+\subsection{Strain out veggies (keep garlic)}
+\label{sec:org024a0ce}
+\subsection{Season with white pepper, salt, black pepper, MSG}
+\label{sec:org913f656}
+\section{Flavored oils/pastes to go on bottom of ramen bowl}
+\label{sec:org87e6581}
+\subsection{Sesame paste}
+\label{sec:orge3d8dad}
+\subsection{Sesame oil}
+\label{sec:orga9734f1}
+\subsection{Miso paste}
+\label{sec:org81dc263}
+\subsection{Sriracha}
+\label{sec:orge305fff}
+\subsection{Soy sauce}
+\label{sec:org3c1b9fc}
+\subsection{Hot oil}
+\label{sec:org9120233}
+\subsubsection{Fry garlic, red pepper flakes, scallions in neutral oil on low flame until ingredients are well browned}
+\label{sec:org42fd84e}
+\subsubsection{Strain out ingredients and set oil aside}
+\label{sec:org68864d6}
+\section{Ramen noodles}
+\label{sec:org517cc61}
+\subsection{Sun noodles}
+\label{sec:org7825878}
+\subsection{Boil, but keep firm}
+\label{sec:org55ce190}
+\end{document}

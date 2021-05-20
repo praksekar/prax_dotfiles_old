@@ -4,12 +4,14 @@ notify-send "bspwm_init executed"
 sxhkd &
 dunst &
 setxkbmap -option caps:swapescape
-xcompmgr &
-feh --bg-fill ~/Pictures/wallpapers/bee_on_flower.jpg #--randomize 
+compton &
+remaps &
+feh --bg-fill $WALLPAPER #--randomize 
 bspwm_lemonbar &
 #emacs --daemon
 
 # mousepad settings
+# use xset
 xinput set-prop "$TOUCHPAD" 'libinput Tapping Enabled' 1
 xinput set-prop "$TOUCHPAD" 'libinput Accel Speed' +0.5
 xinput set-prop 'Logitech USB-PS/2 Optical Mouse' 'libinput Accel Speed' +1

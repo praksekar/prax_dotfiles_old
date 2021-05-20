@@ -2,6 +2,9 @@
 # wm independent hotkeys
 #
 
+mod3 + {button5, button4}
+    bspwm_dynamic_desktops --monitor-scroll {dec, inc}
+
 # open spotify, spotify commands
 mod3 + v 
     spotify
@@ -170,7 +173,9 @@ mod3 + {_,alt +}{1,2,3,4,5,6,7,8,9,0}
 
 # monitor_scroll
 mod3 + {bracketleft, bracketright}
-    bspwm_dynamic_desktops --monitor-scroll {dec, inc}
+    bspc desktop {prev, next} -f
+#mod3 + {bracketleft, bracketright}
+    #bspwm_dynamic_desktops --monitor-scroll {dec, inc}
 
 #mod3 + alt + {1,2,3,4,5,6,7,8,9,0}
 	#~/.config/bspwm/bspwm_dynamic_desktops move_window_to {1,2,3,4,5,6,7,8,9,10}
